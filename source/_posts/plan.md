@@ -8,11 +8,11 @@ title: To do list
 ---
 ### 参加会议一览
 
-- BioSMART $\Rightarrow$ 5月14，15，16
+- BioSMART - 5月14，15，16
     - 演讲时间：5月14日12:00，20min PPT
-- GDR Soc $\Rightarrow$ 6月11，12，13
+- GDR Soc - 6月11，12，13
     - 演讲时间：6月12日，poster
-- NEWCAS $\Rightarrow$ 6月22，23，24，25
+- NEWCAS - 6月22，23，24，25
     - 演讲时间：poster
 
 ---
