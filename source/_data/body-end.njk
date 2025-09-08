@@ -1,0 +1,19 @@
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const bar = document.querySelector('.gallery-filter');
+  const grid = document.querySelector('.gallery-grid');
+  if (!bar || !grid) return;
+
+  bar.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    bar.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn));
+    const filter = btn.dataset.filter;
+    grid.querySelectorAll('a').forEach(el => {
+      const cats = (el.dataset.category || '').split(',').map(s => s.trim());
+      const show = filter === 'all' || cats.includes(filter);
+      el.style.display = show ? '' : 'none';
+    });
+  });
+});
+</script>
