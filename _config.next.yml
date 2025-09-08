@@ -19,7 +19,7 @@ minify: true
 # Define custom file paths.
 # Create your custom files in site directory `source/_data` and uncomment needed files below.
 custom_file_path:
-  #head: source/_data/head.njk
+  head: source/_data/head.njk
   #header: source/_data/header.njk
   # sidebar: source/_data/sidebar.njk
   #postMeta: source/_data/post-meta.njk
@@ -38,9 +38,9 @@ custom_file_path:
 
 # Schemes
 # scheme: Muse
-# scheme: Mist
+scheme: Mist
 # scheme: Pisces
-scheme: Gemini
+# scheme: Gemini
 
 # Dark Mode
 darkmode: false
@@ -50,11 +50,11 @@ darkmode: false
 # Site Information Settings
 # ---------------------------------------------------------------
 
-favicon: /images/favicon.ico
-  # small: /images/favicon-16x16.png
-  # medium: 
-  # apple_touch_icon: /images/apple-icon.png
-  # safari_pinned_tab: /images/logo.svg
+favicon:
+  small: /images/favicon-16x16.png
+  medium: /images/favicon-32x32.png
+  apple_touch_icon: /images/apple-icon.png
+  safari_pinned_tab: /images/logo.svg
   #android_manifest: /manifest.json
 
 # Custom Logo (Warning: Do not support scheme Mist)
@@ -101,8 +101,8 @@ menu:
   Projects: /projects/ || fa fa-briefcase
   Teaching: /teach/ || fa fa-book
   CV: /cv/ || fa fa-download
-  Publications: /publications/ || fa fa-list
-  相册: /photos/ || fa fa-images
+  # Publications: /publications/ || fa fa-list
+  Gallery: /photos/ || fa fa-images
   # about: /about/ || fa fa-user
   #tags: /tags/ || fa fa-tags
   #categories: /categories/ || fa fa-th
@@ -139,7 +139,7 @@ sidebar:
   #  - always  expand for all pages automatically.
   #  - hide    expand only when click on the sidebar toggle icon.
   #  - remove  totally remove sidebar including sidebar toggle.
-  display: post
+  display: remove
 
   # Sidebar padding in pixels.
   padding: 18
@@ -267,7 +267,7 @@ post_meta:
 # Post wordcount display settings
 # Dependencies: https://github.com/next-theme/hexo-word-counter
 symbols_count_time:
-  separated_meta: true
+  separated_meta: false
   item_text_total: false
 
 # Use icon instead of the symbol # to indicate the tag at the bottom of the post
@@ -826,12 +826,12 @@ firestore:
 # Show Views / Visitors of the website / page with busuanzi.
 # For more information: http://ibruce.info/2015/04/04/busuanzi/
 busuanzi_count:
-  enable: true
+  enable: false
   total_visitors: true
   total_visitors_icon: fa fa-user
-  total_views: true
+  total_views: false
   total_views_icon: fa fa-eye
-  post_views: true
+  post_views: false
   post_views_icon: far fa-eye
 
 
