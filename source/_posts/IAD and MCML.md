@@ -1,10 +1,10 @@
 ---
 title: IAD et MOP-MCML
 mathjax: true
-description: L’IAD (Inverse Adding-Doubling) repose sur la méthode AD (Adding-Doubling), complétée par une correction de type Monte-Carlo. Il permet, à partir des valeurs mesurées de la réflectance R et de la transmittance T, de déduire les paramètres optiques intrinsèques de l’échantillon.
+description: IAD (Inverse Adding-Doubling) is based on the AD (Adding-Doubling) method, supplemented by a Monte Carlo correction. It allows the intrinsic optical parameters of the sample to be deduced from the measured values of reflectance R and transmittance T.
 ---
 
-# 1. Introduction à l’IAD
+# 1. Introduction IAD
 ## Présentation
 L’IAD (Inverse Adding-Doubling) repose sur la méthode AD (Adding-Doubling), complétée par une correction de type Monte-Carlo. Il permet, à partir des valeurs mesurées de la réflectance R et de la transmittance T, de déduire les paramètres optiques intrinsèques de l’échantillon : le coefficient d’absorption $μ_a$, le coefficient de diffusion réduite $μ_s'$ et le paramètre d’anisotropie $g$.
 Le logiciel comprend deux processus :
