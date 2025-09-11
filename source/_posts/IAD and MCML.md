@@ -419,7 +419,9 @@ pd.DataFrame(rows).to_csv("ad_results.csv", index=False)
 Le fichier CSV généré regroupe les valeurs de R et de T déduites par l’AD ; elles sont ensuite comparées aux valeurs initiales de R et T.
 - Difference Reflectance: 7.34% ± 1.11% (n=201)
 - Difference Transmittance: 0.83% ± 0.63% (n=201)
-![[Diff_RT.png]]
+
+![Diff_RT](/images/Diff_RT.png)
+
 Les résultats montrent que, lorsque les paramètres sont correctement configurés, l’IAD est capable de reconstituer à partir de R et T des paramètres optiques avec une précision satisfaisante.
 # 7. Notes de débogage
 ## Modification du fichier mci
@@ -462,6 +464,7 @@ C’est-à-dire que le fichier **mco** contient désormais les éléments suivan
 Il convient de noter qu’avant la modification du code **Matlab**, cette section d’information doit être ignorée ; autrement, l’exécution ne pourra pas aboutir.
 ## Modification du code MATLAB
 En intégrant les nouvelles informations de coordonnées, les paramètres dimensionnels et les types de sources lumineuses pour les sources lumineuses et les photodiodes dans le fichier **mco**, nous avons encore optimisé le processus de visualisation. Plus précisément, les positions et les dimensions réelles des sources lumineuses et des photodiodes dans deux modes sont clairement indiquées, ce qui rend la disposition spatiale plus intuitive. De plus, différents symboles sont utilisés pour distinguer les types de sources lumineuses : les sources lumineuses ponctuelles sont représentées par des triangles inversés, tandis que les autres types de sources lumineuses sont indiqués en fonction de leurs dimensions réelles. Ce type de traitement améliore non seulement la clarté du diagramme du chemin optique, mais aussi l'interprétabilité des résultats de la simulation.
+![MOP-MCML](/images/MOP-MCML.png)
 # 8. References
 <span id="ref1">[1]</span> Bashkatov et al. Optical properties of human skin, subcutaneous and mucous tissues in the wavelength range from 400 to 2000 nm. 2005 J. Phys. D: Appl. Phys. 38 2543. DOI: 10.1088/0022-3727/38/15/004.
 <span id="ref2">[2]</span> Simpson et al. Near-infrared optical properties of ex vivo human skin and subcutaneous tissues measured using the Monte Carlo inversion technique. Phys Med Biol. 1998 Sep;43(9):2465-78. DOI: 10.1088/0031-9155/43/9/003.
