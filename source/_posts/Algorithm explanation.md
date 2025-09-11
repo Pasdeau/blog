@@ -6,7 +6,10 @@ description: MATLAB代码程序，用于生成可修改的ECG和PPG模拟信号�
 ---
 
 # 数据集
-对于PPG噪声，需要进一步处理，发现进一步的细节
+目标使用该算法生成相应的噪声，训练一个分类算法。源代码可访问：
+[PPG生成算法](https://nuage.lip6.fr/index.php/s/Mg2r8KswAPrE9Ta)
+[修改后PPG生成算法](https://nuage.lip6.fr/index.php/s/NmpaTdCfmtRt6fX)
+修改内容包括解决了源代码中无法给出噪声为0的PPG信号问题，下载该文件后替换算法中原来的对应文件即可。
 ## Type 1 with 50 RR
 ### 无噪声
 #### 时域信号与FFT

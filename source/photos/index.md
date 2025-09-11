@@ -6,7 +6,7 @@ comments: false
 
 <div class="gallery-filter">
   <button data-filter="all" class="active">全部</button>
-  <button data-filter="people">人物</button>
+  <button data-filter="people">生活</button>
   <button data-filter="travel">旅行</button>
   <button data-filter="lab">实验室</button>
 </div>
