@@ -1,5 +1,6 @@
 ---
 title: IAD et MOP-MCML
+date: 2025-09-06
 mathjax: true
 description: IAD (Inverse Adding-Doubling) is based on the AD (Adding-Doubling) method, supplemented by a Monte Carlo correction. It allows the intrinsic optical parameters of the sample to be deduced from the measured values of reflectance R and transmittance T.
 ---
