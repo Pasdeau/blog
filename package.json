@@ -24,5 +24,10 @@
     "hexo-theme-landscape": "^1.0.0",
     "hexo-theme-next": "^8.25.0",
     "hexo-word-counter": "^0.2.1"
+  },
+  "devDependencies": {
+    "hexo-renderer-markdown-it": "^7.1.1",
+    "katex": "^0.16.22",
+    "markdown-it-katex": "^2.0.3"
   }
 }
