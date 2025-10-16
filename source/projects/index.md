@@ -1,6 +1,4 @@
 ---
-title: Projects
+title: PhD Subject Introduction
 ---
-
-这里放项目列表。
 

@@ -98,7 +98,7 @@ open_graph:
 menu:
   home: / || fa fa-home
   Posts: /posts/ || fa fa-folder-open
-  Projects: /projects/ || fa fa-briefcase
+  PhD: /projects/ || fa fa-briefcase
   Teaching: /teach/ || fa fa-book
   CV: /cv/ || fa fa-download
   # Publications: /publications/ || fa fa-list
