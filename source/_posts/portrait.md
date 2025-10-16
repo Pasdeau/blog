@@ -1,6 +1,6 @@
 ---
 title: Portrait on website of LIP6
-date: 2025-10-16
+date: 2025-10-10
 mathjax: false
 description: Sharing an experience of being interviewed by a laboratory researcher.
 ---
