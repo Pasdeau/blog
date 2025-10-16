@@ -36,7 +36,7 @@ For this board, the appropriate CMake/Zephyr board target in the project is `nr
     
 3. Via **nRF Connect → Browse Sample**, open `zephyr/samples/basic/blinky`. Choose **Add Build Configuration**, then in **Board target** select `nrf5340dk/nrf5340/cpuapp/ns`. For the first build configuration, pick a compatible board target from the drop-down list.
     
-4. Connect the DK over USB (DEBUG port). In the extension panel, select the detected device and **Flash**. **LED1**should begin blinking.
+4. Connect the DK over USB (DEBUG port). In the extension panel, select the detected device and **Flash**. Then LED1 should begin blinking.
 
 For a comprehensive walkthrough, consult the [official documentation](https://docs.nordicsemi.com/bundle/nrf-connect-vscode/page/index.html).
 
