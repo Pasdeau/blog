@@ -17,6 +17,6 @@ I am pleased to report that I received student paper distinctions at **IEEE BioS
   **Co-authors:** Hang Li (LIP6), Raphaël Vialle (Hôpital Armand Trousseau, AP-HP), Julien Denoulet (LIP6), Sylvain Feruglio (LIP6)
   **Available at:** [https://cnrs.hal.science/LIP6/hal-05115174v1](https://cnrs.hal.science/LIP6/hal-05115174v1)
 
-As noted on my laboratory’s LIP6 official news page: [https://www.lip6.fr/actualite/information-fiche.php?ident=OL288](https://www.lip6.fr/actualite/information-fiche.php?ident=OL288)
+As noted on my laboratory’s LIP6 official news page: [Deux prix du meilleur papier étudiant pour Wenzheng Wang](https://www.lip6.fr/actualite/information-fiche.php?ident=OL288)
 
 {% asset_img 1.png Award Photos %}
