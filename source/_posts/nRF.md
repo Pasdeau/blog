@@ -2,7 +2,7 @@
 title: User Guide of nRF5340 DK
 date: 2025-10-15
 mathjax: false
-description: Building upon the two officially recommended workflows, this chapter details, from first principles, how to configure and use the nRF5340 DK on a local workstation. The Nordic nRF Connect SDK (NCS), built on Zephyr, is the preferred toolchain; for most projects, the official guidance is to build within the **nRF Connect for VS Code** extension.
+description: Building upon the two officially recommended workflows, this chapter details, from first principles, how to configure and use the nRF5340 DK on a local workstation. The Nordic nRF Connect SDK (NCS), built on Zephyr, is the preferred toolchain; for most projects, the official guidance is to build within the nRF Connect for VS Code extension.
 ---
 
 # Introduction to the nRF5340 DK
