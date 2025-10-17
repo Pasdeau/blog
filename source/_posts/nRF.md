@@ -58,6 +58,8 @@ For a comprehensive walkthrough, consult the [official documentation](https://d
     
 - **Accidentally built for the network core or LED does not blink**: Confirm the **Board** is set to `nrf5340dk_nrf5340_cpuapp` (application core).
 
+- To identify the serial device associated with a connected development board, open a terminal and execute `ls /dev/tty.*`. For Nordic boards, the CDC-ACM interfaces are typically enumerated as device nodes with basenames beginning `/dev/tty.usbmodem*`. In this enumeration, the numeric suffix distinguishes the cores: a suffix of `1` denotes the **network core**, whereas `3` denotes the **application core**.
+
 ---
 
 # Useful References
