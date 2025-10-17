@@ -1,6 +1,6 @@
 ---
 title: cv
-date: 2025-09-08 11:01:44
+layout: page
 ---
 
 <!-- You can download my resume via the link below.
