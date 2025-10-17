@@ -1,8 +1,8 @@
 ---
-title: Portrait on website of LIP6
+title: Interview transcript in LIP6
 date: 2025-10-10
 mathjax: false
-description: Sharing an experience of being interviewed by a laboratory researcher.
+description: In October 2025, I was honored to be interviewed by LIP6 and am delighted to share it here.
 ---
 
 In October 2025, I was honored to be interviewed by LIP6. Below is the content of that interview.
