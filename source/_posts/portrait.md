@@ -19,13 +19,13 @@ Upon completion of the thesis, I hope to pursue a postdoctoral position, should 
 
 My objective is to design a non-invasive, multimodal health-monitoring system that acquires both bioelectrical and physiological signals. The aim is to retain the portability of consumer devices (e.g., smartwatches) while enabling reliable, accurate, real-time multiparameter assessment of a person’s health status.
 
-{% asset_img fig2.png Schematic of photon propagation through biological tissue %}
+{% asset_img fig2_w.jpg Schematic of photon propagation through biological tissue %}
 
 Concretely, the prototype leverages near-infrared spectroscopy (NIRS) over 700–2500 nm. By analyzing absorption and scattering in biological tissues, it estimates parameters such as oxygen saturation (SpO₂) and blood-flow variations, and investigates coupling between bioelectrical and physiological modalities.
 
 Because these signals are highly susceptible to ambient noise and motion artifacts, pre-processing and feature-extraction algorithms are pivotal. In building the prototype, energy consumption is also a consideration; however, acquisition accuracy and latency remain the primary performance drivers for this class of system. Data throughput and power draw are additional constraints. Collectively, these factors make the design particularly challenging.
 
-{% asset_img fig3.png Schematic of the photoplethysmography (PPG) signal composition %}
+{% asset_img fig3_w.jpg Schematic of the photoplethysmography (PPG) signal composition %}
 
 # How is your week organized?
 
