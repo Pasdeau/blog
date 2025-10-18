@@ -425,7 +425,7 @@ We obtain $\mu_a$ and $\mu_s'$ from measured $R$ and $T$ via:
 ```
 Here, M denotes the model used by `iad`; only model 0 is publicly documented and commonly used. Parameter q specifies the illumination condition under which $R$ and $T$ were measured. To emulate human tissue, we set $g = 0.9$ and the sample thickness to 6.670 mm. A generated output example is available as *vio-A.txt* (shared link).
 
-## Predicting $R$ and $T$ with AD
+## Predicting $R$ and $T$ with IAD and MOP-MCML
 Given the data volume, batch execution via iadpython is preferable. After preparing input parameters and exporting the computed $a$ and $b$ to CSV, run:
 
 ```python
@@ -454,61 +454,18 @@ for a_i, b_i in zip(a_vals, b_vals):
 pd.DataFrame(rows).to_csv("ad_results.csv", index=False)
 ```
 
-Comparing AD-predicted $R$ and $T$ against the input measurements yields:
-- Reflectance difference: $7.34\% \pm 1.11\%$ (n = 201)  
-- Transmittance difference: $0.83\% \pm 0.63\%$ (n = 201)
+**IAD baseline.** Comparing IAD-predicted $R$ and $T$ with the input measurements over 650–850 nm yields a mean reflectance difference of $7.34\\% \pm 1.11\\%$ and a mean transmittance difference of $0.83\\% \pm 0.63\\%$. Across the band, IAD errors remain modest—peaking at $\sim 8.7\\%$ for $R$ and $\sim 2.1\\%$ for $T$—with minima near 690 nm for $T$ approaching zero.
 
-{% asset_img Diff_RT.png Diff RT %}
+**MOP-MCML comparison.** Using the same preprocessing and evaluation pipeline, we forward-simulated $R$ and $T$ with MOP-MCML at the corresponding wavelengths and computed spectral differences relative to the original data. Overall, the MOP-MCML results give a mean reflectance difference of $29.78\\% \pm 7.80\\%$ and a mean transmittance difference of $9.65\\% \pm 5.57\\%$. When the two error sets are juxtaposed, the MOP-MCML curves exhibit **larger discrepancies**, particularly for reflectance, local maxima around 750~760 nm reaching $\sim 43\\%$, and for transmittance up to $\sim 19\\%$. 
 
-These results indicate that, with correct parameterization, IAD can reconstruct optical parameters from $R$ and $T$ with practically useful accuracy.
+{% asset_img Diff_RT_MCML.png Spectral Error in R/T: IAD vs. MOP-MCML %}
 
-# 7. Debugging Notes
+Why IAD fits closer to the measurements? Two factors explain the gap:
 
-## Editing the .mci file
-The .mci file exposes a parameter for the number of runs. Earlier versions allowed multiple runs; after some changes, only single runs appeared to work. During testing, it became clear that blank lines must be strictly controlled; otherwise, multi-run configurations may fail. The snippet below shows a layout that supports multiple runs—pay attention to where blank lines occur.
+1. **Source-model mismatch.** The light-source types currently available in MOP-MCML do not exactly match those assumed in the reference documentation/measurements (spatial/angular profile and/or spectrum), leading to systematic deviations in the forward model.
+2. **Embedded error feedback in IAD.** IAD is an inverse procedure that continuously compares predicted and measured R and T while estimating optical parameters, effectively “fitting to the data” at each iteration. In contrast, MCML uses the retrieved parameters to generate a single forward prediction, so any source or boundary mismatch propagates directly into larger residuals.
 
-```python
-1.0   # file version
-1     # Number of runs
-
-### Specify data for run 1 ###
-fat800.mco A  # output filename, ASCII/Binary
-2000000       # No. of photons
-0.001 0.002   # dz, dr
-1000 1000 1   # No. of dz, dr & da
-
-1   # No. of layers
-1.000000   # n for medium above 
-#n     mua    mus    g    d  [DOI : 10.1142/S1793545811001319]
-1.37  1.07  116  0.90  1    # Fat
-1.000000                    # n for medium below
-
-1.2 0.1  0.05  0.8 0.1  0.05  # PD : (Rx, Ry), Rl, (Tx, Ty), Tl (in cm)
-1  0.8 0.1  0.05              # light source: 1.point 2.Gaussian 3.Flat
-```
-
-## Editing the .mco file
-In `mcmlio.c`, line ~910 was modified so the .mco file now records photodiode and light-source coordinates, sizes, and source type. MATLAB scripts must be updated to parse these extra fields.
-
-```c
-// Add coordinate information here
-fprintf(file, "%G\t%G\t\t%G\t\t%G\t%G\t\t%G\t\t# PD : (Rx, Ry), Rl, (Tx, Ty), Tl (in cm)\n", In_Parm.PD_Rx, In_Parm.PD_Ry, In_Parm.PD_Rl, In_Parm.PD_Tx, In_Parm.PD_Ty, In_Parm.PD_Tl);
-
-// The light type
-fprintf(file, "%hd\t\t%G\t%G\t\t%G\t\t# light source : param 1: 1.point 2.Gaussian 3.Flat\n", In_Parm.lightType, In_Parm.light_x, In_Parm.light_y, In_Parm.light_l);
-```
-
-Thus, the .mco file now includes:
-```python
-1.2 0.1  0.05  0.8 0.1  0.05  # PD : (Rx, Ry), Rl, (Tx, Ty), Tl (in cm)
-1  0.8 0.1  0.05              # light source: 1.point 2.Gaussian 3.Flat
-```
-Note. Until MATLAB code is updated, ignore these appended lines to avoid execution failures.
-
-## MATLAB visualization update
-With the added geometry and source-type metadata in .mco, visualization is clearer: real positions and sizes are drawn for sources and photodiodes in both modes, and distinct markers differentiate source types (e.g., inverted triangles for point sources; size-aware glyphs for extended sources). This improves both diagram clarity and interpretability of simulation results.
-
-{% asset_img MOP-MCML.png MOP-MCML %}
+We note that commercially available phantoms priced at approximately `$1,000` exhibit optical-parameter errors on the order of $40\\%$. Accordingly, despite the differences discussed above, the errors produced by MOP-MCML remain within our study’s tolerance and are therefore considered acceptable.
 
 # 8. References
 <span id="ref1">[1]</span> Bashkatov et al. Optical properties of human skin, subcutaneous and mucous tissues in the wavelength range from 400 to 2000 nm. 2005 J. Phys. D: Appl. Phys. 38 2543. DOI: 10.1088/0022-3727/38/15/004.

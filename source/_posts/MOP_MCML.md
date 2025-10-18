@@ -175,7 +175,9 @@ On $z=0$ and $z=Z_{\max}$, we define a rectangular PD on each detection plane wi
 
 ## 5.2 New Statistics and Outputs
 
-MOP-MCML directly reports device-consistent $R$ and $T$, the intensity-weighted mean pathlength $L_{\mathrm{eff}}$, penetration-depth histograms, and unified statistics in both reflection and transmission modes, facilitating joint optimization of SDS and device dimensions.
+MOP-MCML provides **device-consistent** estimates of reflectance R and transmittance T, the **intensity-weighted mean pathlength** (L_{\mathrm{eff}}), **penetration-depth histograms**, and **harmonized summary statistics** for both reflection and transmission geometries. These outputs are designed to support the **joint optimization** of source–detector separation (SDS) and device dimensions.
+
+To streamline batch experiments, after each run the computed R and T are appended to a project-level summary file (`summary.csv`), enabling quick inspection, aggregation, and cross-run comparison without parsing individual output files.
 
 ## 5.3 I/O and MATLAB Visualization Updates
 
@@ -203,31 +205,29 @@ Leveraging the added source and PD coordinates, size parameters, and source type
 
 # 6. Installation and Usage
 
-## 6.1 Build
+## 6.1 Clone and Build
 
-MOP-MCML is implemented in C and can be compiled and optimized with common toolchains.
-
-1. Windows: Use a recent MSVC (e.g., Visual Studio 2022). Create a Console project, add sources, select Release x64, and enable optimizations.
-
-2. Linux/macOS: Use gcc/clang, e.g.,
-
-   ```
-   gcc -O3 -o mop-mcml *.c -lm
-   ```
-
-   Ensure you link against the math library with `-lm` and enable `-O3` optimization.
-
-3. Cross-platform: `make` is supported; on Windows, MinGW-w64 is an option.
-
-Cloning and building:
+MOP-MCML is written in C and can be compiled and optimized with standard toolchains. You can obtain the source code from the following repository:
 
 ```bash
 git clone https://gitlab.lip6.fr/feruglio/mop-mcml.git
-cd mop-mcml
-make
 ```
 
-The executable reads text `.mci` inputs and writes `.mco` result files (plus optional logs).
+Then, build MOP-MCML on your machine.
+
+* **Windows (Visual Studio 2022):**
+  Open the source tree in Visual Studio, select a **Release** configuration, and enable compiler optimizations (e.g., `/O2` or `/O3`). Build the project to produce `mop-mcml.exe`.
+
+* **Linux/macOS (GCC or Clang):**
+  From the project root, compile with:
+
+  ```bash
+  gcc -O3 -o mop-mcml *.c -lm
+  ```
+
+  If you prefer Clang, replace `gcc` with `clang`. Ensure the math library is linked with `-lm` and that high-level optimization (e.g., `-O3`) is enabled.
+
+The resulting executable reads text-based `.mci` input files and writes `.mco` result files.
 
 ## 6.2 Input File Essentials
 
@@ -252,7 +252,7 @@ Follow the repository’s parser for exact syntax; examples can be filled accord
 Command-line usage:
 
 ```bash
-./mcml input.mci
+./mop-mcml your_input_file_name.mci
 ```
 
 The `.mco` output includes grids and layer info, $R$ and $T$ statistics, and vector and matrix data blocks (e.g., `Al`, `Az`, `Rr`/`Ra`, `Tr`/`Ta`, `Azr`, `Rra`/`Tra`, `OP`). If the project’s I/O extension is enabled, two lines of geometric metadata (PDs and source) are appended at the end (see Section 5.3).
@@ -290,6 +290,8 @@ The `.mco` output includes grids and layer info, $R$ and $T$ statistics, and vec
    $$
 
 6. Robustness tip: Validate $T_{\mathrm{th}}=e^{-\mu_a d}$ with a non-scattering sample to regression-test I/O and statistical definitions.
+
+{% asset_img MOP-MCML.png MOP-MCML %}
 
 # 7. Numerical Validation and Representative Results
 
