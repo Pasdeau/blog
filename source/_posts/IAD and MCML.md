@@ -456,7 +456,7 @@ pd.DataFrame(rows).to_csv("ad_results.csv", index=False)
 
 **IAD baseline.** Comparing IAD-predicted $R$ and $T$ with the input measurements over 650–850 nm yields a mean reflectance difference of $7.34\\% \pm 1.11\\%$ and a mean transmittance difference of $0.83\\% \pm 0.63\\%$. Across the band, IAD errors remain modest—peaking at $\sim 8.7\\%$ for $R$ and $\sim 2.1\\%$ for $T$—with minima near 690 nm for $T$ approaching zero.
 
-**MOP-MCML comparison.** Using the same preprocessing and evaluation pipeline, we forward-simulated $R$ and $T$ with MOP-MCML at the corresponding wavelengths and computed spectral differences relative to the original data. Overall, the MOP-MCML results give a mean reflectance difference of $29.78\\% \pm 7.80\\%$ and a mean transmittance difference of $9.65\\% \pm 5.57\\%$. When the two error sets are juxtaposed, the MOP-MCML curves exhibit **larger discrepancies**, particularly for reflectance, local maxima around 750~760 nm reaching $\sim 43\\%$, and for transmittance up to $\sim 19\\%$. 
+**MOP-MCML comparison.** Using the same preprocessing and evaluation pipeline, we forward-simulated $R$ and $T$ with MOP-MCML at the corresponding wavelengths and computed spectral differences relative to the original data. Overall, the MOP-MCML results give a mean reflectance difference of $29.78\\% \pm 7.80\\%$ and a mean transmittance difference of $9.65\\% \pm 5.57\\%$. When the two error sets are juxtaposed, the MOP-MCML curves exhibit **larger discrepancies**, particularly for reflectance, local maxima around 750-760 nm reaching $\sim 43\\%$, and for transmittance up to $\sim 19\\%$. 
 
 {% asset_img Diff_RT_MCML.png Spectral Error in R/T: IAD vs. MOP-MCML %}
 
@@ -465,7 +465,7 @@ Why IAD fits closer to the measurements? Two factors explain the gap:
 1. **Source-model mismatch.** The light-source types currently available in MOP-MCML do not exactly match those assumed in the reference documentation/measurements (spatial/angular profile and/or spectrum), leading to systematic deviations in the forward model.
 2. **Embedded error feedback in IAD.** IAD is an inverse procedure that continuously compares predicted and measured R and T while estimating optical parameters, effectively “fitting to the data” at each iteration. In contrast, MCML uses the retrieved parameters to generate a single forward prediction, so any source or boundary mismatch propagates directly into larger residuals.
 
-We note that commercially available phantoms priced at approximately `$1,000` exhibit optical-parameter errors on the order of $40\\%$. Accordingly, despite the differences discussed above, the errors produced by MOP-MCML remain within our study’s tolerance and are therefore considered acceptable.
+We note that commercially available phantoms priced at approximately $1,000 exhibit optical-parameter errors on the order of $40\\%$. Accordingly, despite the differences discussed above, the errors produced by MOP-MCML remain within our study’s tolerance and are therefore considered acceptable.
 
 # 8. References
 <span id="ref1">[1]</span> Bashkatov et al. Optical properties of human skin, subcutaneous and mucous tissues in the wavelength range from 400 to 2000 nm. 2005 J. Phys. D: Appl. Phys. 38 2543. DOI: 10.1088/0022-3727/38/15/004.
