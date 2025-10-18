@@ -1,8 +1,6 @@
 ---
-title: cv
+title: Download my resume
 layout: page
 ---
 
-<!-- You can download my resume via the link below.
-
-[Download](/files/cv.pdf) -->
+[Download](/files/cv.pdf)
