@@ -465,7 +465,7 @@ Why IAD fits closer to the measurements? Two factors explain the gap:
 1. **Source-model mismatch.** The light-source types currently available in MOP-MCML do not exactly match those assumed in the reference documentation/measurements (spatial/angular profile and/or spectrum), leading to systematic deviations in the forward model.
 2. **Embedded error feedback in IAD.** IAD is an inverse procedure that continuously compares predicted and measured R and T while estimating optical parameters, effectively “fitting to the data” at each iteration. In contrast, MCML uses the retrieved parameters to generate a single forward prediction, so any source or boundary mismatch propagates directly into larger residuals.
 
-We note that commercially available phantoms priced at approximately $1,000 exhibit optical-parameter errors on the order of $40\\%$. Accordingly, despite the differences discussed above, the errors produced by MOP-MCML remain within our study’s tolerance and are therefore considered acceptable.
+We note that commercially available phantoms priced at approximately \$1,000 exhibit optical-parameter errors on the order of $40\\%$. Accordingly, despite the differences discussed above, the errors produced by MOP-MCML remain within our study’s tolerance and are therefore considered acceptable.
 
 # 8. References
 <span id="ref1">[1]</span> Bashkatov et al. Optical properties of human skin, subcutaneous and mucous tissues in the wavelength range from 400 to 2000 nm. 2005 J. Phys. D: Appl. Phys. 38 2543. DOI: 10.1088/0022-3727/38/15/004.

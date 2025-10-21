@@ -175,7 +175,7 @@ On $z=0$ and $z=Z_{\max}$, we define a rectangular PD on each detection plane wi
 
 ## 5.2 New Statistics and Outputs
 
-MOP-MCML provides **device-consistent** estimates of reflectance R and transmittance T, the **intensity-weighted mean pathlength** (L_{\mathrm{eff}}), **penetration-depth histograms**, and **harmonized summary statistics** for both reflection and transmission geometries. These outputs are designed to support the **joint optimization** of source–detector separation (SDS) and device dimensions.
+MOP-MCML provides **device-consistent** estimates of reflectance R and transmittance T, the **intensity-weighted mean pathlength** $L_{\mathrm{eff}}$, **penetration-depth histograms**, and **harmonized summary statistics** for both reflection and transmission geometries. These outputs are designed to support the **joint optimization** of source–detector separation (SDS) and device dimensions.
 
 To streamline batch experiments, after each run the computed R and T are appended to a project-level summary file (`summary.csv`), enabling quick inspection, aggregation, and cross-run comparison without parsing individual output files.
 
