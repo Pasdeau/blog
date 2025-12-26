@@ -43,42 +43,42 @@ This dissertation addresses these limitations by designing and implementing a ne
 </p>
 
 <p class="en-text">
-Recent advances in wearable monitoring illustrate both the promise and the gaps that remain. Examples include smart contact lenses for assessing visual function [[1](#ref1)], mouthguard sensors for salivary glucose [[2](#ref2)], fatigue detection based on surface electromyography (EMG) [[3](#ref3)], emotion recognition from electroencephalography (EEG) [[4](#ref4)], and pain assessment using electrodermal activity (EDA) [[5](#ref5)]. Despite notable progress, such devices often remain expensive, require nontrivial setup, or target a single modality, limiting their utility for comprehensive day-to-day health monitoring.
+Recent advances in wearable monitoring illustrate both the promise and the gaps that remain. Examples include smart contact lenses for assessing visual function [<a href="#ref1">1</a>], mouthguard sensors for salivary glucose [<a href="#ref2">2</a>], fatigue detection based on surface electromyography (EMG) [<a href="#ref3">3</a>], emotion recognition from electroencephalography (EEG) [<a href="#ref4">4</a>], and pain assessment using electrodermal activity (EDA) [<a href="#ref5">5</a>]. Despite notable progress, such devices often remain expensive, require nontrivial setup, or target a single modality, limiting their utility for comprehensive day-to-day health monitoring.
 </p>
 <p class="zh-text">
 可穿戴监测的最新进展既展示了前景，也揭示了仍然存在的不足。例如用于评估视觉功能的智能隐形眼镜、用于唾液葡萄糖检测的护齿传感器、基于表面肌电图（EMG）的疲劳检测、基于脑电图（EEG）的情绪识别，以及使用皮肤电活动（EDA）的疼痛评估。尽管取得了显著进展，但这些设备往往仍然价格昂贵、需要复杂的设置，或仅针对单一模态，限制了它们在全面日常健康监测中的实用性。
 </p>
 
 <p class="en-text">
-Among candidate technologies, near-infrared spectroscopy (NIRS) has emerged as a compelling approach due to its non-invasive nature, portability, and comparatively low cost. Operating in the 700–2500 nm band, NIRS infers physiological variables—such as oxygenation and hemodynamic changes—by measuring wavelength-dependent absorption and scattering in tissue [[6](#ref6), [7](#ref7)]. These characteristics make NIRS particularly suitable for integration into everyday wearables to enable real-time monitoring.
+Among candidate technologies, near-infrared spectroscopy (NIRS) has emerged as a compelling approach due to its non-invasive nature, portability, and comparatively low cost. Operating in the 700–2500 nm band, NIRS infers physiological variables—such as oxygenation and hemodynamic changes—by measuring wavelength-dependent absorption and scattering in tissue [<a href="#ref6">6</a>, <a href="#ref7">7</a>]. These characteristics make NIRS particularly suitable for integration into everyday wearables to enable real-time monitoring.
 </p>
 <p class="zh-text">
 在候选技术中，近红外光谱（NIRS）因其无创性、便携性和相对较低的成本而成为一种引人注目的方法。NIRS 工作在 700-2500 nm 波段，通过测量组织中与波长相关的吸收和散射来推断生理变量——如氧合和血流动力学变化。这些特性使 NIRS 特别适合集成到日常可穿戴设备中以实现实时监测。
 </p>
 
 <p class="en-text">
-The widespread use of photoplethysmography (PPG) further strengthens the practical feasibility of NIRS-based monitoring. For instance, Přibil et al. developed a dual-channel PPG sensor that maintains high-quality output even under radio-frequency and electromagnetic interference, transmitting data via Bluetooth Low Energy (BLE) for downstream analysis [[8](#ref8), [9](#ref9)]. Murmu et al. demonstrated a deep-learning framework to reconstruct ECG waveforms from PPG, improving heart-rate estimation accuracy and enabling on-device recalibration and energy-efficient real-time operation [[10](#ref10)]. These studies point to new avenues for multi-parameter monitoring.
+The widespread use of photoplethysmography (PPG) further strengthens the practical feasibility of NIRS-based monitoring. For instance, Přibil et al. developed a dual-channel PPG sensor that maintains high-quality output even under radio-frequency and electromagnetic interference, transmitting data via Bluetooth Low Energy (BLE) for downstream analysis [<a href="#ref8">8</a>, <a href="#ref9">9</a>]. Murmu et al. demonstrated a deep-learning framework to reconstruct ECG waveforms from PPG, improving heart-rate estimation accuracy and enabling on-device recalibration and energy-efficient real-time operation [<a href="#ref10">10</a>]. These studies point to new avenues for multi-parameter monitoring.
 </p>
 <p class="zh-text">
 光电容积描记（PPG）的广泛应用进一步增强了基于 NIRS 监测的实际可行性。例如，Přibil 等人开发了一种双通道 PPG 传感器，即使在射频和电磁干扰下也能保持高质量输出，通过低功耗蓝牙（BLE）传输数据供后续分析。Murmu 等人展示了一个深度学习框架，可从 PPG 重建 ECG 波形，提高心率估计精度，并实现设备端重新校准和节能的实时操作。这些研究为多参数监测指出了新的途径。
 </p>
 
 <p class="en-text">
-Additional work has explored multi-wavelength and multi-parameter PPG. Cause et al. reported a five-wavelength LED/photodiode system that also records contact pressure and temperature to improve signal quality and robustness [[11](#ref11)]. Hammour et al. proposed an in-ear, single-wavelength (880 nm) non-invasive glucose monitor that streams PPG via BLE to a computer for machine-learning-based glycemic analysis [[12](#ref12)]. Beyond PPG, Kimoto et al. devised a wireless sensor that simultaneously acquires EMG and NIRS to predict muscular fatigue during physical activity [[13](#ref13)], while Zang et al. built a µC/OS-III-based platform combining sEMG and peripheral oxygen saturation (SpO₂) to study the correlation between muscle fatigue and oxygenation [[14](#ref14)]. In the clinical realm, von Aspern and colleagues demonstrated the feasibility of NIRS for noninvasive monitoring of spinal cord oxygenation, underscoring its potential for peri-operative and postoperative management [[15](#ref15), [16](#ref16)].
+Additional work has explored multi-wavelength and multi-parameter PPG. Cause et al. reported a five-wavelength LED/photodiode system that also records contact pressure and temperature to improve signal quality and robustness [<a href="#ref11">11</a>]. Hammour et al. proposed an in-ear, single-wavelength (880 nm) non-invasive glucose monitor that streams PPG via BLE to a computer for machine-learning-based glycemic analysis [<a href="#ref12">12</a>]. Beyond PPG, Kimoto et al. devised a wireless sensor that simultaneously acquires EMG and NIRS to predict muscular fatigue during physical activity [<a href="#ref13">13</a>], while Zang et al. built a µC/OS-III-based platform combining sEMG and peripheral oxygen saturation (SpO₂) to study the correlation between muscle fatigue and oxygenation [<a href="#ref14">14</a>]. In the clinical realm, von Aspern and colleagues demonstrated the feasibility of NIRS for noninvasive monitoring of spinal cord oxygenation, underscoring its potential for peri-operative and postoperative management [<a href="#ref15">15</a>, <a href="#ref16">16</a>].
 </p>
 <p class="zh-text">
 其他研究探索了多波长和多参数 PPG。Cause 等人报告了一个五波长 LED/光电二极管系统，该系统还记录接触压力和温度以提高信号质量和鲁棒性。Hammour 等人提出了一种耳内单波长（880 nm）无创血糖监测仪，通过 BLE 将 PPG 数据传输到计算机进行基于机器学习的血糖分析。除了 PPG，Kimoto 等人设计了一种无线传感器，同时采集 EMG 和 NIRS 以预测体力活动期间的肌肉疲劳，而 Zang 等人构建了一个基于 µC/OS-III 的平台，结合 sEMG 和外周血氧饱和度（SpO₂）来研究肌肉疲劳与氧合之间的相关性。在临床领域，von Aspern 及其同事证明了 NIRS 用于脊髓氧合无创监测的可行性，强调了其在围手术期和术后管理中的潜力。
 </p>
 
 <p class="en-text">
-Despite this progress, many available NIRS systems still employ one or two wavelengths, often below 900 nm. By contrast, multi-wavelength designs—especially those extending beyond 1000 nm—can increase penetration depth, mitigate superficial noise, and yield more stable and accurate information from deeper tissue layers [[17](#ref17)]. This capability is critical for the next generation of high-performance health-monitoring systems.
+Despite this progress, many available NIRS systems still employ one or two wavelengths, often below 900 nm. By contrast, multi-wavelength designs—especially those extending beyond 1000 nm—can increase penetration depth, mitigate superficial noise, and yield more stable and accurate information from deeper tissue layers [<a href="#ref17">17</a>]. This capability is critical for the next generation of high-performance health-monitoring systems.
 </p>
 <p class="zh-text">
 尽管取得了这些进展，许多现有的 NIRS 系统仍然只使用一到两个波长，通常低于 900 nm。相比之下，多波长设计——尤其是那些延伸到 1000 nm 以上的——can 增加穿透深度，减轻表面噪声，并从更深的组织层获得更稳定和准确的信息。这种能力对于下一代高性能健康监测系统至关重要。
 </p>
 
 <p class="en-text">
-Building on prior work, the LIP6 laboratory in collaboration with Hôpital Armand-Trousseau developed the SpinalMED platform for dynamic monitoring of spinal cord oxygenation using a five-wavelength (600–900 nm) NIRS device with BLE connectivity. In-vivo experiments on a porcine model produced encouraging results [[18](#ref18), [19](#ref19)]. However, that system targets intraoperative monitoring, limiting its transferability to daily use, and its functionality is largely confined to PPG-NIRS. A related rehabilitation-monitoring device from the same team (LigaPC) also exhibits constraints in monitored parameters and scope of application [[20](#ref20)].
+Building on prior work, the LIP6 laboratory in collaboration with Hôpital Armand-Trousseau developed the SpinalMED platform for dynamic monitoring of spinal cord oxygenation using a five-wavelength (600–900 nm) NIRS device with BLE connectivity. In-vivo experiments on a porcine model produced encouraging results [<a href="#ref18">18</a>, <a href="#ref19">19</a>]. However, that system targets intraoperative monitoring, limiting its transferability to daily use, and its functionality is largely confined to PPG-NIRS. A related rehabilitation-monitoring device from the same team (LigaPC) also exhibits constraints in monitored parameters and scope of application [<a href="#ref20">20</a>].
 </p>
 <p class="zh-text">
 在先前工作的基础上，LIP6 实验室与 Armand-Trousseau 医院合作开发了 SpinalMED 平台，使用具有 BLE 连接的五波长（600-900 nm）NIRS 设备动态监测脊髓氧合。在猪模型上的体内实验产生了令人鼓舞的结果。然而，该系统主要针对术中监测，限制了其在日常使用中的可移植性，其功能主要局限于 PPG-NIRS。来自同一团队的相关康复监测设备（LigaPC）在监测参数和应用范围方面也存在限制。
