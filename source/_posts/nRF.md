@@ -1,73 +1,113 @@
 ---
-title: User Guide of nRF5340 DK
+title: Getting Started with nRF5340 DK
 date: 2025-10-15
+comments: true
+lang: en
 mathjax: false
-description: Building upon the two officially recommended workflows, this chapter details, from first principles, how to configure and use the nRF5340 DK on a local workstation. The Nordic nRF Connect SDK (NCS), built on Zephyr, is the preferred toolchain; for most projects, the official guidance is to build within the nRF Connect for VS Code extension.
+toc: true
+categories:
+  - Embedded Systems
+  - Nordic nRF
+  - Research Projects
+tags:
+  - nRF5340
+  - Zephyr
+  - DevKit
+  - Setup
+description: A comprehensive guide to configuring and configuring the nRF5340 DK (PCA10095) for local development, differentiating between the application and network cores.
 ---
 
 # Introduction to the nRF5340 DK
 
-The nRF5340 DK (PCA10095) is a single-board development kit intended for evaluation and application development on Nordic’s nRF5340 System-on-Chip (SoC).  
-The nRF5340 is a dual-core SoC based on the Arm® Cortex®-M33 architecture, comprising:
+The **nRF5340 DK (PCA10095)** is the premier single-board development kit for evaluating Nordic Semiconductor’s flagship nRF5340 System-on-Chip (SoC).
 
-- a full-featured Arm Cortex-M33F core with DSP instructions, FPU, and the Armv8-M Security Extension, operating at up to 128 MHz, hereafter the **application core**; and
-    
-- a secondary Arm Cortex-M33 core with a reduced feature set, operating at a fixed 64 MHz, hereafter the **network core**.
+The **nRF5340** is the world's first wireless SoC with two Arm® Cortex®-M33 processors:
+1.  **Application Core (High Performance)**:
+    *   Arm Cortex-M33F running at up to 128 MHz.
+    *   Features DSP instructions, FPU, and Armv8-M TrustZone®.
+    *   Full feature set for complex application logic.
+2.  **Network Core (High Efficiency)**:
+    *   Arm Cortex-M33 running at a fixed 64 MHz.
+    *   Optimized for low-power wireless protocol handling (BLE, Thread, Zigbee).
 
-For this board, the appropriate CMake/Zephyr board target in the project is `nrf5340dk_nrf5340_cpuapp`, i.e., the application core of the DK.
+> **Important**: For general application development, you will primarily target the Application Core using the board target `nrf5340dk/nrf5340/cpuapp`.
 
 ---
 
 # General Preparation
 
-- An **nRF5340 DK (PCA10095)** connected via USB to the **DEBUG** port (on-board J-Link OB).
-    
-- **SEGGER J-Link drivers / nRF Command Line Tools**.
+To get started, ensure you have the following hardware and software stack:
 
-- If using a command-line workflow: install **Python 3, Git, CMake, Ninja**, and an appropriate cross-compiler (Zephyr SDK or GNU Arm Embedded). The [Zephyr Getting Started Guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html) provides detailed system requirements and installation steps.
+### Hardware
+*   **nRF5340 DK (PCA10095)** connected via Micro-USB to the **DEBUG** port (labeled **J2** on most boards, connecting to the on-board J-Link OB).
+
+### Software
+1.  **nRF Command Line Tools** (includes SEGGER J-Link drivers).
+2.  **Development Toolchain**:
+    *   **VS Code** (Recommended): Install the **nRF Connect for VS Code** extension pack.
+    *   *Command Line*: Python 3, Git, CMake, Ninja, and the Zephyr SDK (refer to the [Zephyr Getting Started Guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html)).
 
 ---
 
 # Development in VS Code
 
-1. Install **Visual Studio Code**, then add the **nRF Connect for VS Code** extension pack.
-    
-2. In VS Code, open the left-hand **nRF Connect** view → **Toolchains / SDK management** and, following the guided prompts, install the desired **NCS version** together with a **matching toolchain**.
-    
-3. Via **nRF Connect → Browse Sample**, open `zephyr/samples/basic/blinky`. Choose **Add Build Configuration**, then in **Board target** select `nrf5340dk/nrf5340/cpuapp/ns`. For the first build configuration, pick a compatible board target from the drop-down list.
-    
-4. Connect the DK over USB (DEBUG port). In the extension panel, select the detected device and **Flash**. Then LED1 should begin blinking.
+The VS Code extension provides the most streamlined workflow.
 
-For a comprehensive walkthrough, consult the [official documentation](https://docs.nordicsemi.com/bundle/nrf-connect-vscode/page/index.html).
+1.  **Setup Toolchain**:
+    *   Open the **nRF Connect**  sidebar.
+    *   Navigate to **Toolchains / SDK management**.
+    *   Follow the prompts to install the recommended **nRF Connect SDK (NCS)** version and toolchain.
+
+2.  **Create a Project**:
+    *   Click **Browse Sample** or **Create New Application**.
+    *   Select `zephyr/samples/basic/blinky` for a quick test.
+
+3.  **Configure Build**:
+    *   Click **Add Build Configuration**.
+    *   **Board Target**: Select `nrf5340dk/nrf5340/cpuapp`.
+    *   *Tip*: Ensure you don't select `cpunet` unless you are specifically developing low-level radio firmware.
+
+4.  **Flash and Run**:
+    *   Connect your DK.
+    *   Select the device in the **Connected Devices** panel.
+    *   Click **Flash**.
+    *   Observe **LED1** blinking on the board.
+
+For more details, consult the [official nRF Connect for VS Code documentation](https://docs.nordicsemi.com/bundle/nrf-connect-vscode/page/index.html).
 
 ---
 
-# Verification
+# Verification & Troubleshooting
 
-- The `blinky` sample relies on Zephyr’s **devicetree plus GPIO/LED drivers**. Once the board target is selected, the LED mapping to **LED1** is resolved automatically—no manual pin configuration is required. After flashing, LED1 blinks with a fixed period.
-    
-- To adjust the blink period, edit `SLEEP_TIME_MS` in `samples/basic/blinky/src/main.c`.
+## Verifying the Setup
+The `blinky` sample uses Zephyr's device tree to automatically map the logical LED alias to the physical **LED1** pin. No manual pin configuration is needed.
+*   To change the blink rate, modify `SLEEP_TIME_MS` in `src/main.c` and re-flash.
 
----
+## Common Issues (FAQ)
 
-# Frequently Asked Questions (FAQ)
+### 1. Board not detected
+*   **Check connection**: Ensure the cable is in the **DEBUG** port, not the nRF USB port.
+*   **Drivers**: Reinstall nRF Command Line Tools / J-Link drivers.
+*   **Permissions (Linux)**: Verify `udev` rules are set up correctly.
 
-- **Flashing fails / board not detected**: Verify the USB cable is connected to the **DEBUG** port and that J-Link drivers are installed. On Linux, check udev permissions; on Windows, confirm the device appears as a J-Link adapter in Device Manager.
-    
-- **Toolchain or dependency missing**: Use **Toolchains / SDK management** in the extension to install or bind the correct versions.
-    
-- **Accidentally built for the network core or LED does not blink**: Confirm the **Board** is set to `nrf5340dk_nrf5340_cpuapp` (application core).
+### 2. Compilation fails / missing toolchain
+*   Use the **Toolchains / SDK management** UI in VS Code to repair the installation. Ensure the toolchain version matches the SDK version.
 
-- To identify the serial device associated with a connected development board, open a terminal and execute `ls /dev/tty.*`. For Nordic boards, the CDC-ACM interfaces are typically enumerated as device nodes with basenames beginning `/dev/tty.usbmodem*`. In this enumeration, the numeric suffix distinguishes the cores: a suffix of `1` denotes the **network core**, whereas `3` denotes the **application core**.
+### 3. LED not blinking
+*   **Wrong Core**: Did you build for `nrf5340dk/nrf5340/cpunet`? The network core cannot directly control LED1 in standard configurations. Switch to `.../cpuapp`.
+
+### 4. Identifying Serial Ports
+When connected, multiple serial ports appear (e.g., `/dev/tty.usbmodem...` on macOS).
+*   Run `ls /dev/tty.*` in the terminal.
+*   If you see suffixes like `1` and `3`:
+    *   **`3`** typically maps to the **Application Core** UART.
+    *   **`1`** typically maps to the **Network Core** UART.
 
 ---
 
 # Useful References
 
-- NCS: Installing the nRF Connect SDK. ([nRF Connect SDK](https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/installation/install_ncs.html?utm_source=chatgpt.com "Installing the nRF Connect SDK - Technical Documentation"))
-    
-- Zephyr: Getting Started. [Zephyr Getting Started Guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html)
-    
-- nRF Command Line Tools (`nrfjprog`): installation guide and macOS Homebrew. ([nRF Command Line Tools](https://docs.nordicsemi.com/bundle/ug_nrf_cltools/page/UG/cltools/nrf_installation.html?utm_source=chatgpt.com "Installing the nRF Command Line Tools"))
-    
-- System source code, **September 2025 edition [latest]**: [GitHub](https://github.com/Pasdeau/Sys_collect)
+*   **nRF Connect SDK Installation**: [Docs](https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/installation/install_ncs.html)
+*   **Zephyr Getting Started**: [Docs](https://docs.zephyrproject.org/latest/develop/getting_started/index.html)
+*   **nRF Command Line Tools**: [Docs](https://docs.nordicsemi.com/bundle/ug_nrf_cltools/page/UG/cltools/nrf_installation.html)
+*   **System Source Code (Latest)**: [GitHub Repository](https://github.com/Pasdeau/Sys_collect)

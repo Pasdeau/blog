@@ -1,22 +1,42 @@
 ---
-title: Received two IEEE Best Student Paper Awards
+title: Received Two IEEE Best Student Paper Awards
 date: 2025-07-12
+comments: true
+lang: en
 mathjax: false
-description: Sharing the press release published on our lab's official website after I received two Best Paper Awards.
+toc: true
+categories:
+  - Personal Experience
+  - Academic Achievements
+tags:
+  - IEEE
+  - Awards
+  - Academic Papers
+description: Sharing the experience of winning Best Student Paper Awards at two IEEE conferences.
 ---
 
-I am pleased to report that I received student paper distinctions at **IEEE BioSMART 2025 (May 14–15, Paris)** and **IEEE NEWCAS 2025 (June 22–25, Paris)**.
+I am delighted to share some good news: I have received Best Student Paper Awards at two IEEE conferences!
 
-* 🏆 **6th IEEE BioSMART Best Student Paper**
-  **Paper:** *Preliminary Development of an Opto-Electronic System for Ankle Instability Assessment*
-  **Co-authors:** Hang Li (LIP6), Ibrahim Saliba (Hôpital Cochin), Alexandre Hardy (Clinique du Sport de Paris), Julien Denoulet (LIP6), Sylvain Feruglio (LIP6)
-  **Available at:** [https://hal.science/hal-05065209](https://hal.science/hal-05065209)
+## Awards Details
 
-* 🏆 **23rd IEEE NEWCAS Young Professional Paper Award (1st Place)**
-  **Paper:** *Design of Multi-Channel Wireless System for Physiological Signals Acquisition*
-  **Co-authors:** Hang Li (LIP6), Raphaël Vialle (Hôpital Armand Trousseau, AP-HP), Julien Denoulet (LIP6), Sylvain Feruglio (LIP6)
-  **Available at:** [https://cnrs.hal.science/LIP6/hal-05115174v1](https://cnrs.hal.science/LIP6/hal-05115174v1)
+* 🏆 **Best Student Paper Award at the 6th IEEE BioSMART**
+  - **Conference Dates**: May 14-15, 2025, Paris
+  - **Paper Title**: *Preliminary Development of an Opto-Electronic System for Ankle Instability Assessment*
+  - **Co-authors**: Hang Li (LIP6), Ibrahim Saliba (Cochin Hospital), Alexandre Hardy (Paris Sports Medicine Clinic), Julien Denoulet (LIP6), Sylvain Feruglio (LIP6)
+  - **Paper Link**: [https://hal.science/hal-05065209](https://hal.science/hal-05065209)
 
-As noted on my laboratory’s LIP6 official news page: [Deux prix du meilleur papier étudiant pour Wenzheng Wang](https://www.lip6.fr/actualite/information-fiche.php?ident=OL288)
+* 🏆 **IEEE NEWCAS Young Professional Paper Award (First Prize) at the 23rd Edition**
+  - **Conference Dates**: June 22-25, 2025, Paris
+  - **Paper Title**: *Design of Multi-Channel Wireless System for Physiological Signals Acquisition*
+  - **Co-authors**: Hang Li (LIP6), Raphaël Vialle (Armand Trousseau Hospital, AP-HP), Julien Denoulet (LIP6), Sylvain Feruglio (LIP6)
+  - **Paper Link**: [https://cnrs.hal.science/LIP6/hal-05115174v1](https://cnrs.hal.science/LIP6/hal-05115174v1)
 
-{% asset_img 1.png Award Photos %}
+## Laboratory News
+
+This news has also been published on the LIP6 laboratory official news page: [Deux prix du meilleur papier étudiant pour Wenzheng Wang](https://www.lip6.fr/actualite/information-fiche.php?ident=OL288)
+
+{% asset_img 1.png Award Photo %}
+
+---
+
+Winning recognition at these two conferences would not have been possible without the joint efforts of my collaborators and the support of the laboratory. This also motivates me to continue moving forward on my path of PhD research!

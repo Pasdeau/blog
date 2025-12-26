@@ -1,388 +1,235 @@
 ---
-title: MOP‑MCML User Guide and Introduction
+title: "MOP-MCML: A User Guide and Technical Introduction"
 date: 2025-09-09
+comments: true
+lang: en
 mathjax: true
-description: A practical, theory‑grounded guide to the MOP‑MCML Monte‑Carlo simulator for modeling photon transport in layered biological tissues, with instructions, file formats, and validation recipes.
+toc: true
+categories:
+  - Optical Simulation
+  - User Manuals
+tags:
+  - MCML
+  - Monte Carlo
+  - Biomedical Optics
+  - MOP
+description: A practical, theory-grounded guide to the MOP-MCML simulator for modeling photon transport in layered biological tissues, featuring Mean Optical Path (MOP) analysis and enhanced visualization.
 ---
 
-This manual addresses research on light propagation simulations in biological tissues. Building on the physical model and Monte Carlo methodology of MCML, we establish and describe the MOP-MCML framework to quantify the mean optical path (MOP) traversed by light within tissue from emission at the source to reception by a photodiode (PD). The document introduces MCML fundamentals, our extensions and contributions, input/output (I/O) and visualization methods, and a complete end-to-end simulation workflow with representative results.
+This manual provides a comprehensive guide for researchers modeling light propagation in biological tissues. Building upon the foundational physical models of standard MCML, the **MOP-MCML** framework extends capabilities to quantify the **Mean Optical Path (MOP)** traversed by photons from emission to detection. This document details the underlying principles, new features, input/output specifications, visualization tools, and a complete end-to-end workflow with validation examples.
 
 # 1. Background and Objectives
 
-In wearable or implantable biomedical systems, near-infrared spectroscopy (NIRS) is widely used for functional monitoring and optical imaging to assess tissue integrity and physiological state. Relying solely on surface reflectance $R$ and transmittance $T$ is insufficient for engineering demands related to the “reachability” of target layers; practical design focuses on internal quantities such as the optical path (denoted $OP$) and penetration depth.
+In the design of wearable or implantable biomedical systems, Near-Infrared Spectroscopy (NIRS) is a cornerstone technology for assessing tissue physiology. However, relying solely on surface measurements of Reflectance ($R$) and Transmittance ($T$) is often insufficient for engineering robust sensors. Practical design requires a deeper understanding of internal photon behavior, specifically:
+*   **"Reachability"**: Does light penetrate to the target layer (e.g., muscle or deep vessels)?
+*   **Pathlength**: What is the effective optical pathlength for applying the Beer-Lambert law?
 
-Building on classical MCML, we implement MOP-MCML by introducing configurable geometric detection regions, user-defined source distributions, MOP visualization, and computation of material reflectance and transmittance. Validation on single-layer and multi-layer tissue cases demonstrates a simulation toolchain suitable for experimental design and parameter inversion.
+MOP-MCML addresses these needs by introducing:
+*   Configurable geometric detection regions (photodiodes).
+*   User-defined source profiles (Point, Gaussian, Flat-top).
+*   Direct computation and visualization of the Mean Optical Path (MOP).
+*   Device-consistent estimation of $R$ and $T$.
+
+---
 
 # 2. Overview of MCML
 
-The Monte Carlo Multi-Layer (MCML) model is open-source software developed in the 1990s for steady-state optical simulations in biological media and remains foundational for modeling steady-state light transport [[1](#ref1)]. Tissue is modeled as a semi-infinite multilayer stack along the $z$-axis. Each layer at wavelength $\lambda$ is characterized by four macroscopic parameters:
+The **Monte Carlo Multi-Layer (MCML)** model, developed in the 1990s, remains the gold standard for steady-state optical simulations in turbid media [[1](#ref1)]. It models tissue as a semi-infinite stack of layers aligned along the $z$-axis. Each layer is defined by its optical properties at a specific wavelength $\lambda$:
 
-$$
-\mu_a(\lambda), \mu_s(\lambda), g(\lambda), n(\lambda)
-$$
+$$ \mu_a(\lambda), \ \mu_s(\lambda), \ g(\lambda), \ n(\lambda) $$
 
-Here, $\mu_a$ is the absorption coefficient, $\mu_s$ the scattering coefficient, $g$ the anisotropy factor, and $n$ the refractive index. The reduced scattering coefficient is commonly written as
+Where:
+*   $\mu_a$: Absorption coefficient ($cm^{-1}$)
+*   $\mu_s$: Scattering coefficient ($cm^{-1}$)
+*   $g$: Anisotropy factor (dimensionless)
+*   $n$: Refractive index
 
-$$
-\mu_s'=(1-g) \ \mu_s
-$$
+The reduced scattering coefficient is given by $\mu_s'=(1-g)\mu_s$.
 
-MCML discretizes incident light into photon packets. Each photon undergoes absorption, scattering, and interface reflection/transmission as random events, generating statistical samples [[2](#ref2)]. The standard error of independent samples decays with the total photon count $N_{\mathrm{ph,tot}}$ approximately as
+MCML simulates photon packets undergoing random walk events (absorption, scattering, reflection/refraction) [[2](#ref2)]. The statistical error of the simulation decreases with the total number of photon packets $N_{ph,tot}$:
 
-$$
-SE \propto N_{\mathrm{ph,tot}}^{-\frac{1}{2}}
-$$
+$$ SE \propto \frac{1}{\sqrt{N_{ph,tot}}} $$
+
+---
 
 # 3. Simulation Principles and Computational Methods
 
 ## 3.1 Photon Packets and Free-Path Sampling
+The step size $L_i$ between interaction events is sampled from an exponential distribution:
 
-Each free path $L_i$ follows an exponential distribution:
+$$ L_i = -\frac{\ln(\xi)}{\mu_a+\mu_s}, \quad \xi \in (0,1) $$
 
-$$
-L_i = -\frac{\ln(\xi_i)}{\mu_a+\mu_s}, \quad 0<\xi<1
-$$
-
-In common visible–NIR tissues, the free path typically ranges from $10\sim1000 \ \mu\mathrm{m}$. At the end of each step, the propagation direction is updated by a phase function (e.g., Henyey–Greenstein), and the photon weight is decreased according to absorption.
+In biological tissues (visible–NIR), the mean free path ranges from $10$ to $1000 \mu m$. After each step, the photon's weight is attenuated by absorption, and its direction is updated using a phase function (e.g., Henyey–Greenstein).
 
 ## 3.2 Computing Reflectance and Transmittance
+**Standard MCML** calculates $R$ and $T$ by accumulating all photons exiting the upper or lower surfaces, effectively assuming an infinite detector.
 
-In the original MCML, all escaping photons are accumulated at the exit surface to estimate $X\in\{R,T\}$:
+**MOP-MCML** introduces finite detectors. We define rectangular Photodiodes (PDs) on the reflection ($z=0$) and transmission ($z=Z_{max}$) planes. Reflectance and Transmittance are calculated only from photons striking the active area:
 
-$$
-X=\frac{1}{\omega_i \ N_{\mathrm{ph,tot}}}\sum_{j=1}^{N_{\mathrm{ph},X}} \omega_{0,j}
-$$
+$$ X = \frac{1}{W_i \cdot N_{ph,tot}}\sum_{j=1}^{N_{ph}}\omega_{0,j} $$
 
-where $\omega_i$ is the initial weight, $\omega_{0,j}$ is the exit weight of the $j$-th photon, and $N_{\mathrm{ph},X}$ is the number of photons in the corresponding set.
-
-In MOP-MCML, we define on the reflection side $z=0$ and the transmission side $z=Z_{\max}$ a rectangular PD on each detection plane, and we only tally photons that hit the PD active area:
-
-$$
-X=\frac{1}{\omega_i \ N_{\mathrm{ph,tot}}}\sum_{j=1}^{N_{\mathrm{ph}}}\omega_{0,j}
-$$
-
-where $N_{\mathrm{ph}}$ counts photons striking the PD. This definition aligns with real-device measurements and markedly improves simulation–experiment consistency.
+Where $N_{ph}$ is the count of photons hitting the specific PD geometry. This approach aligns simulation results with real-world sensor measurements.
 
 ## 3.3 Mean Optical Path and Penetration Depth
+For the $N_{ph}$ detected photon trajectories [[3](#ref3)], the total pathlength of the $j$-th photon is $OP_j = \sum L_i$.
 
-For the $N_{\mathrm{ph}}$ detected photon trajectories [[3](#ref3)], let the total pathlength of the $j$-th trajectory be
-{% raw %}
-$$
-\mathrm{OP}_j=\sum_{i=1}^{N_j} L_{i}
-$$
-{% endraw %}
-The arithmetic mean optical path is
-{% raw %}
-$$
-\mathrm{MOP}_{\text{arith}}=\frac{1}{N_{\mathrm{ph}}}\sum_{j=1}^{N_{\mathrm{ph}}}\mathrm{OP}_j
-$$
-{% endraw %}
-An intensity-weighted mean, more consistent with intensity measurements, is
+We define the **Intensity-Weighted Mean Optical Path ($L_{eff}$)**, which is most relevant for intensity-based sensing:
 
-$$
-L_{\mathrm{eff}}=\frac{\sum_j \omega_j \ \mathrm{OP}_j}{\sum_j \omega_j}
-$$
+$$ L_{eff} = \frac{\sum_j \omega_j \cdot OP_j}{\sum_j \omega_j} $$
 
-where $\omega_j$ is the exit weight. Under the diffusion approximation, a characteristic penetration depth can be written as
+Under the diffusion approximation, the theoretical penetration depth $\delta$ is:
 
-$$
-\delta=\frac{1}{3 \ \mu_a(\mu_a+\mu_s')}
-$$
+$$ \delta = \frac{1}{\sqrt{3\mu_a(\mu_a+\mu_s')}} $$
 
-which is used for comparison with numerical results. For a homogeneous medium, the analytical transmittance under pure absorption ($\mu_s'=0$) is
+This theoretical value serves as a benchmark for verifying numerical results.
 
-$$
-T_{\mathrm{th}}=e^{-\mu_a d}
-$$
+---
 
-If written as $\exp[-(\mu_a+\mu_s')d]$, it reduces to the above in the absence of scattering.
-
-# 4. Source–Detector Separation and DPF Derivation
+# 4. Source–Detector Separation and DPF
 
 ## 4.1 Source–Detector Separation (SDS)
+Geometry is critical in NIRS. MOP-MCML allows precise placement of sources and detectors. The SDS is calculated as:
 
-Reflection mode:
+*   **Reflection Mode**: $r_{refl} = \sqrt{(x_r-x_s)^2 + (y_r-y_s)^2}$
+*   **Transmission Mode**: $r_{trans} = \sqrt{(x_t-x_s)^2 + (y_t-y_s)^2}$
 
-$$
-r_{\mathrm{refl}}=(x_r-x_s)^2+(y_r-y_s)^2
-$$
+## 4.2 The Differential Pathlength Factor (DPF)
+The Modified Beer–Lambert Law (MBLL) relates absorbance changes $\Delta A$ to absorption changes $\Delta \mu_a$:
 
-Transmission mode:
+$$ \Delta A \approx L_{eff} \cdot \ln 10 \cdot \Delta \mu_a $$
 
-$$
-r_{\mathrm{trans}}=(x_t-x_s)^2+(y_t-y_s)^2
-$$
+We can express $L_{eff}$ in terms of the geometric distance $r$ and a scaling factor, the **DPF**:
 
-In MOP-MCML, $(x_s,y_s)$ are specified by $(\text{light\_x},\text{light\_y})$, while $(x_r,y_r)$ and $(x_t,y_t)$ are given by $(\text{PD\_Rx},\text{PD\_Ry})$ and $(\text{PD\_Tx},\text{PD\_Ty})$, respectively.
+$$ DPF = \frac{L_{eff}}{r} $$
 
-## 4.2 From Path Integrals to the MBLL Equivalence
+In the diffusive regime, $DPF$ is relatively constant, meaning $L_{eff}$ scales linearly with $r$. MOP-MCML allows you to calculate $DPF$ directly for complex, multilayer geometries where analytical solutions fail.
 
-Let $\mu_a$ denote the absorption coefficient. For the $j$-th trajectory, the intensity factor is approximated by $\exp(-\mu_a \mathrm{OP}_j)$. The total detected intensity $I(\mu_a)$ and decadic absorbance $A(\mu_a)$ are
+---
 
-$$
-I(\mu_a)=\sum_j \omega_j(0)e^{-\mu_a \mathrm{OP}_j}
-$$
+# 5. From MCML to MOP-MCML: Key Extensions
 
-$$
-A(\mu_a)=-\log_{10}\frac{I(\mu_a)}{I(0)}
-$$
+## 5.1 Measurement Geometry Modeling
+MOP-MCML adds specific geometric definitions to the input file:
+*   **detectors**: Rectangular PDs defined by center coordinates and side lengths.
+*   **Sources**:
+    *   Type 1: Point Source
+    *   Type 2: Gaussian Beam
+    *   Type 3: Flat-top Uniform Beam
 
-For a small perturbation $\Delta \mu_a$,
+## 5.2 Enhanced Output Statistics
+New outputs include:
+*   **Device-consistent $R$ and $T$**: Based on finite detector aperture.
+*   **$L_{eff}$**: Intensity-weighted mean optical path.
+*   **Summary File**: A `summary.csv` is automatically generated, appending $R$ and $T$ from batch runs for easy analysis.
 
-$$
-\frac{\mathrm{d}A}{\mathrm{d}\mu_a}=\frac{1}{\ln 10}
-$$
-{% raw %}
-$$
-\frac{\sum_j \omega_j(0) \ \mathrm{OP}_j \ e^{-\mu_a \mathrm{OP}_j}}{\sum_j \omega_j(0) \ e^{-\mu_a \mathrm{OP}_j}} \approx L_{\mathrm{eff}}\ln 10
-$$
-{% endraw %}
-and thus
+## 5.3 Improved I/O and Visualization
+The output `.mco` file format is extended to include geometric metadata. This enables the MATLAB visualization scripts to:
+*   Draw exact source and detector positions.
+*   Visualize the source profile (e.g., inverted triangle for point, semi-transparent shape for area).
+*   Overlay these on the photon fluence map for clear interpretation.
 
-$$
-\Delta A \approx L_{\mathrm{eff}}\ln 10 \ \Delta \mu_a
-$$
-
-The modified Beer–Lambert law (MBLL) relates $\Delta A$ to the geometric separation $r$ and the differential path length factor $DPF$:
-
-$$
-\Delta A \approx DPF\cdot r \cdot \ln 10 \ \Delta \mu_a
-$$
-
-By comparison,
-
-$$
-DPF=\frac{L_{\mathrm{eff}}}{r}
-$$
-
-If one focuses on a specific region or layer $k$, then
-
-$$
-L_{\mathrm{eff},k}=\frac{\sum_j \omega_j \ \mathrm{OP}_{j,k}}{\sum_j \omega_j}
-$$
-
-$$
-DPF_k=\frac{L_{\mathrm{eff},k}}{r}
-$$
-
-When the diffusion approximation holds and the medium’s optical parameters are fixed, $DPF$ is approximately constant (or slowly varying) with respect to $r$ within the usable range, so $L_{\mathrm{eff}}\approx DPF\cdot r$ grows roughly linearly with $r$. Only when $r$ is too small (non-diffusive regime) or too large (boundary/loss dominated) does $DPF$ deviate markedly from constancy.
-
-# 5. From MCML to MOP-MCML
-
-## 5.1 Geometric Modeling of Detectors and Sources
-
-On $z=0$ and $z=Z_{\max}$, we define a rectangular PD on each detection plane with independently adjustable center coordinates and side lengths (in cm) to tally photons incident on the device’s active area. The source supports three spatial profiles: point ($\text{type}=1$), Gaussian ($\text{type}=2$), and flat-top uniform ($\text{type}=3$), each with configurable center and size parameters.
-
-## 5.2 New Statistics and Outputs
-
-MOP-MCML provides **device-consistent** estimates of reflectance R and transmittance T, the **intensity-weighted mean pathlength** $L_{\mathrm{eff}}$, **penetration-depth histograms**, and **harmonized summary statistics** for both reflection and transmission geometries. These outputs are designed to support the **joint optimization** of source–detector separation (SDS) and device dimensions.
-
-To streamline batch experiments, after each run the computed R and T are appended to a project-level summary file (`summary.csv`), enabling quick inspection, aggregation, and cross-run comparison without parsing individual output files.
-
-## 5.3 I/O and MATLAB Visualization Updates
-
-We extend the `.mco` output in `mcmlio.c` to append PD adn source geometry and the source type. Example:
-
-```c
-// Add coordinate information here
-fprintf(file, "%G\t%G\t\t%G\t\t%G\t%G\t\t%G\t\t# PD : (Rx, Ry), Rl, (Tx, Ty), Tl (in cm)\n",
-        In_Parm.PD_Rx, In_Parm.PD_Ry, In_Parm.PD_Rl,
-        In_Parm.PD_Tx, In_Parm.PD_Ty, In_Parm.PD_Tl);
-
-// The light type
-fprintf(file, "%hd\t\t%G\t%G\t\t%G\t\t# light source : param 1: 1.point 2.Gaussian 3.Flat\n",
-        In_Parm.lightType, In_Parm.light_x, In_Parm.light_y, In_Parm.light_l);
-```
-
-Corresponding `.mco` tail example:
-
-```python
-1.2 0.1  0.05  0.8 0.1  0.05  # PD : (Rx, Ry), Rl, (Tx, Ty), Tl (in cm)
-1  0.8 0.1  0.05              # light source: 1.point 2.Gaussian 3.Flat
-```
-
-Leveraging the added source and PD coordinates, size parameters, and source type, the visualization highlights positions and physical sizes for both the source and the two PDs (reflection and transmission), improving spatial interpretability. Symbolization depends on the source type: a point source is drawn as an inverted triangle, whereas extended sources are annotated with semi-transparent shapes sized to their physical extent. This enhances clarity of ray-path diagrams and improves interpretability of simulation results.
+---
 
 # 6. Installation and Usage
 
 ## 6.1 Clone and Build
-
-MOP-MCML is written in C and can be compiled and optimized with standard toolchains. You can obtain the source code from the following repository:
-
-```bash
-git clone https://gitlab.lip6.fr/feruglio/mop-mcml.git
-```
-
-Then, build MOP-MCML on your machine.
-
-* **Windows (Visual Studio 2022):**
-  Open the source tree in Visual Studio, select a **Release** configuration, and enable compiler optimizations (e.g., `/O2` or `/O3`). Build the project to produce `mop-mcml.exe`.
-
-* **Linux/macOS (GCC or Clang):**
-  From the project root, compile with:
-
-  ```bash
-  gcc -O3 -o mop-mcml *.c -lm
-  ```
-
-  If you prefer Clang, replace `gcc` with `clang`. Ensure the math library is linked with `-lm` and that high-level optimization (e.g., `-O3`) is enabled.
-
-The resulting executable reads text-based `.mci` input files and writes `.mco` result files.
-
-## 6.2 Input File Essentials
-
-1. Global/batch control: A single `.mci` can define multiple simulations (varying SDS, wavelength, or layer parameters).
-
-2. Layer model: Specify thickness $d$ (or layer interfaces $z$) and $\mu_a,\ \mu_s,\ g,\ n$ per layer.
-
-3. Source: $\text{lightType}\in{1,2,3}$; $(\text{light}_x,\text{light}_y)$ are source center coordinates (cm); `light_l` is the size parameter (e.g., radius and half-width, cm).
-
-4. Detectors: Reflection PD center $(\text{PD\_Rx},\text{PD\_Ry})$ and side $\text{PD\_Rl}$; transmission PD center $(\text{PD\_Tx},\text{PD\_Ty})$ and side $\text{PD\_Tl}$.
-
-5. Photon count: $N_{\mathrm{ph,tot}}$ typically starts from $10^6$; larger counts reduce variance but increase runtime.
-
-6. Grid: Step and voxel sizes should match tissue characteristic scales; average free paths of $10\sim100 \ \mu\mathrm{m}$ are typical in NIRS regimes.
-
-7. Multiple runs: Enforce strict blank-line and block formatting to avoid parser ambiguity at run boundaries.
-
-Follow the repository’s parser for exact syntax; examples can be filled according to the implemented field order and units.
-
-## 6.3 Running and Output
-
-Command-line usage:
+MOP-MCML is written in C.
 
 ```bash
-./mop-mcml your_input_file_name.mci
+git clone https://github.com/Pasdeau/MOP-MCML.git
 ```
 
-The `.mco` output includes grids and layer info, $R$ and $T$ statistics, and vector and matrix data blocks (e.g., `Al`, `Az`, `Rr`/`Ra`, `Tr`/`Ta`, `Azr`, `Rra`/`Tra`, `OP`). If the project’s I/O extension is enabled, two lines of geometric metadata (PDs and source) are appended at the end (see Section 5.3).
+**Build Commands**:
+*   **Linux/macOS**:
+    ```bash
+    gcc -O3 -o mop-mcml *.c -lm
+    ```
+*   **Windows**: Use Visual Studio with Release configuration and `/O2` optimization.
 
-## 6.4 MATLAB Visualization Workflow
+## 6.2 Input File (.mci) Essentials
+The input file structure dictates the simulation. Key additions for MOP-MCML are the source type and geometric coordinates for PDs. Ensure strict adherence to the format (avoid sparse blank lines between data blocks).
 
-1. Environment: Place parsing/plotting scripts on the MATLAB path. If a project colormap utility `makec2f.m` exists, plotting will use it; otherwise, a default colormap is used.
+## 6.3 Running the Simulation
+```bash
+./mop-mcml your_input_file.mci
+```
 
-2. Data ingestion: Use the reader to parse `.mco`, validating grids, layer parameters, statistics, and data blocks; both legacy and extended `.mco` files are supported (auto-detecting the optional tail metadata).
+## 6.4 MATLAB Visualization
+Using the provided MATLAB scripts:
+1.  **Parse**: Read the `.mco` file.
+2.  **Render**: Use `imagesc` to plot $\log_{10}(OP)$.
+3.  **Overlay**: The script automatically draws the source (top) and detectors (reflection/transmission) based on the file metadata.
 
-3. Main rendering: Plot $\log_{10}(\mathrm{OP})$ via
+{% asset_img MOP-MCML.png MOP-MCML Visualization Interface %}
 
-   $$
-   \texttt{imagesc}(r,z,\log_{10}(\mathrm{OP}))
-   $$
+---
 
-   with axes in cm. Draw the source marker just above the top surface based on source type: inverted triangle for a point source; semi-transparent square scaled to size for extended sources. Draw rectangular patches for the reflection and transmission PDs above $z=0$ and below $z=Z_{\max}$, respectively. Normalize colorbars/contrast for cross-figure comparability.
+# 7. Validation Results
 
-4. Derived plots and layer interfaces: Use $R_r, T_r$ for radial energy distributions, $R_a, T_a$ for angular distributions; overlay dashed horizontal lines for layer boundaries using cumulative thickness.
+We verified MOP-MCML against analytical models and standard test cases.
 
-5. SDS and DPF: When `.mco` contains geometric metadata, compute
+1.  **Single-Layer Tissue ($1300$ nm)**:
+    *   Simulated penetration depth agreed with diffusion theory ($\delta \approx 0.32$ cm) within $12.5\%$.
+    *   Transmittance matched theoretical expectations.
+2.  **Non-Scattering Medium**:
+    *   Compared against Beer-Lambert Law ($T = e^{-\mu_a d}$).
+    *   Error was $< 5\%$ across $\mu_a \in [0.5, 3.0] \ cm^{-1}$.
 
-   $$
-   r_{\mathrm{refl}}=(x_r-x_s)^2+(y_r-y_s)^2
-   $$
+---
 
-   $$
-   r_{\mathrm{trans}}=(x_t-x_s)^2+(y_t-y_s)^2
-   $$
+# 8. Practical Guide: Parameter Selection
 
-   Given $L_{\mathrm{eff}}$
+1.  **Photon Count**: Start with $10^5$ for quick scans, then use $10^6$ or $10^7$ for final high-precision results.
+2.  **SDS Optimization**: Use batch mode to scan multiple SDS values to find the sweet spot between signal strength ($R$) and penetration depth.
+3.  **Detector Sizing**: Match the simulated PD size to your physical hardware (e.g., $1 \times 1$ mm) to get realistic photon counts.
+4.  **Troubleshooting**: If MATLAB fails to parse `.mco`, check if the geometric metadata lines exist at the end of the file. Legacy readers may need updates.
 
-   $$
-   DPF=\frac{L_{\mathrm{eff}}}{r}
-   $$
-
-6. Robustness tip: Validate $T_{\mathrm{th}}=e^{-\mu_a d}$ with a non-scattering sample to regression-test I/O and statistical definitions.
-
-{% asset_img MOP-MCML.png MOP-MCML %}
-
-# 7. Numerical Validation and Representative Results
-
-1. Single-layer transmittance and penetration depth (subcutaneous tissue, $Z_{\max}=1 \ \mathrm{cm}$, $\lambda=1300 \ \mathrm{nm}$). Source at $(0.8,0.2,0.1) \ \mathrm{cm}$; reflection-side PD is a $0.05 \ \mathrm{cm} \times 0.05 \ \mathrm{cm}$ square centered at $(1.2,0.2,0.1) \ \mathrm{cm}$; $N_{\mathrm{ph,tot}}=2\times10^6$. In reflection mode, the maximum penetration is about $0.6\ \mathrm{cm}$, the mean is about $0.28 \ \mathrm{cm}$, and the relative error versus the analytical approximation $\delta\approx0.32 \ \mathrm{cm}$ is roughly $12.5\\%$. Theoretical and simulated transmittance agree within reasonable error.
-
-2. Non-scattering medium transmittance check: Set $\mu_s=0$ and $\mu_a \in [0.5,3.0] \ \mathrm{cm}^{-1}$. Simulated transmittance typically differs from $T_{\mathrm{th}}=e^{-\mu_a d}$ by less than $5\\%$, suitable for regression testing.
-
-# 8. Parameter Selection and Common Issues
-
-1. Photon count vs variance: Increase $N_{\mathrm{ph,tot}}$ first to reduce statistical variance; an engineering workflow may use $10^5$ for coarse scans, then $10^6$ for refinement.
-
-2. Source–detector separation: In reflection mode, SDS governs reachable depth and SNR; batch scanning is recommended to balance sensitivity and depth.
-
-3. Detector size: Smaller PDs improve geometric fidelity but reduce collected photon counts; match PD area to the real device.
-
-4. Layer parameters: Use literature or measured properties at the target wavelength and ensure physical consistency among $\mu_a,\ \mu_s,\ g,\ n$.
-
-5. MATLAB `.mco` parse failures: Often due to ignoring the final two lines of geometric metadata or using outdated scripts. A temporary workaround is to skip the last two lines; the long-term fix is to update the parser.
-
-6. Multiple runs and ASCII format errors: Blank lines and block layouts in `.mci` affect parsing. Use a fixed order and compact layout for each run entry and avoid inserting blank lines between critical blocks.
+---
 
 # 9. Examples
 
-## A. Example mci with Multiple Simulations
-
-Each MOP-MCML execution is driven by a single `.mci` file. By adjusting `Number of runs`, one `.mci` can produce multiple `.mco` results, improving throughput and enabling batch variation of SDS to evaluate MOP, penetration depth, and collection efficiency. The example `.mci` below sets multiple simulations, each producing one `.mco` corresponding to different materials and wavelengths.
+## A. Batch Simulation Input (.mci)
+This example defines two runs with different source wavelengths ($700$ nm vs $800$ nm).
 
 ```python
 1.0   # file version
 2     # Number of runs
 
-### Specify data for run 1 ###
-fat700.mco A  # output filename, ASCII/Binary
-200000   # No. of photons
-0.001 0.002  # dz, dr
-1000 1000 1  # No. of dz, dr & da
+### Run 1: Fat 700nm ###
+fat700.mco A  # Output file
+200000        # Photon count
+0.001 0.002   # dz, dr
+1000 1000 1   # Grid dimensions
 
-1   # No. of layers
-1.000000   # n for medium above 
-#n     mua    mus    g    d # [DOI : 10.1142/S1793545811001319]
-1.455  1.11  122  0.90  1 # Gras
-1.000000   # n for medium below
+1             # Number of layers
+1.0           # n_ambient
+# n     mua   mus   g    d
+1.455 1.11  122   0.90 1.0 
+1.0           # n_bottom
 
-1.2 0.0  0.05  0.8 0.0  0.05  # PD: (Rx, Ry), Rl, (Tx, Ty), Tl (in cm)
-1  0.8 0.0  0.05     # light source: 1.point 2.Gaussian 3.Flat; 
+1.2 0.0 0.05 0.8 0.0 0.05  # PD Geometry: Rx Ry Rl Tx Ty Tl
+1   0.8 0.0 0.05           # Source Geometry: Type x y Size
 
-### Specify data for run 2 ###
-fat800.mco A  # output filename, ASCII/Binary
-200000   # No. of photons
-0.001 0.002  # dz, dr
-1000 1000 1  # No. of dz, dr & da
-
-1   # No. of layers
-1.000000   # n for medium above 
-#n     mua    mus    g    d # [DOI : 10.1142/S1793545811001319]
-1.455  1.07  111.5  0.90  1 # Gras
-1.000000   # n for medium below
-
-1.2 0.0  0.05  0.8 0.0  0.05  # PD: (Rx, Ry), Rl, (Tx, Ty), Tl (in cm)
-1  0.8 0.0  0.05     # light source: 1.point 2.Gaussian 3.Flat;
+### Run 2: Fat 800nm ###
+fat800.mco A
+...
 ```
 
-## B. Mode Selection and Application
+## B. Visualization: Optical Path Distribution
+The figure below compares Reflection Mode (left) and Transmission Mode (right). Note how photon paths distribute differently, affecting the sampled volume.
 
-In `mcmlmain.c`, the following toggles are available:
-
-* Commenting out “Recording photon optical paths in R” disables MCML in R mode.
-* Commenting out “Recording photon optical paths in T” disables MCML in T mode.
-
-In a single active mode, one obtains the MOP from the source to the chosen detection region. The visualization below shows single-layer adipose tissue at $800 \ \mathrm{nm}$.
-
-{% asset_img fig1_new.png Distribution of optical paths in reflection (a) and transmission (b) for a layer of human hypodermis %}
+{% asset_img fig1_new.png Optical Path Distribution in Reflection (a) and Transmission (b) Modes %}
 
 ## C. Multilayer Ankle Model
+A complex model simulating light propagation through Epidermis, Dermis, Hypodermis, and Ligament layers. By setting SDS $\approx 4$ mm, we verified that photons successfully probe the ligament layer ($d > 3.45$ mm).
 
-We configure reflection mode with an SDS of approximately $4 \ \mathrm{mm}$ to verify that photons can reach the ligament layer and be received by the photodiode. Layer optical parameters are listed below; the simulation wavelength is $1300 \ \mathrm{nm}$ [[4](#ref4)].
+{% asset_img liga_3.png Multilayer Simulation of Ankle Tissue at 1300nm %}
 
-| $\text{Layer}$       | $d$ $\text{(cm)}$ | $\mu_a$ $\text{(}\mathrm{cm}^{-1}\text{)}$ | $\mu_s$ $\text{(}\mathrm{cm}^{-1}\text{)}$ |
-| :-----------: | :----------: | :---------------------------------: | :---------------------------------: |
-| Epidermis   | 0.025      | 0.71                              | 25.70                             |
-| Dermis      | 0.12       | 1.19                              | 16.20                             |
-| Hyperdermis | 0.20       | 1.05                              | 15.80                             |
-| Ligament    | 0.22       | 0.70                              | 16.50                             |
-
-This example illustrates how to construct a multilayer model. Note that the total material thickness must match `dz` in the `.mci`; otherwise, black regions may appear in visualization due to a mismatch between physical and optical thicknesses [[5](#ref5)].
-
-{% asset_img liga_3.png Simulation results of ankle tissue at 1300nm %}
+---
 
 # References
-<span id="ref1">[1]</span> S.L. Jacques. 2022. History of Monte Carlo modeling of light transport in tissues using mcml.c. Journal of Biomedical Optics, 27(8), 083002. DOI: 10.1117/1.JBO.27.8.083002.
-<span id="ref2">[2]</span> S. Chatterjee, P.A. Kyriacou. Monte Carlo Analysis of Optical Interactions in Reflectance and Transmittance Finger Photoplethysmography. Sensors, 2019. DOI: 10.3390/s19040789.
-<span id="ref3">[3]</span> S. Chatterjee, J.P. Phillips, P.A. Kyriacou. Monte Carlo investigation of the effect of blood volume and oxygen saturation on optical path in reflectance pulse oximetry. Biomedical Physics and Engineering Express, 2016, 2(6): 065018. DOI: 10.1088/2057-1976/2/6/065018.
-<span id="ref4">[4]</span> A.N. Bashkatov, E.A. Genina, V.V. Tuchin. Optical properties of skin, subcutaneous, and muscle tissues: a review. Journal of Innovative Optical Health Sciences, 2011, 4(01): 9–38. DOI: 10.1142/S1793545811001319.
-<span id="ref5">[5]</span> I. Saliba, A. Hardy, W. Wang, R. Vialle, S. Feruglio. A Review of Chronic Lateral Ankle Instability and Emerging Alternative Outcome Monitoring Tools in Patients following Ankle Ligament Reconstruction Surgery. J. Clin. Med. 2024, 13, 442. DOI: 10.3390/jcm13020442.
+<span id="ref1">[1]</span> S.L. Jacques. "History of Monte Carlo modeling of light transport in tissues using mcml.c." *J. Biomed. Opt.*, 27(8), 083002, 2022. DOI: 10.1117/1.JBO.27.8.083002.
+<span id="ref2">[2]</span> S. Chatterjee, P.A. Kyriacou. "Monte Carlo Analysis of Optical Interactions in Reflectance and Transmittance Finger Photoplethysmography." *Sensors*, 19(4), 2019. DOI: 10.3390/s19040789.
+<span id="ref3">[3]</span> S. Chatterjee et al. "Monte Carlo investigation of the effect of blood volume and oxygen saturation..." *Biomed. Phys. Eng. Express*, 2(6), 065018, 2016. DOI: 10.1088/2057-1976/2/6/065018.
+<span id="ref4">[4]</span> A.N. Bashkatov et al. "Optical properties of skin, subcutaneous, and muscle tissues: a review." *J. Innov. Opt. Health Sci.*, 4(01): 9–38, 2011. DOI: 10.1142/S1793545811001319.
+<span id="ref5">[5]</span> I. Saliba, W. Wang et al. "A Review of Chronic Lateral Ankle Instability..." *J. Clin. Med.*, 13, 442, 2024. DOI: 10.3390/jcm13020442.

@@ -1,48 +1,59 @@
 ---
-title: Interview transcript in LIP6
+title: Interview at LIP6 Laboratory
 date: 2025-10-10
+comments: true
+lang: en
 mathjax: false
-description: In October 2025, I was honored to be interviewed by LIP6 and am delighted to share it here.
+toc: true
+categories:
+  - Personal Experience
+  - PhD Life
+tags:
+  - Interview
+  - PhD Research
+description: A record of an interview with the LIP6 laboratory, sharing insights into PhD research life and scientific work.
 ---
 
-In October 2025, I was honored to be interviewed by LIP6. Below is the content of that interview.
+In October 2025, I was honored to be interviewed by the LIP6 laboratory. You can view the original interview content on this [LIP6 webpage](https://www.lip6.fr/actualite/information-fiche.php?ident=OL303).
 
-# Where do you come from, and where are you headed?
+## Where are you from? What are your future plans?
 
-My name is Wenzheng WANG, and I am a second-year Ph.D. candidate (soon entering the third year) in the SYEL team at LIP6. Before beginning my doctorate, I earned an engineering degree specializing in embedded systems from ISEP, a digital engineering school based in Paris and Bordeaux.
+My name is Wenzheng WANG, and I am currently a second-year PhD student (soon to enter my third year) in the SYEL team at LIP6 laboratory. Before my PhD, I obtained an engineering degree in Embedded Systems from ISEP, which has campuses in both Paris and Bordeaux.
 
-I first joined LIP6 for my final-year internship in February 2023. Following an EDITE call for Ph.D. topics, I began my doctoral studies in November 2023—an organic continuation of that internship.
+My journey with LIP6 began with my graduation internship in February 2023. I saw a call for PhD topics published by EDITE, and the project content aligned perfectly with my interests. So, in November 2023, I naturally started my PhD research—essentially a continuation of my internship work.
 
-Upon completion of the thesis, I hope to pursue a postdoctoral position, should the opportunity arise.
+After graduating, if the opportunity arises, I hope to continue with postdoctoral research.
 
-# What are you working on now?
+{% asset_img fig2_w.jpg Illustration of photon propagation in biological tissue %}
 
-My objective is to design a non-invasive, multimodal health-monitoring system that acquires both bioelectrical and physiological signals. The aim is to retain the portability of consumer devices (e.g., smartwatches) while enabling reliable, accurate, real-time multiparameter assessment of a person’s health status.
+## What research are you currently working on?
 
-{% asset_img fig2_w.jpg Schematic of photon propagation through biological tissue %}
+My goal is to design a non-invasive, multimodal health monitoring system capable of simultaneously acquiring bioelectrical and physiological signals. Simply put, I hope to create a device that is as convenient and portable as a smart watch, but capable of accurately, reliably, and continuously assessing human health status.
 
-Concretely, the prototype leverages near-infrared spectroscopy (NIRS) over 700–2500 nm. By analyzing absorption and scattering in biological tissues, it estimates parameters such as oxygen saturation (SpO₂) and blood-flow variations, and investigates coupling between bioelectrical and physiological modalities.
+Specifically, this prototype uses **Near-Infrared Spectroscopy (NIRS)**, operating in the 700 to 2500 nm range. By analyzing the absorption and scattering of light in biological tissues, we can estimate parameters such as blood oxygen saturation (SpO₂) and hemodynamic changes, and also study the correlation between bioelectrical and physiological signals.
 
-Because these signals are highly susceptible to ambient noise and motion artifacts, pre-processing and feature-extraction algorithms are pivotal. In building the prototype, energy consumption is also a consideration; however, acquisition accuracy and latency remain the primary performance drivers for this class of system. Data throughput and power draw are additional constraints. Collectively, these factors make the design particularly challenging.
+These signals are very sensitive to environmental noise and motion artifacts, so preprocessing and feature extraction algorithms are particularly important. When designing the prototype, although power consumption is considered, acquisition accuracy and response speed are the core performance indicators for such systems. Data throughput and power consumption are additional constraints. Integrating these factors makes the entire design quite challenging.
 
-{% asset_img fig3_w.jpg Schematic of the photoplethysmography (PPG) signal composition %}
+{% asset_img fig3_w.jpg Composition of Photoplethysmography (PPG) signals %}
 
-# How is your week organized?
+## How do you organize your weekly schedule?
 
-I do not follow a fixed timetable. At times, I teach laboratory and tutorial sessions (TP/TD) at Polytech Sorbonne—the engineering school of Sorbonne Université—as well as in the **Licence** EEA (Électronique, Énergie Électrique, Automatique) and the **Master** in Computer Science, SESI track (Systèmes Électroniques et Systèmes Informatique). On other days, I am in the lab working on the hardware and software components of the prototype. I am currently preparing for my second individual thesis follow-up committee meeting—an obligatory milestone to launch my third year effectively. In the coming year, I will devote substantial time to writing and will conduct in vivo tests to validate the prototype.
+I don't have a fixed schedule. Sometimes I teach laboratory (TP) and tutorial (TD) sessions at Polytech Sorbonne, the Licence EEA program, and the Master SESI track (Electronic Systems and Information Systems). At other times, I am in the lab developing the hardware and software for the prototype.
 
-# What do you hope to accomplish during your time at LIP6?
+Recently, I have been preparing for my second year doctoral thesis progress defense—a necessary step before starting the third year. In the coming year, I will spend a lot of time writing my thesis and conducting in-vivo experiments to verify the prototype's performance.
 
-My primary goal is to complete the thesis and earn the Ph.D. In parallel, my teaching activities (e.g., microcontrollers, analog electronics) have allowed me to gain pedagogical experience and further consolidate my technical foundations.
+## What goals do you hope to achieve at LIP6?
 
-# What is one thing people often misunderstand about your topic?
+The primary goal is, of course, to complete my thesis and obtain my PhD degree. At the same time, teaching activities (such as Microcontrollers and Analog Circuits) have allowed me to accumulate teaching experience and further consolidate my technical foundation.
 
-People usually grasp the general idea quickly, but the technical details can be demanding. It is tempting to equate my project with consumer devices based on photoplethysmography (PPG), such as smartwatches. In practice, those devices deliver only basic functions and a limited set of parameters. By contrast, my prototype employs longer near-infrared wavelengths, enabling deeper tissue penetration and producing more stable, accurate physiological measurements. It aims to combine everyday usability with genuine clinical relevance, ultimately supporting more effective health management.
+## What are common misconceptions about your research?
 
-# What excites you about your research?
+People usually quickly understand the general direction of the research, but the technical details are more complex. Many people easily equate my project with consumer electronic devices like smartwatches based on Photoplethysmography (PPG) technology on the market. In reality, those devices can only provide some basic functions and limited parameters. In contrast, my prototype uses longer-wavelength near-infrared light, which can penetrate deeper tissue layers to obtain more stable and accurate physiological measurement data. I hope to bridge the gap between the convenience of daily use and true clinical value, ultimately supporting more effective health management.
 
-I enjoy the full cycle: modeling, hardware design, data processing, and prototype validation. The project lets me deepen my expertise in real-time systems and integrate multiple skill sets. The forthcoming in vivo experiments are a major challenge, and I am eager to deliver a working multimodal system.
+## What excites you most about your research?
 
-# Anything to add?
+I enjoy the entire R&D process: modeling, hardware design, data processing, and prototype verification. This project allows me to delve deep into the field of real-time systems and integrate various technologies. The upcoming in-vivo experiments are a significant challenge, and I look forward to delivering a truly usable multimodal system.
 
-I am very happy to be at LIP6 and to be part of this journey. If you would like to discuss any of these topics, I would be delighted to talk.
+## Is there anything else you would like to add?
+
+I am very happy to work at LIP6 and be part of this journey. If anyone is interested in these topics, feel free to chat and exchange ideas!

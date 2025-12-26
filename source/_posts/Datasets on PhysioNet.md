@@ -1,159 +1,181 @@
 ---
-title: Datasets on PhysioNet
+title: Curated Physiological Datasets on PhysioNet
 date: 2025-06-29
+comments: true
+lang: en
 mathjax: true
-description: PhysioNet provides an extensive, openly accessible repository of physiological signals, serving as a cornerstone for training advanced models and acquiring high‑quality physiological data.
+toc: true
+categories:
+  - Dataset Resources
+  - Biomedical Engineering
+tags:
+  - PhysioNet
+  - Datasets
+  - ECG
+  - PPG
+  - EEG
+description: An overview of openly accessible physiological signal repositories from PhysioNet, serving as essential resources for training advanced models and validating biomedical algorithms.
 ---
 
-Source for all datasets: [LIP6 Nuage Repository](https://nuage.lip6.fr/index.php/s/9JYzo9A7rHkFHNZ)
+> **Access Note**: All datasets described below have been mirrored for easier access at the [LIP6 Nuage Repository](https://nuage.lip6.fr/index.php/s/9JYzo9A7rHkFHNZ).
 
-# [ECG & PPG Signal with Arrhythmia Episodes](https://doi.org/10.13026/s32e-sv15) – 2022
-*Simulation model for ECG and PPG signals with arrhythmia episodes*
+---
 
-A dedicated software tool capable of generating synthetic ECG and PPG signals containing a broad range of arrhythmic events (e.g., atrial fibrillation, bradycardia, ventricular tachycardia). Key features include:
-- Normal sinus rhythm  
-- Atrial fibrillation (AF)  
-- Bradycardia  
-- Ventricular tachycardia (VT)  
-- Atrial premature beats (APB)
+# 1. ECG & PPG Signal with Arrhythmia Episodes (2022)
+**Source**: [doi.org/10.13026/s32e-sv15](https://doi.org/10.13026/s32e-sv15)
 
-Realistic measurement noise can be superimposed to mimic real acquisition conditions. Users can configure signal duration, sampling frequency (PPG: 75–1000 Hz; ECG: 250–1000 Hz), abnormal episode timing, and noise type/level. This simulator facilitates generation of realistic cases to augment training datasets.
+## Overview
+This resource provides a dedicated software tool for generating synthetic ECG and PPG signals populated with a broad range of arrhythmic events. It is designed to augment training data for arrhythmia detection algorithms.
 
-# [Motion Artifact Contaminated fNIRS and EEG](https://physionet.org/content/motion-artifact/1.0.0/) – 2014
-*Simultaneous fNIRS and EEG recordings with controlled motion artifacts*
+## Key Features
+*   **Arrhythmia Types**: Normal sinus rhythm, Atrial Fibrillation (AF), Bradycardia, Ventricular Tachycardia (VT), and Atrial Premature Beats (APB).
+*   **Customization**:
+    *   **Sampling Frequency**: 75–1000 Hz for PPG, 250–1000 Hz for ECG.
+    *   **Signal Parameters**: Configurable duration, timing of abnormal episodes, and noise characteristics.
+*   **Realism**: Supports the superimposition of realistic measurement noise to simulate authentic acquisition environments.
 
-fNIRS and EEG signals were recorded simultaneously in an experimental setting using two sensor groups: one deliberately exposed to motion artifacts and one kept still. A triaxial accelerometer captured the motion data.  
-- fNIRS: ~25 Hz at two wavelengths (690 nm and 830 nm)  
-- EEG: 2048 Hz  
-- Accelerometer: 200 Hz
+---
 
-## CSV File Details
-fNIRS/EEG signals and accelerometer data were acquired on independent systems but synchronized by trigger signals.
+# 2. Motion Artifact Contaminated fNIRS and EEG (2014)
+**Source**: [physionet.org/content/motion-artifact/1.0.0](https://physionet.org/content/motion-artifact/1.0.0/)
 
-**fNIRS data (9 experimental sessions, with sessions 5 and 8 of lower quality):** two optical channels per wavelength.
+## Overview
+This dataset contains simultaneous fNIRS and EEG recordings designed to study motion artifact removal. Data was collected in an experimental setting with controlled motion artifacts.
 
-**EEG data (23 recordings):** two frontal channels.
+## Acquisition Setup
+*   **fNIRS**: ~25 Hz sampling, dual wavelengths (690 nm and 830 nm).
+*   **EEG**: 2048 Hz sampling.
+*   **Motion Reference**: Triaxial accelerometer sampled at 200 Hz.
+*   **Protocol**: One sensor group was deliberately moved to induce artifacts, while a second control group remained stationary.
 
-Trigger coding:  
-- fNIRS trigger: rising edge = experiment start; low level = motion‑artifact phase; high level = clean phase; final drop = experiment end.  
-- EEG trigger: only start (rise) and end (fall) markers; no phase segmentation.
+## Data Structure
+The dataset includes synchronized fNIRS, EEG, and accelerometer streams.
 
-**fNIRS data structure:**  
-|Column|Description|
-|:------:|:-----------:|
-|1|Sample number|
-|2|Raw light intensity 690 nm – Channel 1 (25 Hz)|
-|3|Raw light intensity 830 nm – Channel 1 (25 Hz)|
-|4|Raw light intensity 690 nm – Channel 2 (25 Hz)|
-|5|Raw light intensity 830 nm – Channel 2 (25 Hz)|
-|6|fNIRS trigger (25 Hz)|
-|7–9|Accelerometer 1 – X/Y/Z (200 Hz)|
-|10–12|Accelerometer 2 – X/Y/Z (200 Hz)|
-|13|Accelerometer trigger (200 Hz)|
+**fNIRS Data Format**:
+<div align="center">
 
-**EEG data structure:**  
-|Column|Description|
-|:------:|:-----------:|
-|1|Sample number|
-|2|Raw EEG – Channel 1 (2048 Hz)|
-|3|Raw EEG – Channel 2 (2048 Hz)|
-|4|EEG trigger (2048 Hz)|
-|5–7|Accelerometer 1 – X/Y/Z (200 Hz)|
-|8–10|Accelerometer 2 – X/Y/Z (200 Hz)|
-|11|Accelerometer trigger (200 Hz)|
+| Column | Description |
+| :---: | :---: |
+| 1 | Sample number |
+| 2-3 | Raw Light Intensity (690/830 nm) - Channel 1 (25 Hz) |
+| 4-5 | Raw Light Intensity (690/830 nm) - Channel 2 (25 Hz) |
+| 6 | Trigger Signal (Rise=Start, Low=Motion, High=Clean) |
+| 7-12 | Accelerometer Data (Sensor 1 & 2 X/Y/Z) |
+| 13 | Accelerometer Trigger |
 
-*Note: Channel 1 is generally motion‑free, whereas Channel 2 is deliberately moved.*
+</div>
 
-# [ScientISST MOVE](https://doi.org/10.13026/hyxq-r919) – 2024
-*Multimodal biosignal recordings in natural living environments with annotated daily activities*
+**EEG Data Format**:
+<div align="center">
 
-Seventeen participants were monitored for ~37 minutes each during natural activities (standing, walking, running, chair displacement, greeting, etc.), with precise activity annotations.
+| Column | Description |
+| :---: | :---: |
+| 1 | Sample number |
+| 2 | Raw EEG - Channel 1 (2048 Hz) |
+| 3 | Raw EEG - Channel 2 (2048 Hz) |
+| 4 | Trigger Signal |
+| 5-10 | Accelerometer Data |
+| 11 | Accelerometer Trigger |
 
-Devices and sampling frequencies:  
-- **ScientISST‑Chest and ScientISST‑Forearm**: ECG, EMG, EDA, and finger PPG at 500 Hz.  
-- **Empatica E4 wristband**: PPG, EDA, skin temperature, and accelerometry.
+</div>
 
-|Signal type|Sampling frequency (ScientISST / E4)|
-|:-----------:|:--------------------------------------:|
-|ECG (gel electrodes)|500 Hz|
-|PPG|500 Hz / 64 Hz|
-|EDA|500 Hz / 4 Hz|
-|EMG|500 Hz|
-|Accelerometer (chest/wrist)|500 Hz / 32 Hz|
-|Temperature|– / 4 Hz|
+> **Note**: Channel 1 is generally the stationary (clean) reference, while Channel 2 contains induced motion artifacts.
 
-# [BIG IDEAs](https://physionet.org/content/big-ideas-glycemic-wearable/1.1.2/) – 2023
-*Glycemic variability and wearable-device data*
+---
 
-Continuous glucose monitoring combined with Apple Watch or Empatica E4 recordings provides heart rate, accelerometry, blood volume pulse (PPG), electrodermal activity, and temperature.  
-- Glucose measurement every 5 min  
-- PPG sampling at 64 Hz (sufficient for waveform analysis)  
-- 16 participants including controlled food intake
+# 3. ScientISST MOVE (2024)
+**Source**: [doi.org/10.13026/hyxq-r919](https://doi.org/10.13026/hyxq-r919)
 
-`Food_Log_xxx.csv` files detail nutritional intake (type, time, amount, calories, carbohydrates, proteins, lipids, fibers, etc.). The dataset supports time‑aligned PPG–glucose analysis.
+## Overview
+ScientISST MOVE provides multimodal biosignal recordings captured in natural living environments. It features 17 participants performing annotated daily activities such as walking, running, and social interactions.
 
-# [Labeled Raw Accelerometry Data](https://doi.org/10.13026/51h0-a262) – 2021
-*Annotated raw accelerometry during walking, stair climbing/descending, and driving*
+## Device Configuration
+<div align="center">
 
-Thirty‑two healthy adults (13 males, 19 females) each wore four ActiGraph GT3X+ accelerometers (left wrist, left hip, left ankle, right ankle) sampling at 100 Hz.
+| Signal Type | ScientISST (Chest/Forearm) | Empatica E4 (Wrist) |
+| :---: | :---: | :---: |
+| **ECG** | 500 Hz (Gel electrodes) | N/A |
+| **PPG** | 500 Hz | 64 Hz |
+| **EDA** | 500 Hz | 4 Hz |
+| **EMG** | 500 Hz | N/A |
+| **ACC** | 500 Hz | 32 Hz |
+| **Temp** | N/A | 4 Hz |
 
-Activities: walking ~1 km, ascending/descending stairs six times, and driving ~12.8 miles. Each trial began and ended with a hand clap for synchronization.
+</div>
 
-Each subject file contains:  
-|Parameter|Meaning|
-|:---------:|:-------:|
-|activity|Activity code|
-|time_s|Elapsed time (s)|
-|lw_x,y,z|Left wrist axes|
-|lh_x,y,z|Left hip axes|
-|la_x,y,z|Left ankle axes|
-|ra_x,y,z|Right ankle axes|
+---
 
-Activity codes: 1=walk, 2=downstairs, 3=upstairs, 4=drive, 77=clap, 99=off‑protocol.
+# 4. BIG IDEAs Glycemic Variability (2023)
+**Source**: [physionet.org/content/big-ideas-glycemic-wearable](https://physionet.org/content/big-ideas-glycemic-wearable/1.1.2/)
 
-# [Stress and Structured Exercise Sessions](https://physionet.org/content/wearable-device-dataset/1.0.1/) – 2025
-*Physiological recordings during induced stress and structured exercise*
+## Overview
+This dataset explores the relationship between non-invasive physiological signals and glycemic variability. It combines continuous glucose monitoring (CGM) with wearable data from 16 participants.
 
-Recordings with **Empatica E4** wristbands under three protocols:
-1. **Acute Stress (STRESS)** – alternating mental arithmetic and emotional stimulation with rest; subjective stress levels logged (two CSVs per subject).  
-2. **Aerobic Exercise (AEROBIC)** – moderate, rhythmic cycling.  
-3. **Anaerobic Exercise (ANAEROBIC)** – short, high‑intensity cycling.
+## Features
+*   **Physiological Data**: Heart rate, accelerometry, Blood Volume Pulse (PPG), EDA, and skin temperature from Apple Watch and Empatica E4.
+*   **Glucose Data**: Measurements every 5 minutes.
+*   **Nutritional Logs**: Detailed intake records (calories, macros) in `Food_Log_xxx.csv`.
+*   **Application**: Ideal for researching non-invasive glucose estimation using time-aligned PPG and metabolic data.
 
-Sample sizes: 36 (STRESS), 30 (AEROBIC), 31 (ANAEROBIC).  
-`BVP.csv` provides 64 Hz PPG for heart‑rate, HRV, and waveform‑quality analysis.
+---
 
-|Accelerometer|PPG|EDA|Heart rate|IBI|Events|Temperature|
-|:-------------:|:---:|:---:|:----------:|:---:|:------:|:----------:|
-|ACC.csv|BVP.csv|EDA.csv|HR.csv|IBI.csv|tags.csv|TEMP.csv|
+# 5. Labeled Raw Accelerometry Data (2021)
+**Source**: [doi.org/10.13026/51h0-a262](https://doi.org/10.13026/51h0-a262)
 
-# [BigIdeasLab_STEP](https://physionet.org/content/bigideaslab-step-hr-smartwatch/1.0/) – 2021
-*Skin‑tone effects on optical heart‑rate sensing in smartwatches*
+## Overview
+A human activity recognition (HAR) dataset featuring high-frequency accelerometry from 32 healthy adults (13 males, 19 females).
 
-Assesses how skin tone (Fitzpatrick types 1–6), activity type, and device model influence optical heart‑rate accuracy.
+## Protocol
+*   **Sensors**: 4x ActiGraph GT3X+ (Left Wrist, Left Hip, Left Ankle, Right Ankle).
+*   **Sampling**: 100 Hz.
+*   **Activities**: Walking (~1 km), Stair Climbing (Up/Down 6x), Driving (~12.8 miles).
 
-Fifty‑three participants (32 females, 21 males; ages 18–54) balanced across six skin‑tone categories completed a standardized protocol repeated three times:
-1. Seated rest – 4 min  
-2. Paced breathing – 1 min  
-3. Brisk walking (≈50 % HRmax) – 5 min  
-4. Seated rest – 2 min  
-5. Keyboard typing – 1 min
+## Format
+Each file contains time-series data with activity codes:
+*   `1`: Walk
+*   `2`: Downstairs
+*   `3`: Upstairs
+*   `4`: Drive
+*   `77`: Clap (Sync)
+*   `99`: Off-protocol
 
-Reference ECG was recorded with a Bittium Faros patch at ~1000 Hz. Only heart‑rate values (BPM) from multiple devices are provided—no raw PPG.
+---
 
-|Parameter|Description|
-|:---------:|:-----------:|
-|ECG|Reference (Bittium Faros 180)|
-|Apple Watch|Apple Watch 4|
-|Empatica|Empatica E4|
-|Fitbit|Fitbit Charge 2|
-|Garmin|Garmin Vivosmart 3|
-|Miband|Xiaomi Miband 3|
-|Biovotion|Biovotion Everion|
-|Skin tone|Fitzpatrick type (1–6)|
-|ID|Participant identifier|
-|Activity|Rest, exercise, breathing, typing|
+# 6. Stress and Structured Exercise Sessions (2025)
+**Source**: [physionet.org/content/wearable-device-dataset](https://physionet.org/content/wearable-device-dataset/1.0.1/)
 
-# Conclusion
+## Overview
+A multimodal dataset recording physiological responses to induced acute stress and structured physical exercise using Empatica E4 wristbands.
 
-Most datasets cited here employed the [Empatica E4](https://www.empatica.com/en-int/research/e4/) to acquire PPG, EDA, and temperature signals.  
-However, the E4 has been superseded by **EmbracePlus**, which offers lower energy consumption and supports up to four concurrent measurement channels.
+## Protocols
+1.  **Acute Stress (STRESS)**: Mental arithmetic and emotional stimulation tasks ($n=36$).
+2.  **Aerobic Exercise**: Moderate, rhythmic cycling ($n=30$).
+3.  **Anaerobic Exercise**: Short, high-intensity cycling ($n=31$).
+
+## File Structure
+*   `BVP.csv`: 64 Hz signal for HRV and waveform quality analysis.
+*   `EDA.csv`: Electrodermal activity.
+*   `TEMP.csv`: Skin temperature.
+*   `tags.csv`: Event markers.
+
+---
+
+# 7. BigIdeasLab_STEP (2021)
+**Source**: [physionet.org/content/bigideaslab-step-hr-smartwatch](https://physionet.org/content/bigideaslab-step-hr-smartwatch/1.0/)
+
+## Overview
+This study assesses the impact of skin tone (Fitzpatrick scale 1–6), activity type, and device model on the accuracy of optical heart rate monitoring.
+
+## Demographics & Protocol
+*   **Participants**: 53 individuals (ages 18–54), balanced across skin tones.
+*   **Activities**: Rest, Paced Breathing, Brisk Walking, Typing.
+*   **Devices**: Apple Watch 4, Empatica E4, Fitbit Charge 2, Garmin Vivosmart 3, Xiaomi Miband 3, Biovotion Everion.
+*   **Reference**: Bittium Faros 180 ECG (~1000 Hz).
+
+> **Note**: This dataset provides processed Heart Rate (BPM) values, not raw PPG waveforms.
+
+---
+
+# Summary
+
+The majority of these datasets utilize the **Empatica E4** for acquiring PPG, EDA, and temperature signals, establishing it as a common reference in the field. However, researchers should note that the E4 has notably been succeeded by the **EmbracePlus**, which offers enhanced energy efficiency and multi-channel capabilities.
