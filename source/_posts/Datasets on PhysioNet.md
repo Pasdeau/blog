@@ -6,8 +6,8 @@ lang: en
 mathjax: true
 toc: true
 categories:
-  - Dataset Resources
-  - Biomedical Engineering
+  - Research Projects
+  - Biomedical Resources
 tags:
   - PhysioNet
   - Datasets

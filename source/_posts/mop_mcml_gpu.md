@@ -7,12 +7,12 @@ mathjax: false
 toc: true
 categories:
   - Research Projects
-  - Biomedical Optics
+  - Optical Simulation
 tags:
   - MCML
-  - GPU Acceleration
+  - GPU
   - CUDA
-  - Light Transport Simulation
+  - Simulation
 description: A detailed introduction to the GPU-accelerated version of MOP-MCML, achieving a 175x performance leap based on CUDA architecture, supporting efficient simulation of millions of photons.
 ---
 

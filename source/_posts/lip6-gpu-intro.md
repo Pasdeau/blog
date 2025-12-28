@@ -6,6 +6,7 @@ lang: en
 mathjax: false
 toc: true
 categories:
+  - Technical Share
   - Lab Guides
 tags:
   - HPC

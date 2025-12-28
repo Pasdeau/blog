@@ -20,10 +20,10 @@ comments: false
 </style>
 
 <p class="en-text">
-During my PhD, I have been teaching laboratory (TP) and tutorial (TD) sessions at Polytech Sorbonne—the engineering school of Sorbonne Université—as well as in the <strong>Licence</strong> EEA track (Électronique, Énergie Électrique, Automatique) and the <strong>Master</strong> SESI track (Systèmes Électroniques et Systèmes Informatiques).
+During my PhD, I taught laboratory (TP) and tutorial (TD) sessions at Polytech Sorbonne—the engineering school of Sorbonne University. I also instructed in the <strong>Licence</strong> EEA track (Électronique, Énergie Électrique, Automatique) and the <strong>Master</strong> SESI track (Systèmes Électroniques et Systèmes Informatiques) at Sorbonne University.
 </p>
 <p class="zh-text">
-在攻读博士期间，我一直在索邦大学工程师学院（Polytech Sorbonne）以及<strong>本科</strong> EEA 方向（电子、电气能源、自动化）和<strong>硕士</strong> SESI 方向（电子系统与信息系统）担任实验课（TP）和习题课（TD）的教学工作。
+攻读博士期间，我在索邦大学工程师学院（Polytech Sorbonne）负责实验课（TP）和习题课（TD）的教学。同时，我也在索邦大学的<strong>本科</strong> EEA 方向（电子、电气能源、自动化）和<strong>硕士</strong> SESI 方向（电子系统与信息系统）担任教学工作。
 </p>
 
 ---

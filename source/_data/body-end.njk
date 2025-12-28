@@ -4,16 +4,44 @@ document.addEventListener('DOMContentLoaded', function () {
   const grid = document.querySelector('.gallery-grid');
   if (!bar || !grid) return;
 
-  bar.addEventListener('click', e => {
-    const btn = e.target.closest('button');
-    if (!btn) return;
-    bar.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn));
-    const filter = btn.dataset.filter;
-    grid.querySelectorAll('a').forEach(el => {
+  // 1. Capture original order (Strict Date Order from HTML)
+  const originalItems = Array.from(grid.querySelectorAll('a'));
+
+  const render = (filter) => {
+    // 2. Prepare items: Shuffle if 'all', else original order
+    let items;
+    if (filter === 'all') {
+       items = [...originalItems].sort(() => 0.5 - Math.random());
+    } else {
+       items = [...originalItems];
+    }
+
+    // 3. Clear and re-append in correct order
+    grid.innerHTML = '';
+    items.forEach(el => {
+      grid.appendChild(el);
+      // 4. Apply visibility
       const cats = (el.dataset.category || '').split(',').map(s => s.trim());
+      // Note: Our data-filter matches the directory name exactly (Life, travel, lab, puppy) case-sensitively
+      // The dataset.category also comes from directory names.
       const show = filter === 'all' || cats.includes(filter);
       el.style.display = show ? '' : 'none';
     });
+  };
+
+  // Initial render: Random 'All'
+  render('all');
+
+  bar.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    
+    // Toggle active class
+    bar.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn));
+    
+    // Get filter and render
+    const filter = btn.dataset.filter;
+    render(filter);
   });
 });
 </script>

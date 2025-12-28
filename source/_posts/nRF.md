@@ -6,14 +6,12 @@ lang: en
 mathjax: false
 toc: true
 categories:
+  - Technical Share
   - Embedded Systems
-  - Nordic nRF
-  - Research Projects
 tags:
   - nRF5340
   - Zephyr
   - DevKit
-  - Setup
 description: A comprehensive guide to configuring and configuring the nRF5340 DK (PCA10095) for local development, differentiating between the application and network cores.
 ---
 

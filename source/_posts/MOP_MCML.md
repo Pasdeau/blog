@@ -6,8 +6,8 @@ lang: en
 mathjax: true
 toc: true
 categories:
+  - Research Projects
   - Optical Simulation
-  - User Manuals
 tags:
   - MCML
   - Monte Carlo

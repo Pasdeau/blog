@@ -6,7 +6,8 @@ lang: en
 mathjax: false
 toc: true
 categories:
-  - Competition Projects
+  - Competitions
+  - Robotics
 tags:
   - LeRobot
   - AMD

@@ -6,11 +6,13 @@ lang: en
 mathjax: false
 toc: true
 categories:
+  - Technical Share
   - Embedded Systems
 tags:
   - nRF52840
   - Zephyr
   - BLE
+  - Firmware
 description: A concise guide to compiling and flashing firmware for the nRF52840 Dongle on macOS using nRF Connect SDK, including nrfutil usage and DFU mode details.
 ---
 

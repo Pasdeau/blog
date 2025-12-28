@@ -6,12 +6,11 @@ lang: en
 mathjax: false
 toc: true
 categories:
-  - Personal Experience
-  - Academic Achievements
+  - Personal Life
+  - Awards
 tags:
   - IEEE
-  - Awards
-  - Academic Papers
+  - Academic Awards
 description: Sharing the experience of winning Best Student Paper Awards at two IEEE conferences.
 ---
 

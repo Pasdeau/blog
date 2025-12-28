@@ -7,7 +7,7 @@ mathjax: false
 toc: true
 categories:
   - Research Projects
-  - Biomedical Signal Processing
+  - Biomedical Optics
 tags:
   - MATLAB
   - ECG
