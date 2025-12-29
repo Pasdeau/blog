@@ -1,6 +1,6 @@
 ---
 title: "PPG Signal Analysis: Dual-Stream Architecture"
-date: 2024-12-26
+date: 2025-12-26
 comments: true
 lang: en
 mathjax: false

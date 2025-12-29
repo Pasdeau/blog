@@ -1,6 +1,6 @@
 ---
 title: "PPG Signal Generation: From MATLAB to Python"
-date: 2024-12-21
+date: 2025-12-21
 comments: true
 lang: en
 mathjax: false

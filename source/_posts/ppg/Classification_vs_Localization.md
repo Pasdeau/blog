@@ -1,6 +1,6 @@
 ---
 title: "PPG Signal Analysis: The Dilemma of Task Conflict"
-date: 2024-12-22
+date: 2025-12-22
 comments: true
 lang: en
 mathjax: false

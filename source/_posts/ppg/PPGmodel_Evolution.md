@@ -1,6 +1,6 @@
 ---
 title: "PPG Signal Analysis: Time-Frequency & Attention"
-date: 2024-12-24
+date: 2025-12-24
 comments: true
 lang: en
 mathjax: false
