@@ -98,7 +98,7 @@ The build artifact is located at `build/zephyr/zephyr.hex`.
 The Dongle can only be updated via its Bootloader. The `.hex` file must be packaged into a `.zip` archive:
 ```bash
 nrfutil pkg generate --hw-version 52 --sd-req 0x00 \
-  --application build/zephyr/zephyr.hex \
+  --application build/<your_project_name>/zephyr/zephyr.hex \
   --application-version 1 app.zip
 ```
 
@@ -119,11 +119,11 @@ nrfutil pkg generate --hw-version 52 --sd-req 0x00 \
 1.  **Find Device Port**:
     ```bash
     ls /dev/tty.usbmodem*
-    # Example Output: /dev/tty.usbmodem14201
+    # Example Output: /dev/tty.usbmodemXXXX
     ```
 2.  **Flash**:
     ```bash
-    nrfutil dfu usb-serial -pkg app.zip -p /dev/tty.usbmodem14201
+    nrfutil dfu usb-serial -pkg app.zip -p /dev/tty.usbmodemXXXX
     ```
     *Note: Replace the port number in the command with the actual one observed.*
 

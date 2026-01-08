@@ -35,7 +35,7 @@ The connection method varies slightly depending on your network environment.
 
 ### 2.1 From Internal Network
 
-If you are already connected to the LIP6 wired network or Wi-Fi (LIP6-dot1x), you can connect via SSH directly.
+If you are already connected to the LIP6 wired network or Wi-Fi, you can connect via SSH directly.
 
 #### Connect to CPU Cluster
 Used for data preprocessing, scripting, and lightweight calculations.
