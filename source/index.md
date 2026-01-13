@@ -9,8 +9,7 @@ comments: false
   <h1 class="home-name">Wenzheng Wang - 王文正</h1>
 
   <p class="home-tagline">
-    3rd-year Ph.D. student at LIP6 laboratory, Sorbonne University, advised by Prof. Sylvain Feruglio.
-    Research focuses on embedded systems with photoplethysmography and near-infrared spectroscopy.
+    Final-year PhD candidate at the LIP6 Laboratory, Sorbonne University, advised by Prof. Sylvain Feruglio, focusing on embedded systems applied to photoplethysmography (PPG) and near-infrared spectroscopy (NIRS).
   </p>
 
   <div class="home-social">
