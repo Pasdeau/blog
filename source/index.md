@@ -9,7 +9,7 @@ comments: false
   <h1 class="home-name">Wenzheng Wang - 王文正</h1>
 
   <p class="home-tagline">
-    Final-year PhD candidate at the LIP6 Laboratory, Sorbonne University, advised by Prof. Sylvain Feruglio, focusing on embedded systems applied to photoplethysmography (PPG) and near-infrared spectroscopy (NIRS).
+    I am a final-year PhD candidate at the LIP6 Laboratory, Sorbonne University, advised by Prof. Sylvain Feruglio, focusing on embedded systems applied to photoplethysmography and near-infrared spectroscopy.
   </p>
 
   <div class="home-social">
