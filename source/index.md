@@ -14,7 +14,7 @@ comments: false
 
   <div class="home-social">
     <a href="https://lip6.fr/Wenzheng.Wang" target="_blank" rel="noopener" aria-label="LIP6 profile"><i class="fa fa-user"></i></a>
-    <a href="https://www.linkedin.com/in/wenzheng-714389247" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    <a href="https://www.linkedin.com/in/pasdeau/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
     <a href="https://github.com/Pasdeau" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
     <a href="mailto:wenzheng.wang@lip6.fr" aria-label="E-mail"><i class="fa fa-envelope"></i></a>
   </div>
