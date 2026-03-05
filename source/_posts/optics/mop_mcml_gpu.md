@@ -1,9 +1,9 @@
 ---
-title: "MOP-MCML GPU Version: Performance Boost"
+title: "MOP-MCML GPU Version: 175x Faster 2D Light Transport Simulation"
 date: 2025-12-16
 comments: true
 lang: en
-mathjax: false
+mathjax: true
 toc: true
 categories:
   - Research Projects
@@ -13,115 +13,147 @@ tags:
   - GPU
   - CUDA
   - Simulation
-description: A detailed introduction to the GPU-accelerated version of MOP-MCML, achieving a 175x performance leap based on CUDA architecture, supporting efficient simulation of millions of photons.
+  - MOP
+description: A detailed introduction to the GPU-accelerated 2D version of MOP-MCML, achieving a 175x performance leap on NVIDIA A100 via CUDA, with batch parameter scanning, Python visualization, and full HPC cluster integration.
 ---
 
 ## Project Background
 
-The **Monte Carlo Multi-Layered (MCML)** method is a classic algorithm in biomedical optics for simulating light transport in multi-layered turbid media. By tracing the random walk of a large number of photons in tissue, it statistically estimates key physical quantities such as reflectance and transmittance, providing a theoretical basis for applications like optical diagnosis and photodynamic therapy.
+The **Monte Carlo Multi-Layered (MCML)** method is the gold standard algorithm in biomedical optics for simulating photon transport in multi-layered turbid media. By statistically tracing large numbers of random-walking photons, it estimates key physical quantities — reflectance ($R_d$), transmittance ($T_t$), and the **Mean Optical Path (MOP, $L_{eff}$)** — providing a theoretical basis for optical diagnosis, photoplethysmography (PPG), and photodynamic therapy.
 
-This project implements both a standard CPU version and a high-performance GPU version of the MCML simulator based on the **Mean Optical Path (MOP)** method. Initially developed by Songlin Li, it was improved and ported to GPU by **Wenzheng Wang** under the supervision of Professor Sylvain Feruglio at the LIP6 Laboratory, Sorbonne University.
+This project implements both a CPU and a high-performance GPU version of the 2D MOP-MCML simulator. The original CPU implementation was developed by Songlin Li. It was extended with GPU acceleration and improved I/O by **Wenzheng Wang** under the supervision of Prof. Sylvain Feruglio at the LIP6 Laboratory, Sorbonne University.
+
+> **Note**: For the 3D Cartesian grid extension (full-volume OP visualization), see [MOP-MCML 3D Version](../mop_mcml_3d).
+
+---
 
 ## Why GPU Acceleration?
 
-The traditional CPU version processes photons serially, one by one. While acceptable for small-scale simulations (e.g., hundreds of thousands of photons), the computation time grows drastically when millions of photons are required for higher statistical accuracy. For instance, simulating 2 million photons on a CPU takes about 70 seconds. This becomes prohibitively slow for research scenarios requiring scans across multiple wavelengths and diverse tissue parameters.
+The CPU version processes photons serially. While sufficient for hundreds of thousands of photons, computation time grows prohibitively for the millions of photons required for high statistical accuracy. Simulating 2 million photons on a CPU takes approximately **70 seconds per wavelength**. A full parameter scan across tissue thicknesses and wavelengths can therefore take hours.
 
-The massive parallel architecture of GPUs is naturally suited for such "embarrassingly parallel" tasks. Since the transport process of each photon is independent and follows the same computational logic, it presents an ideal scenario for GPU acceleration.
+The GPU's massively parallel architecture is a natural fit: each photon's transport path is **statistically independent** and follows identical computational logic — a textbook case for data-level parallelism.
+
+---
 
 ## Core Features of the GPU Version
 
 ### 1. Significant Performance Improvement
 
-We benchmarked the system on an NVIDIA A100 GPU, yielding impressive results:
+Benchmarked on an NVIDIA A100 GPU:
 
 <div align="center">
 
 | Metric | CPU Version | GPU Version (CUDA) | Speedup |
-|:---:|:---:|:---:|:---:|
-| **Simulation Time** | ~70.0 s | **~0.4 s** | **175x** |
-| **Photon Transport** | Serial (Sequential) | Parallel (Thousands simultaneously) | - |
-| **Precision** | Double Precision | Double Precision + Atomic Operations | - |
+|:------:|:-----------:|:------------------:|:-------:|
+| **Runtime** | ~70.0 s | **~0.4 s** | **175×** |
+| **Photon execution** | Serial | Thousands in parallel | — |
+| **Precision** | Double | Double + atomic ops | — |
 
 </div>
 
-> Test Condition: 2 million photons per run.
+> Test condition: 2 million photons per run on a single layer tissue model.
 
-This means a simulation process that originally took two hours can now be completed in minutes. For research requiring rapid iteration, this boost is decisive.
+A full scan that previously required hours now completes in minutes. For iterative inverse-problem workflows or multi-wavelength studies, this speedup is decisive.
 
 ### 2. Implementation Highlights
 
-The GPU implementation is not a simple code port but a deep optimization tailored for parallel computing characteristics:
+The GPU implementation is a deep re-engineering for the parallel computing paradigm, not a naïve code port:
 
-- **Parallel Random Number Generation**: Uses the CUDA `curand` library to generate high-quality random numbers independently for each thread, avoiding pseudo-random sequence correlation issues.
-- **Atomic Operations for Consistency**: Photon weight accumulation uses `atomicAdd` to ensure data consistency during concurrent writes by multiple threads.
-- **Memory Access Optimization**: Adopts a flattened array layout to improve GPU global memory access efficiency.
-- **Double Precision Computing**: Maintain the same double-precision floating-point arithmetic as the CPU version to ensure numerical accuracy.
+- **Parallel RNG**: Uses the CUDA `curand` library to generate independent high-quality random number streams per thread, eliminating correlation artifacts.
+- **Atomic accumulation**: Photon weight contributions to `Rd_ra`, `A_rz`, and `Tt_ra` arrays use `atomicAdd` to guarantee correctness under concurrent writes from thousands of threads.
+- **Flattened memory layout**: Multi-dimensional output arrays are stored in contiguous 1D blocks, maximizing coalesced global memory access on the GPU.
+- **Double precision throughout**: The full double-precision arithmetic of the CPU version is preserved, ensuring numerical equivalence.
 
-The core physical algorithm logic (Hop-Drop-Spin) remains identical to the CPU version, with the execution mode shifting from serial to parallel.
+The physical Hop-Drop-Spin algorithm remains identical to the CPU version; only the execution model changes from serial to massively parallel.
 
-### 3. User-Friendly Workflow
+### 3. Batch Workflow and Auto-CSV Summary
+
+A key practical addition is **automatic per-run CSV summary generation**. After each simulation, the program appends a row to a `summary_<label>.csv` file:
+
+```
+output, Rd, Tt
+3mm_1500.mco, 0.0412, 0.3187
+```
+
+This makes it easy to aggregate results from a parameter sweep without post-processing scripts.
 
 #### Local Compilation and Execution
 
-On a workstation equipped with an NVIDIA GPU, running the simulation is straightforward:
+On a workstation with an NVIDIA GPU:
 
 ```bash
 cd version_gpu
-make                    # Compile to generate mcml_gpu executable
-./mcml_gpu input.mci    # Run simulation
+make                      # compiles mcml_gpu via Makefile (nvcc + gcc)
+./mcml_gpu input.mci      # runs simulation, auto-generates summary CSV
 ```
 
-The program automatically generates a corresponding CSV summary file (e.g., `summary_3mm_1500.csv`) for each input file (e.g., `3mm_1500.mci`).
+#### HPC Cluster Integration (SLURM)
 
-#### HPC Cluster Integration
-
-For large-scale parameter scanning, we provide SLURM job scripts for seamless integration into High-Performance Computing clusters:
+For large-scale parameter scanning on the LIP6 Convergence cluster (A100 partition):
 
 ```bash
-# Single file simulation
+# Single run
 sbatch version_gpu/run_gpu.slurm
 
-# Batch processing multiple files
+# Batch: 3mm / 4mm / 5mm tissue at 1500 photon packets each
 sbatch version_gpu/run_batch.slurm
 ```
 
-The scripts are configured for the LIP6 Convergence cluster (A100 3g.40gb partition) but can be adapted to other HPC environments by simply modifying partition and module load commands.
+The `run_batch.slurm` script recompiles the code, removes stale `.mco` files, and sequentially runs `3mm_1500.mci`, `4mm_1500.mci`, and `5mm_1500.mci`:
+
+```bash
+#!/bin/bash
+#SBATCH --partition=convergence
+#SBATCH --gres=gpu:a100_3g.40gb:1
+module load gcc/11 cuda/11.8
+
+make clean && make
+./mcml_gpu 3mm_1500.mci
+./mcml_gpu 4mm_1500.mci
+./mcml_gpu 5mm_1500.mci
+```
+
+For multi-mode variant runs (Ronly / Tonly / RT), use `run_gpu_variants.slurm` — this also serves as the entry point for the 3D GPU extension.
 
 ### 4. Visualization Tools
 
-In addition to MATLAB scripts, we developed a Python visualization tool (`plot_results.py`) to quickly generate:
+Beyond MATLAB scripts, a Python visualization tool `plot_results.py` generates publication-ready figures (300 DPI):
 
-- Reflectance (Rd) curves for different tissue thicknesses (3mm/4mm/5mm).
-- Transmittance (Tt) trends across wavelengths.
-- Multi-condition comparison plots to visualize the impact of tissue parameters on light transport.
+- **Reflectance ($R_d$) curves** as a function of wavelength, for 3 mm / 4 mm / 5 mm tissue.
+- **Transmittance ($T_t$) trends** across wavelengths and thicknesses.
+- **Multi-condition overlay plots** for comparing the influence of optical parameters.
 
 ```bash
 python3 version_gpu/plot_results.py
 ```
 
-The generated high-resolution images (300 DPI) are ready for publication.
+---
 
 ## Application Scenarios
 
-The GPU-accelerated version is particularly suitable for:
+The GPU-accelerated 2D version is particularly well-suited for:
 
-1.  **Large-scale Parameter Space Scanning**: Rapidly exploring combinations of different wavelengths, tissue thicknesses, and absorption/scattering coefficients.
-2.  **Inverse Problem Solving**: Retrieving tissue optical parameters from measured data via iterative optimization.
-3.  **Real-time Feedback Systems**: Providing near real-time theoretical predictions for clinical optical diagnostic devices.
-4.  **Educational Demonstrations**: Live classroom demonstrations of how parameter changes affect light transport.
+1. **Large-scale parameter sweeps**: Rapidly scanning wavelength, tissue thickness, and $\mu_a / \mu_s$ combinations.
+2. **Inverse problem solving**: Iteratively retrieving tissue optical properties from measured $R_d$ / $T_t$ data.
+3. **Sensor design optimization**: Finding the optimal source-detector separation (SDS) for wearable or implantable photonic sensors.
+4. **Educational demonstrations**: Near-instant classroom demos of how tissue properties alter light transport.
+
+---
 
 ## Technical Requirements
 
--   **Hardware**: NVIDIA GPU (Compute Capability 5.0+, A100/V100/RTX A-series recommended).
--   **Software**: CUDA Toolkit (e.g., v11.8), GCC Compiler.
+- **Hardware**: NVIDIA GPU (Compute Capability 5.0+; A100 / V100 / RTX A-series recommended for research).
+- **Software**: CUDA Toolkit ≥ 11.8, GCC ≥ 9.
 
-For users without a GPU, the standard CPU version remains available for small-scale verification and debugging.
+For users without a GPU, the CPU version remains available for small-scale verification and debugging.
+
+---
 
 ## Summary
 
-The translation of MOP-MCML to GPU has improved the efficiency of light transport simulation by two orders of magnitude, reducing computation tasks from hours or days to minutes. This not only accelerates research but also enables the exploration of more complex light-tissue interaction models.
+The GPU port of MOP-MCML reduces 2D simulation time by two orders of magnitude — from ~70 s to ~0.4 s per run. Combined with automatic CSV logging, HPC SLURM integration, and the Python visualization pipeline, it forms a complete parameter-scanning workflow for biomedical optics research.
 
-Whether you are a biomedical optics researcher, a medical physics engineer, or a developer interested in parallel computing, this project offers a practical and efficient tool. We hope it facilitates more scientific discoveries.
+For scenarios requiring full volumetric 3D resolution, see the **[MOP-MCML 3D Extension](../mop_mcml_3d)**, which extends the same GPU engine to a Cartesian $N_x \times N_y \times N_z$ grid with interactive MATLAB slice viewer.
 
 ---
 
