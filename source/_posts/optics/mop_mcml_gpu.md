@@ -127,6 +127,8 @@ Beyond MATLAB scripts, a Python visualization tool `plot_results.py` generates p
 python3 version_gpu/plot_results.py
 ```
 
+{% asset_img fig_2D_gpu.png 2D GPU Simulation Results %}
+
 ---
 
 ## Application Scenarios
