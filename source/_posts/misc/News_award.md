@@ -18,13 +18,13 @@ I am delighted to share some good news: I have received Best Student Paper Award
 
 ## Awards Details
 
-*  **Best Student Paper Award at the 6th IEEE BioSMART**
+* 🏆 **Best Student Paper Award at the 6th IEEE BioSMART**
   - **Conference Dates**: May 14-15, 2025, Paris
   - **Paper Title**: *Preliminary Development of an Opto-Electronic System for Ankle Instability Assessment*
   - **Co-authors**: Hang Li (LIP6), Ibrahim Saliba (Cochin Hospital), Alexandre Hardy (Paris Sports Medicine Clinic), Julien Denoulet (LIP6), Sylvain Feruglio (LIP6)
   - **Paper Link**: [https://hal.science/hal-05065209](https://hal.science/hal-05065209)
 
-*  **IEEE NEWCAS Young Professional Paper Award (First Prize) at the 23rd Edition**
+* 🏆 **IEEE NEWCAS Young Professional Paper Award (First Prize) at the 23rd Edition**
   - **Conference Dates**: June 22-25, 2025, Paris
   - **Paper Title**: *Design of Multi-Channel Wireless System for Physiological Signals Acquisition*
   - **Co-authors**: Hang Li (LIP6), Raphaël Vialle (Armand Trousseau Hospital, AP-HP), Julien Denoulet (LIP6), Sylvain Feruglio (LIP6)
