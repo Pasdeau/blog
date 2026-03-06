@@ -169,13 +169,159 @@ CLim        = [-5 -2]; % color axis range for log10(OP)
 run('look_mop_3d.m')
 ```
 
-## 6.3 Visualization Result
+## 6.3 Simulation Result
 
-{% asset_img preview_3d_op.png 3D Monte Carlo Optical Path Visualization (Cartesian grid, reflection mode, 10^6 photons) %}
+The figure below shows the actual output of the CPU simulation: three orthogonal cross-sectional slices of the $\log_{10}(\text{OP})$ volumetric field at initial positions (X=0, Y=0, Z=mid-depth). The photon injection point (point source at the top surface $z=0$) has the highest density (dark red), decaying with depth and lateral distance. This is the **authoritative output** of `look_mop_3d.m` applied to `3d_cpu_RT.mco`.
 
-The figure shows the initial slice positions (X=0, Y=0, Z=mid-depth). The photon injection point (point source, top surface $z=0$) has the highest density (dark red), decaying hemisperically with depth. By dragging the sliders:
-- Push the **Z slider** toward shallow depth to see the approximately circular lateral spot;
-- Shift the **X or Y slider** toward the detector position to quantify the photon density at the detection area.
+{% asset_img fig_3D.png 3D Monte Carlo Optical Path Visualization — CPU result, 10^6 photons, RT mode, rendered in MATLAB (look_mop_3d.m) %}
+
+---
+
+## 6.4 Web Interactive Explorer
+
+> **Note**: The interactive viewer below is built for exploration on this webpage. It uses a spatially downsampled version of the same dataset (factor ×2, i.e., $150 \times 150 \times 100$ voxels vs. the original $300 \times 300 \times 200$). The color scale and photon distribution pattern are faithful representations of the data, but the exact values and fine-grained spatial resolution should be taken from the authoritative figure above.
+
+**How to use:**
+- **Drag the 3D figure** (left-click + drag) to rotate the view.
+- **Use the sliders or ±  buttons** to move each cross-sectional plane along X, Y, or Z. You can also type a number directly into the input box.
+- The **X slider** moves the YZ plane laterally (observe depth-wise asymmetry).
+- The **Y slider** moves the XZ plane (compare source vs. detector side).
+- The **Z slider** moves the XY horizontal plane (inspect photon spot size at a given depth layer).
+
+<div style="background-color: #222; border-radius: 8px; padding: 15px; color: white;">
+  <div id="plotly-3d" style="width: 100%; height: 500px;"></div>
+  
+  <div style="display: flex; gap: 30px; font-family: sans-serif; padding-top: 15px; justify-content: center; align-items: center;">
+    <!-- X Axis Control -->
+    <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px;">
+      <label style="display: block; font-weight: bold;">X Slice</label>
+      <div style="display: flex; align-items: center; gap: 5px;">
+        <button onclick="stepSlice('x', -1)" style="background: #444; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer;">-</button>
+        <input type="number" id="x-num" min="0" max="149" value="75" style="width: 45px; text-align: center; background: #333; color: white; border: 1px solid #555; border-radius: 4px;">
+        <button onclick="stepSlice('x', 1)" style="background: #444; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer;">+</button>
+      </div>
+      <input type="range" id="x-slider" min="0" max="149" value="75" style="width: 120px;">
+    </div>
+    <!-- Y Axis Control -->
+    <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px;">
+      <label style="display: block; font-weight: bold;">Y Slice</label>
+      <div style="display: flex; align-items: center; gap: 5px;">
+        <button onclick="stepSlice('y', -1)" style="background: #444; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer;">-</button>
+        <input type="number" id="y-num" min="0" max="149" value="75" style="width: 45px; text-align: center; background: #333; color: white; border: 1px solid #555; border-radius: 4px;">
+        <button onclick="stepSlice('y', 1)" style="background: #444; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer;">+</button>
+      </div>
+      <input type="range" id="y-slider" min="0" max="149" value="75" style="width: 120px;">
+    </div>
+    <!-- Z Axis Control -->
+    <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px;">
+      <label style="display: block; font-weight: bold;">Z Slice</label>
+      <div style="display: flex; align-items: center; gap: 5px;">
+        <button onclick="stepSlice('z', -1)" style="background: #444; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer;">-</button>
+        <input type="number" id="z-num" min="0" max="99" value="10" style="width: 45px; text-align: center; background: #333; color: white; border: 1px solid #555; border-radius: 4px;">
+        <button onclick="stepSlice('z', 1)" style="background: #444; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer;">+</button>
+      </div>
+      <input type="range" id="z-slider" min="0" max="99" value="10" style="width: 120px;">
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<script>
+  fetch("volume_data.json")
+    .then(r => r.json())
+    .then(data => {
+      const shape = data.shape;
+      const binaryString = atob(data.b64_data);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      const floatData = new Float32Array(bytes.length);
+      const bgMapVal = -10.0;
+      for (let i = 0; i < bytes.length; i++) {
+        if (bytes[i] === data.bg_val) {
+           floatData[i] = bgMapVal;
+        } else {
+           floatData[i] = -10.0 + (bytes[i] / 255.0) * (data.vis_max - (-10.0));
+        }
+      }
+      
+      let x = [], y = [], z = [], val = [];
+      let idx = 0;
+      for(let ix = 0; ix < shape[0]; ix++){
+          for(let iy = 0; iy < shape[1]; iy++){
+              for(let iz = 0; iz < shape[2]; iz++){
+                  x.push(ix);
+                  y.push(iy);
+                  z.push(iz); // Z starts from 0 to depth
+                  val.push(floatData[idx]);
+                  idx++;
+              }
+          }
+      }
+      
+      let trace = {
+          type: 'volume',
+          x: x,  y: y,  z: z,  value: val,
+          isomin: bgMapVal, // Render the background (-10) as deep blue instead of transparent
+          isomax: data.vis_max,
+          opacity: 1.0,  // Fully opaque solid slices
+          surface: {show: false},
+          spaceframe: {show: false},
+          caps: { x: {show: false}, y: {show: false}, z: {show: false} },
+          slices: {
+              x: {show: true, locations: [75]},
+              y: {show: true, locations: [75]},
+              z: {show: true, locations: [10]}
+          },
+          colorscale: 'Jet',
+          colorbar: { title: 'log10(OP)' }
+      };
+      
+      let layout = {
+          margin: {l: 0, r: 0, b: 0, t: 0},
+          paper_bgcolor: '#222',
+          plot_bgcolor: '#222',
+          font: { color: 'white' },
+          scene: {
+              xaxis: {title: 'X', showgrid: true, backgroundcolor: '#333'},
+              yaxis: {title: 'Y', showgrid: true, backgroundcolor: '#333'},
+              zaxis: {
+                  title: 'Depth (Z)', 
+                  showgrid: true, 
+                  backgroundcolor: '#333',
+                  autorange: 'reversed'
+              },
+              aspectratio: {x: 1, y: 1, z: shape[2]/shape[0]}
+          }
+      };
+      
+      Plotly.newPlot('plotly-3d', [trace], layout);
+      
+      function updateSlice(axis, valStr) {
+          let v = parseInt(valStr);
+          // Sync slider and number input
+          document.getElementById(axis + '-slider').value = v;
+          document.getElementById(axis + '-num').value = v;
+          // Re-render plot
+          Plotly.restyle('plotly-3d', `slices.${axis}.locations`, [[v]]);
+      }
+      
+      window.stepSlice = function(axis, step) {
+          let el = document.getElementById(axis + '-num');
+          let newVal = parseInt(el.value) + step;
+          if (newVal >= el.min && newVal <= el.max) {
+              updateSlice(axis, newVal);
+          }
+      };
+      
+      // Bind inputs
+      ['x', 'y', 'z'].forEach(axis => {
+          document.getElementById(axis + '-slider').oninput = (e) => updateSlice(axis, e.target.value);
+          document.getElementById(axis + '-num').onchange = (e) => updateSlice(axis, e.target.value);
+      });
+    });
+</script>
 
 ---
 
@@ -209,7 +355,7 @@ The 3D grid upgrades `OP_3D` from the earlier 2D array to a full $N_x \times N_y
 | Photons | $10^6$ | $10^6$ |
 | Grid size | $300\times300\times200$ | $300\times300\times200$ |
 | Runtime | ~minutes | **< 1 s** |
-| Output accuracy |  |  (equivalent) |
+| Output accuracy | Baseline | Statistically equivalent |
 
 </div>
 
@@ -235,8 +381,6 @@ Once done, load any GPU output directly into `look_mop_3d.m` for interactive vis
 mco_file = 'validate_RT/3d_gpu_RT.mco';
 run('look_mop_3d.m')
 ```
-
-{% asset_img fig_3D.png 3D GPU Output Visualization (Generated by CPU, statistically equivalent) %}
 
 ---
 
