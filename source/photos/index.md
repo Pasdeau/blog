@@ -10,9 +10,74 @@ comments: false
   <button data-filter="travel">Travel</button>
   <button data-filter="lab">Lab</button>
   <button data-filter="puppy">Puppy</button>
+  <button data-filter="kitten">Kitten</button>
 </div>
 
 <div class="gallery-grid">
+  <a href="/images/photos/Life/IMG_6721.jpg" data-fancybox="photos" data-caption="IMG_6721" data-category="Life">
+    <img src="/images/photos/Life/IMG_6721.jpg" alt="IMG_6721" loading="lazy">
+    <span class="caption">IMG_6721</span>
+  </a>
+  <a href="/images/photos/lab/IMG_6748.jpg" data-fancybox="photos" data-caption="IMG_6748" data-category="lab">
+    <img src="/images/photos/lab/IMG_6748.jpg" alt="IMG_6748" loading="lazy">
+    <span class="caption">IMG_6748</span>
+  </a>
+  <a href="/images/photos/lab/IMG_6772.jpg" data-fancybox="photos" data-caption="IMG_6772" data-category="lab">
+    <img src="/images/photos/lab/IMG_6772.jpg" alt="IMG_6772" loading="lazy">
+    <span class="caption">IMG_6772</span>
+  </a>
+  <a href="/images/photos/kitten/IMG_1652.jpg" data-fancybox="photos" data-caption="IMG_1652" data-category="kitten">
+    <img src="/images/photos/kitten/IMG_1652.jpg" alt="IMG_1652" loading="lazy">
+    <span class="caption">IMG_1652</span>
+  </a>
+  <a href="/images/photos/kitten/IMG_1707.jpg" data-fancybox="photos" data-caption="IMG_1707" data-category="kitten">
+    <img src="/images/photos/kitten/IMG_1707.jpg" alt="IMG_1707" loading="lazy">
+    <span class="caption">IMG_1707</span>
+  </a>
+  <a href="/images/photos/kitten/IMG_1717.JPG" data-fancybox="photos" data-caption="IMG_1717" data-category="kitten">
+    <img src="/images/photos/kitten/IMG_1717.JPG" alt="IMG_1717" loading="lazy">
+    <span class="caption">IMG_1717</span>
+  </a>
+  <a href="/images/photos/kitten/IMG_1754.jpg" data-fancybox="photos" data-caption="IMG_1754" data-category="kitten">
+    <img src="/images/photos/kitten/IMG_1754.jpg" alt="IMG_1754" loading="lazy">
+    <span class="caption">IMG_1754</span>
+  </a>
+  <a href="/images/photos/kitten/IMG_1755.jpg" data-fancybox="photos" data-caption="IMG_1755" data-category="kitten">
+    <img src="/images/photos/kitten/IMG_1755.jpg" alt="IMG_1755" loading="lazy">
+    <span class="caption">IMG_1755</span>
+  </a>
+  <a href="/images/photos/kitten/IMG_1768.jpg" data-fancybox="photos" data-caption="IMG_1768" data-category="kitten">
+    <img src="/images/photos/kitten/IMG_1768.jpg" alt="IMG_1768" loading="lazy">
+    <span class="caption">IMG_1768</span>
+  </a>
+  <a href="/images/photos/kitten/IMG_1769.jpg" data-fancybox="photos" data-caption="IMG_1769" data-category="kitten">
+    <img src="/images/photos/kitten/IMG_1769.jpg" alt="IMG_1769" loading="lazy">
+    <span class="caption">IMG_1769</span>
+  </a>
+  <a href="/images/photos/kitten/IMG_1815.jpg" data-fancybox="photos" data-caption="IMG_1815" data-category="kitten">
+    <img src="/images/photos/kitten/IMG_1815.jpg" alt="IMG_1815" loading="lazy">
+    <span class="caption">IMG_1815</span>
+  </a>
+  <a href="/images/photos/kitten/IMG_1827.jpg" data-fancybox="photos" data-caption="IMG_1827" data-category="kitten">
+    <img src="/images/photos/kitten/IMG_1827.jpg" alt="IMG_1827" loading="lazy">
+    <span class="caption">IMG_1827</span>
+  </a>
+  <a href="/images/photos/puppy/IMG_6756.jpg" data-fancybox="photos" data-caption="IMG_6756" data-category="puppy">
+    <img src="/images/photos/puppy/IMG_6756.jpg" alt="IMG_6756" loading="lazy">
+    <span class="caption">IMG_6756</span>
+  </a>
+  <a href="/images/photos/puppy/IMG_6759.jpg" data-fancybox="photos" data-caption="IMG_6759" data-category="puppy">
+    <img src="/images/photos/puppy/IMG_6759.jpg" alt="IMG_6759" loading="lazy">
+    <span class="caption">IMG_6759</span>
+  </a>
+  <a href="/images/photos/puppy/IMG_6760.jpg" data-fancybox="photos" data-caption="IMG_6760" data-category="puppy">
+    <img src="/images/photos/puppy/IMG_6760.jpg" alt="IMG_6760" loading="lazy">
+    <span class="caption">IMG_6760</span>
+  </a>
+  <a href="/images/photos/puppy/IMG_6661.png" data-fancybox="photos" data-caption="IMG_6661" data-category="puppy">
+    <img src="/images/photos/puppy/IMG_6661.png" alt="IMG_6661" loading="lazy">
+    <span class="caption">IMG_6661</span>
+  </a>
   <a href="/images/photos/Life/IMG_2092.jpg" data-fancybox="photos" data-caption="IMG_2092" data-category="Life">
     <img src="/images/photos/Life/IMG_2092.jpg" alt="IMG_2092" loading="lazy">
     <span class="caption">IMG_2092</span>
