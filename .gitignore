@@ -8,3 +8,14 @@ public/
 _multiconfig.ymlpublic
 node_modules
 .deploy_git
+
+# Local scripts and data
+combine_gallery.py
+generate_gallery_v2.py
+test_exif.py
+test_exif_v2.py
+update_gallery_images.py
+convert_images.py
+timestamps.txt
+source/photos/gallery_content.html
+__pycache__/

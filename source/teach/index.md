@@ -1,9 +1,10 @@
 ---
 title: Teaching Experience
 layout: page
+comments: false
 ---
 
-During my PhD, I have been teaching laboratory (TP) and tutorial (TD) sessions at Polytech Sorbonne—the engineering school of Sorbonne Université—as well as in the **Licence** EEA track (Électronique, Énergie Électrique, Automatique) and the **Master** SESI track (Systèmes Électroniques et Systèmes Informatiques).
+During my PhD, I taught lectures (CM), laboratories (TP) and tutorials (TD) sessions at Polytech Sorbonne—the engineering school of Sorbonne University. I also instructed in the **Licence** EEA track (Électronique, Énergie Électrique, Automatique) and the **Master** SESI track (Systèmes Électroniques et Systèmes Informatiques) at Sorbonne University.
 
 ---
 
