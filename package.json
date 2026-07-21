@@ -25,13 +25,13 @@
     "hexo-renderer-stylus": "^3.0.1",
     "hexo-server": "^3.0.0",
     "hexo-theme-landscape": "^1.0.0",
-    "hexo-theme-next": "^8.27.0",
+    "hexo-theme-next": "^8.28.0",
     "hexo-util": "^4.0.0",
-    "hexo-word-counter": "^0.2.2"
+    "hexo-word-counter": "^0.3.0-rc.1"
   },
   "devDependencies": {
     "hexo-renderer-markdown-it": "^7.1.1",
-    "katex": "^0.17.0",
+    "katex": "^0.18.1",
     "markdown-it-katex": "^2.0.3"
   }
 }
