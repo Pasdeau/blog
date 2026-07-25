@@ -116,7 +116,7 @@
     for (let i = 0; i < 5; i++) {
       const heart = document.createElement('div');
       heart.className = 'oneko-heart';
-      heart.innerHTML = '🐾';
+      heart.innerHTML = '♥';
       heart.style.left = (x + (Math.random() * 30 - 15)) + 'px';
       heart.style.top = (y - 10 + (Math.random() * 20 - 10)) + 'px';
       document.body.appendChild(heart);
