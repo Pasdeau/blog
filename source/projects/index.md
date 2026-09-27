@@ -32,7 +32,7 @@ This thesis links these challenges into an interconnected experimental chain, mo
 
 In multilayer biological tissues (such as skin, fat, muscle, ligament, and bone), the physical separation between an optical source and a photodetector provides little insight into where photons actually migrate. Standard forward Monte Carlo codes (like conventional MCML) simulate light radiating outward everywhere into a grid. However, for probe design, we care strictly about the small fraction of scattered photons that survive absorption and reach the finite active area of our photodiode.
 
-To resolve this directly, we developed **MOP-MCML** (*Measurement-Oriented Path Monte Carlo*). The simulator reformulates photon tracking by computing detected photon probability distributions and recording layer-by-layer optical pathlengths under arbitrary source-detector separations (SDS) and multi-wavelength illumination.
+To resolve this directly, we developed **MOP-MCML** (*Mean optical path Monte Carlo Multi-Layered*). The simulator reformulates photon tracking by computing detected photon probability distributions and recording layer-by-layer optical pathlengths under arbitrary source-detector separations (SDS) and multi-wavelength illumination.
 
 Crucially, the simulator resolves photon migration in both measurement modes:
 - **Reflection mode (R)**: Source and detector sit on the same tissue surface (*z* = 0). Detected light forms a curved, "banana-shaped" spatial corridor whose penetration depth is governed by the source-detector separation.
@@ -41,7 +41,7 @@ Crucially, the simulator resolves photon migration in both measurement modes:
 We verified the model experimentally using double integrating spheres and the **Inverse Adding-Doubling (IAD)** method on calibrated solid silicone and liquid intralipid phantoms, confirming that simulated depth profiles reflect physical optical transport across complex musculoskeletal and vertebral targets.
 
 ![Optical Path Distributions in Reflection and Transmission Modes](/projects/fig2_mop_mcml_rt.png)
-*Figure 1: Spatial optical path distributions in reflection (a) and transmission (b) modes for human subcutaneous tissue, resolving the effective exploration depth and photon migration corridors.*
+*Figure 1: Spatial optical path distributions in reflection (R) and transmission (T) modes for human subcutaneous tissue, resolving the effective exploration depth and photon migration corridors.*
 
 ---
 
@@ -49,10 +49,10 @@ We verified the model experimentally using double integrating spheres and the **
 
 Multi-wavelength optical monitoring relies on time-division multiplexing: rapidly sequencing multiple LEDs alongside an unilluminated dark state to subtract ambient light. If LED switching drifts relative to analog-to-digital conversion even by microseconds, optical states become ambiguous, corrupting subsequent chromophore absorption calculations.
 
-To guarantee absolute phase coherence, our system locks LED switching directly to the Analog Front-End (AFE) Data Ready (`DRDY`) hardware interrupt:
-- **Sample-Synchronous Multiplexing**: At 4 kSPS, each illumination slot spans **four DRDY periods (*T*<sub>slot</sub> = 1 ms)**, completing a five-slot cycle (λ<sub>1</sub>–λ<sub>4</sub> plus dark state) in **5 ms (200 Hz repetition rate)**. This finite duration allows the constant-current LED driver and receiver transimpedance electronics to settle during initial samples, leaving later samples in each slot to capture the clean, steady optical response.
-- **Embedded State Metadata**: Serialized frames interleave hardware illumination state tags directly with 24-bit digitized biopotentials, preserving state identity through buffers and wireless transmission.
-- **Three-Node Wireless Topology**: Sustaining 4 kSPS continuous streaming at 52 kB/s net payload easily causes buffer congestion on standard PC Bluetooth stacks. We resolved this by introducing an intermediate embedded relay node that handles Bluetooth Low Energy (BLE) reception and forwards the raw stream over high-speed UART.
+To guarantee absolute phase coherence, our system locks optical switching directly to the hardware conversion strobe of the biopotential Analog Front-End (AFE):
+- **Sample-Synchronous Timing**: Rather than relying on unsynchronized microsecond software delays, LED switching is triggered synchronously on hardware conversion boundaries. Operating at 4 kSPS, each optical illumination window spans **four consecutive analog-to-digital conversion periods (*T*<sub>slot</sub> = 1 ms)**. A full measurement cycle sequences five distinct time slots (four active optical wavelengths λ<sub>1</sub>–λ<sub>4</sub> plus an unilluminated dark frame for ambient subtraction) every **5 ms (200 Hz repetition rate)**.
+- **Transient Settling & Plateau Sampling**: When switching high-current LEDs, the driver circuitry and receiver transimpedance amplifier require finite time to overcome parasitic capacitance and reach electrical equilibrium. Allocating four conversion periods per slot allows initial samples to absorb these switching transients, ensuring subsequent digitized readings represent the true, steady-state optical response before advancing to the next wavelength.
+- **Synchronous Metadata & Lossless Telemetry**: Hardware illumination state tags are interleaved directly with 24-bit digitized biopotentials at the moment of conversion, preserving state identity through intermediate buffers. To prevent buffer overflow on host operating systems under sustained 4 kSPS streaming (52 kB/s net payload), an embedded relay bridge handles Bluetooth Low Energy reception and forwards the raw stream via high-speed UART.
 
 The complete system sustained continuous transmission with **0% packet loss**, low bounded latency (<20 ms), and sub-millisecond timestamp precision across multi-hour surgical deployments. The recovered multi-channel recordings demonstrated strong inter-wavelength cardiac synchronization (cross-correlation with λ<sub>4</sub> up to 0.96) and robust relative spectral quality (RSQI).
 
@@ -87,7 +87,7 @@ We addressed this through two complementary Kalman filtering strategies:
 The experimental methodology spans three complementary tiers, connecting computational modeling, operating theater deployment, and multimodal human physiology:
 
 | Evaluation Tier | Experimental Protocol | Primary Outcomes & Validation Objectives |
-| :--- | :--- | :--- |
+| :---: | :---: | :---: |
 | **Solid & Liquid Optical Phantoms** | Integrating spheres & spectrophotometry using calibrated solid silicone and liquid intralipid matrices | Validated the experimental feasibility of optical property extraction (*μ*<sub>a</sub>, *μ*<sub>s</sub>′) and verified that physical photon propagation depth in scattering media strictly matches MOP-MCML simulation predictions. |
 | **In Vivo Porcine Surgery** | Long-duration intraoperative multi-wavelength monitoring in a surgical operating theater | Demonstrated continuous, long-distance wireless telemetry and robust data logging under realistic surgical conditions, maintaining uninterrupted recording despite severe electrocautery noise and metallic interference. |
 | **Human Multimodal Protocols** | Synchronous recording of multi-wavelength PPG, ECG, and IMU inertial signals during rest and movement | Validated cooperative multi-signal processing across modalities, extracting key cardiovascular biomarkers such as Pulse Arrival Time (PAT) to facilitate downstream algorithm development for cuffless PPG blood pressure estimation. |
@@ -108,7 +108,7 @@ The experimental methodology spans three complementary tiers, connecting computa
 - **W. Wang**, S. Li, I. Saliba, A. Hardy, R. Vialle, J. Denoulet, S. Feruglio. "Optimizing the Monte-Carlo simulation program for NIRS modeling of biological tissues in optoelectronic devices." *31st IEEE International Conference on Electronics, Circuits and Systems (ICECS)*, 2024. [\[PDF\]](https://hal.science/hal-04709286) · [\[DOI: 10.1109/ICECS61496.2024.10849250\]](https://doi.org/10.1109/ICECS61496.2024.10849250) · [\[GitHub\]](https://github.com/Pasdeau/MOP-MCML)
 
 ## Open-Source Repositories
-- **[Pasdeau/MOP-MCML](https://github.com/Pasdeau/MOP-MCML)**: Monte Carlo photon migration simulator in layered turbid media, supporting custom source-detector configurations, GPU acceleration, and 3D trajectory tracking.
+- **[Pasdeau/MOP-MCML](https://github.com/Pasdeau/MOP-MCML)**: Mean optical path Monte Carlo Multi-Layered simulator for photon migration in layered turbid media, supporting custom source-detector configurations, GPU acceleration, and 3D trajectory tracking.
 - **[Pasdeau/Sys_collect](https://github.com/Pasdeau/Sys_collect)**: Firmware and multi-wavelength BLE-to-UART streaming pipeline for continuous multimodal physiological acquisition.
 - **[Pasdeau/ExG_Generator](https://github.com/Pasdeau/ExG_Generator)**: Electrophysiological signal synthesis, realistic noise modeling, and evaluation suite for bioelectrical signal processing.
 
