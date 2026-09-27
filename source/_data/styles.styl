@@ -234,3 +234,114 @@
     opacity: 0
     transform: scale(1) translateY(-40px)
 
+/* 博客主题分类导航与列表样式 (Thematic Post Lists) */
+.topic-nav-pills
+  display: flex
+  flex-wrap: wrap
+  gap: 8px
+  justify-content: center
+  margin: 15px 0 35px
+
+.topic-nav-pill
+  display: inline-flex
+  align-items: center
+  gap: 6px
+  padding: 6px 14px
+  border-radius: 999px
+  border: 1px solid var(--btn-default-border-color, rgba(128,128,128,0.25))
+  background: var(--body-bg-color, transparent)
+  color: var(--text-color, inherit) !important
+  font-size: 0.88rem
+  font-weight: 500
+  text-decoration: none !important
+  transition: all 0.2s ease
+
+.topic-nav-pill:hover
+  background: var(--theme-color, #222)
+  color: #fff !important
+  border-color: var(--theme-color, #222)
+  transform: translateY(-1px)
+
+.topic-nav-pill .badge
+  padding: 1px 7px
+  font-size: 0.75rem
+  border-radius: 999px
+  background: rgba(128,128,128,0.15)
+  color: inherit
+
+.topic-nav-pill:hover .badge
+  background: rgba(255,255,255,0.25)
+  color: #fff
+
+.topic-nav-pill.timeline-pill
+  border-style: dashed
+
+.topic-category-section
+  margin-bottom: 35px
+
+.topic-category-header
+  display: flex
+  align-items: center
+  gap: 10px
+  margin: 30px 0 12px
+  padding-bottom: 8px
+  border-bottom: 1.5px solid var(--theme-color, rgba(128,128,128,0.25))
+  font-size: 1.25rem
+  font-weight: 700
+
+.topic-category-header i
+  color: var(--theme-color, inherit)
+  font-size: 1.1rem
+
+.topic-category-header .badge
+  font-size: 0.8rem
+  font-weight: normal
+  padding: 2px 8px
+  border-radius: 999px
+  background: rgba(128,128,128,0.12)
+  opacity: 0.8
+
+.topic-post-list
+  list-style: none !important
+  padding: 0 !important
+  margin: 0 0 20px !important
+
+.topic-post-item
+  display: flex
+  align-items: baseline
+  padding: 9px 12px
+  border-bottom: 1px dashed rgba(128,128,128,0.15)
+  border-radius: 6px
+  transition: background 0.15s ease
+  gap: 16px
+
+.topic-post-item:hover
+  background: rgba(128,128,128,0.06)
+
+.topic-post-date
+  font-family: Consolas, Monaco, "Courier New", monospace
+  font-size: 0.86rem
+  opacity: 0.65
+  flex-shrink: 0
+  min-width: 95px
+
+.topic-post-title
+  flex-grow: 1
+  font-size: 0.96rem
+  font-weight: 500
+  color: var(--link-color, inherit)
+  text-decoration: none !important
+
+.topic-post-item:hover .topic-post-title
+  color: var(--link-hover-color, #222)
+  text-decoration: underline !important
+
+@media (max-width: 600px)
+  .topic-post-item
+    flex-direction: column
+    gap: 4px
+    padding: 8px 6px
+  .topic-post-date
+    font-size: 0.78rem
+
+
