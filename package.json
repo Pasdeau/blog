@@ -9,7 +9,7 @@
     "server": "hexo server"
   },
   "hexo": {
-    "version": "8.1.1"
+    "version": "8.1.2"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
@@ -24,14 +24,13 @@
     "hexo-renderer-marked": "^7.0.0",
     "hexo-renderer-stylus": "^3.0.1",
     "hexo-server": "^3.0.0",
-    "hexo-theme-landscape": "^1.0.0",
-    "hexo-theme-next": "^8.28.0",
+    "hexo-theme-next": "^8.29.0",
     "hexo-util": "^4.0.0",
     "hexo-word-counter": "^0.3.0-rc.1"
   },
   "devDependencies": {
     "hexo-renderer-markdown-it": "^7.1.1",
-    "katex": "^0.18.1",
+    "katex": "^0.18.9",
     "markdown-it-katex": "^2.0.3"
   }
 }
