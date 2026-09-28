@@ -6,12 +6,8 @@ lang: en
 mathjax: false
 toc: true
 categories:
-  - Technical Share
-  - Lab Guides
+  - Tools & Workflows
 tags:
-  - HPC
-  - GPU
-  - SSH
   - Slurm
 description: A comprehensive guide for LIP6 lab members on accessing and utilizing the GPU cluster, covering SSH connections, environment setup, and Slurm job submission.
 ---

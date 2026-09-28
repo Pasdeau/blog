@@ -1,19 +1,16 @@
 ---
-title: "MOP-MCML GPU Version: 175x Faster 2D Light Transport Simulation"
+title: "MOP-MCML GPU: 175x Faster 2D Simulation"
 date: 2025-12-16
 comments: true
 lang: en
 mathjax: true
 toc: true
 categories:
-  - Research Projects
-  - Optical Simulation
+  - Biomedical Optics
 tags:
-  - MCML
-  - GPU
+  - MOP-MCML
   - CUDA
-  - Simulation
-  - MOP
+  - Optical Simulation
 description: A detailed introduction to the GPU-accelerated 2D version of MOP-MCML, achieving a 175x performance leap on NVIDIA A100 via CUDA, with batch parameter scanning, Python visualization, and full HPC cluster integration.
 ---
 
@@ -23,7 +20,7 @@ The **Monte Carlo Multi-Layered (MCML)** method is the gold standard algorithm i
 
 This project implements both a CPU and a high-performance GPU version of the 2D MOP-MCML simulator. The original CPU implementation was developed by Songlin Li. It was extended with GPU acceleration and improved I/O by **Wenzheng Wang** under the supervision of Prof. Sylvain Feruglio at the LIP6 Laboratory, Sorbonne University.
 
-> **Note**: For the 3D Cartesian grid extension (full-volume OP visualization), see [MOP-MCML 3D Version](../mop_mcml_3d).
+> **Note**: For the 3D Cartesian grid extension (full-volume OP visualization), see [MOP-MCML 3D: Volumetric Optical Path Mapping](/2026/03/05/optics/mop_mcml_3d/).
 
 ---
 
@@ -155,7 +152,7 @@ For users without a GPU, the CPU version remains available for small-scale verif
 
 The GPU port of MOP-MCML reduces 2D simulation time by two orders of magnitude — from ~70 s to ~0.4 s per run. Combined with automatic CSV logging, HPC SLURM integration, and the Python visualization pipeline, it forms a complete parameter-scanning workflow for biomedical optics research.
 
-For scenarios requiring full volumetric 3D resolution, see the **[MOP-MCML 3D Extension](../mop_mcml_3d)**, which extends the same GPU engine to a Cartesian $N_x \times N_y \times N_z$ grid with interactive MATLAB slice viewer.
+For scenarios requiring full volumetric 3D resolution, see **[MOP-MCML 3D: Volumetric Optical Path Mapping](/2026/03/05/optics/mop_mcml_3d/)**, which extends the same GPU engine to a Cartesian $N_x \times N_y \times N_z$ grid with interactive MATLAB slice viewer.
 
 ---
 

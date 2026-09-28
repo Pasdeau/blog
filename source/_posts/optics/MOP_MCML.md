@@ -6,13 +6,10 @@ lang: en
 mathjax: true
 toc: true
 categories:
-  - Research Projects
-  - Optical Simulation
-tags:
-  - MCML
-  - Monte Carlo
   - Biomedical Optics
-  - MOP
+tags:
+  - MOP-MCML
+  - Optical Simulation
 description: A practical, theory-grounded guide to the MOP-MCML simulator for modeling photon transport in layered biological tissues, featuring Mean Optical Path (MOP) analysis and enhanced visualization.
 ---
 

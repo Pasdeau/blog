@@ -1,17 +1,14 @@
 ---
-title: "EMG Gesture Recognition: Generalization & Calibration"
+title: "EMG Gesture Recognition Across Subjects"
 date: 2025-12-28
 comments: true
 lang: en
 mathjax: true
 toc: true
 categories:
-  - Research Projects
-  - Signal Processing
+  - Biosignal Processing
 tags:
-  - Cross-Subject
-  - Transfer Learning
-  - Calibration
+  - EMG
 description: Discussing the severe cross-subject distribution shift in EMG signals and proposing a solution based on Universal Models and Few-Shot Rapid Calibration.
 ---
 

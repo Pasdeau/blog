@@ -6,13 +6,9 @@ lang: en
 mathjax: true
 toc: true
 categories:
-  - Research Projects
-  - Neural Engineering
+  - Biosignal Processing
 tags:
   - ENG
-  - Simulation
-  - Deep Learning
-  - Physics-based
 description: Exploring a physics-driven Electroneurography (ENG) simulator using Gaussian Difference functions and Colored Noise models to address low SNR and labeling challenges in real neural data.
 ---
 

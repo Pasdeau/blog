@@ -6,14 +6,10 @@ lang: en
 mathjax: true
 toc: true
 categories:
-  - Research Projects
-  - Biomedical Resources
+  - Biosignal Processing
 tags:
-  - PhysioNet
-  - Datasets
-  - ECG
   - PPG
-  - EEG
+  - ECG
 description: An overview of openly accessible physiological signal repositories from PhysioNet, serving as essential resources for training advanced models and validating biomedical algorithms.
 ---
 

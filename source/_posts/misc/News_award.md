@@ -6,11 +6,9 @@ lang: en
 mathjax: false
 toc: true
 categories:
-  - Personal Life
-  - Awards
+  - Life & Activities
 tags:
-  - IEEE
-  - Academic Awards
+  - PhD Life
 description: Sharing the experience of winning Best Student Paper Awards at two IEEE conferences.
 ---
 

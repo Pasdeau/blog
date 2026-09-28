@@ -6,12 +6,9 @@ lang: en
 mathjax: false
 toc: true
 categories:
-  - Personal Life
-  - Interviews
+  - Life & Activities
 tags:
   - PhD Life
-  - Interview
-  - LIP6
 description: A record of an interview with the LIP6 laboratory, sharing insights into PhD research life and scientific work.
 ---
 

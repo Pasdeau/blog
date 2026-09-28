@@ -1,23 +1,19 @@
 ---
-title: "MOP-MCML 3D Extension: Full-Volume Optical Path Visualization on a Cartesian Grid"
+title: "MOP-MCML 3D: Volumetric Optical Path Mapping"
 date: 2026-03-05
 comments: true
 lang: en
 mathjax: true
 toc: true
 categories:
-  - Research Projects
-  - Optical Simulation
-tags:
-  - MCML
-  - Monte Carlo
-  - 3D Visualization
   - Biomedical Optics
-  - MOP
+tags:
+  - MOP-MCML
+  - Optical Simulation
 description: Introducing the 3D extension of MOP-MCML, which upgrades photon path recording from cylindrical 2D to a full Cartesian 3D grid (OP_3D), enabling volumetric visualization of light-tissue interactions — available in both CPU and GPU implementations.
 ---
 
-Following the [baseline MOP-MCML](../MOP_MCML) and [GPU-accelerated 2D version](../mop_mcml_gpu), we faced a fundamental limitation: **a 2D cylindrical OP map cannot faithfully represent off-axis, asymmetric source-detector geometries**. This post introduces the 3D extension of MOP-MCML, upgrading photon path recording from $(r, z)$ cylindrical to a full $(x, y, z)$ Cartesian grid, enabling complete volumetric visualization.
+Following [MOP-MCML: A User Guide and Technical Introduction](/2025/09/09/optics/MOP_MCML/) and [MOP-MCML GPU: 175x Faster 2D Simulation](/2025/12/16/optics/mop_mcml_gpu/), we faced a fundamental limitation: **a 2D cylindrical OP map cannot faithfully represent off-axis, asymmetric source-detector geometries**. This post introduces the 3D extension of MOP-MCML, upgrading photon path recording from $(r, z)$ cylindrical to a full $(x, y, z)$ Cartesian grid, enabling complete volumetric visualization.
 
 ---
 
@@ -406,6 +402,6 @@ run('look_mop_3d.m')
 
 # Further Reading
 
-- [MOP-MCML Baseline Version](../MOP_MCML)
-- [MOP-MCML GPU-Accelerated 2D Version](../mop_mcml_gpu)
+- [MOP-MCML: A User Guide and Technical Introduction](/2025/09/09/optics/MOP_MCML/)
+- [MOP-MCML GPU: 175x Faster 2D Simulation](/2025/12/16/optics/mop_mcml_gpu/)
 - **Source Code**: [GitHub - Pasdeau/MOP-MCML](https://github.com/Pasdeau/MOP-MCML)

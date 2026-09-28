@@ -6,12 +6,8 @@ lang: en
 mathjax: false
 toc: true
 categories:
-  - Technical Share
-  - Deep Learning
+  - Biosignal Processing
 tags:
-  - Multi-Task Learning
-  - CNN
-  - ResNet
   - PPG
 description: Exploring the architectural conflict between classification (translation invariance) and localization (translation equivariance) in PPG signal analysis.
 ---

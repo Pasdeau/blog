@@ -6,11 +6,9 @@ lang: zh
 mathjax: false
 toc: true
 categories:
-  - Personal Life
-  - Board Games
+  - Life & Activities
 tags:
-  - 桌游
-  - 奶酪大盗
+  - Board Games
 description: 奶酪大盗桌游主持人配音，按 4–8 人局选择，可直接播放与下载。
 ---
 

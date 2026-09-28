@@ -6,13 +6,10 @@ lang: en
 mathjax: true
 toc: true
 categories:
-  - Research Projects
-  - Optical Simulation
+  - Biomedical Optics
 tags:
   - IAD
-  - MCML
-  - Optics
-  - Simulation
+  - Optical Simulation
 description: A comprehensive guide to the Inverse Adding-Doubling (IAD) method for deducing intrinsic optical parameters from reflectance and transmittance measurements, including validation against MOP-MCML simulations.
 ---
 

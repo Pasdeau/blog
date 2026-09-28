@@ -35,13 +35,13 @@ In multilayer biological tissues (such as skin, fat, muscle, ligament, and bone)
 To resolve this directly, we developed **MOP-MCML** (*Mean optical path Monte Carlo Multi-Layered*). The simulator reformulates photon tracking by computing detected photon probability distributions and recording layer-by-layer optical pathlengths under arbitrary source-detector separations (SDS) and multi-wavelength illumination.
 
 Crucially, the simulator resolves photon migration in both measurement modes:
-- **Reflection mode (R)**: Source and detector sit on the same tissue surface (*z* = 0). Detected light forms a curved, "banana-shaped" spatial corridor whose penetration depth is governed by the source-detector separation.
+- **Reflection mode (<span>R</span>)**: Source and detector sit on the same tissue surface (*z* = 0). Detected light forms a curved, "banana-shaped" spatial corridor whose penetration depth is governed by the source-detector separation.
 - **Transmission mode (T)**: Light enters from one surface and emerges through the opposite boundary, concentrating tightly along the optical axis between source and detector across the full tissue thickness.
 
 We verified the model experimentally using double integrating spheres and the **Inverse Adding-Doubling (IAD)** method on calibrated solid silicone and liquid intralipid phantoms, confirming that simulated depth profiles reflect physical optical transport across complex musculoskeletal and vertebral targets.
 
 ![Optical Path Distributions in Reflection and Transmission Modes](/projects/fig2_mop_mcml_rt.png)
-*Figure 1: Spatial optical path distributions in reflection (R) and transmission (T) modes for human subcutaneous tissue, resolving the effective exploration depth and photon migration corridors.*
+*Figure 1: Spatial optical path distributions in reflection (<span>R</span>) and transmission (T) modes for human subcutaneous tissue, resolving the effective exploration depth and photon migration corridors.*
 
 ---
 
@@ -114,16 +114,16 @@ The experimental methodology spans three complementary tiers, connecting computa
 
 ## Related Articles & Notes
 - **Tissue Optics & MCML Simulation**:
-  - [MOP-MCML User Guide and Technical Introduction](/2025/09/09/optics/MOP_MCML/)
-  - [3D Cartesian Path Visualization in MOP-MCML](/2026/03/05/optics/mop_mcml_3d/)
-  - [GPU Acceleration for Monte Carlo Simulations](/2025/11/12/optics/mop_mcml_gpu/)
-  - [Inverse Adding-Doubling (IAD) and Optical Parameter Extraction](/2025/08/23/optics/IAD%20and%20MCML/)
+  - [MOP-MCML: A User Guide and Technical Introduction](/2025/09/09/optics/MOP_MCML/)
+  - [MOP-MCML 3D: Volumetric Optical Path Mapping](/2026/03/05/optics/mop_mcml_3d/)
+  - [MOP-MCML GPU: 175x Faster 2D Simulation](/2025/12/16/optics/mop_mcml_gpu/)
+  - [Introduction to Inverse Adding-Doubling (IAD)](/2025/08/23/optics/IAD%20and%20MCML/)
 - **Embedded Acquisition & Telemetry**:
-  - [Getting Started with the nRF5340 Dual-Core SoC](/2025/10/15/embedded/nRF/)
+  - [Getting Started with nRF5340 DK](/2025/10/15/embedded/nRF/)
 - **PPG Signal Processing & Physiological Modeling**:
-  - [Dual-Stream PPG Neural Network](/2025/12/26/ppg/Final_Model_Architecture/)
-  - [Time-Frequency Representation of Pulse Waves](/2025/12/24/ppg/PPGmodel_Evolution/)
+  - [PPG Signal Analysis: Dual-Stream Architecture](/2025/12/26/ppg/Final_Model_Architecture/)
+  - [PPG Signal Analysis: Time-Frequency & Attention](/2025/12/24/ppg/PPGmodel_Evolution/)
 - **Electrophysiology & Neuromuscular Interfaces**:
-  - [Cross-Day Gesture Recognition Stability](/2025/12/26/exg/emg_cross_day/)
-  - [Cross-Subject Generalization in Neuromuscular Interfaces](/2025/12/28/exg/emg_cross_subject/)
-  - [Electrophysiological Noise Modeling & Generator](/2025/11/04/exg/eng_noise_detection/)
+  - [EMG Gesture Recognition: Robustness Research](/2025/12/26/exg/emg_cross_day/)
+  - [EMG Gesture Recognition Across Subjects](/2025/12/28/exg/emg_cross_subject/)
+  - [Solving Low SNR in ENG Signals](/2025/12/23/exg/eng_noise_detection/)

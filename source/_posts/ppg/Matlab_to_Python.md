@@ -5,20 +5,16 @@ comments: true
 lang: en
 mathjax: false
 toc: true
-categories: 
-  - Technical Share
-  - Signal Processing
+categories:
+  - Biosignal Processing
 tags:
-  - Python
-  - MATLAB
-  - Migration
   - PPG
 description: A detailed account of migrating core PPG signal generation logic from MATLAB to Python to overcome I/O bottlenecks and integrate with deep learning workflows.
 ---
 
 # Introduction
 
-In our previous article, [MATLAB Simulation for ECG and PPG Signal Generation](https://www.wenzheng.eu/2025/07/15/Algorithm%20explanation/), we introduced a Photoplethysmography (PPG) simulator based on MATLAB. MATLAB's authority in signal processing is undeniable, and its rich toolbox benefited us greatly during the algorithm verification phase. However, as our research deepened—particularly when we introduced deep learning models for waveform classification and noise robustness studies—MATLAB's limitations became apparent. It severely bottlenecked our data generation speed, prompting us to migrate the core generation logic entirely to Python.
+In our previous article, [ECG and PPG Signal Simulation in MATLAB](/2025/07/15/misc/Algorithm%20explanation/), we introduced a Photoplethysmography (PPG) simulator based on MATLAB. MATLAB's authority in signal processing is undeniable, and its rich toolbox benefited us greatly during the algorithm verification phase. However, as our research deepened—particularly when we introduced deep learning models for waveform classification and noise robustness studies—MATLAB's limitations became apparent. It severely bottlenecked our data generation speed, prompting us to migrate the core generation logic entirely to Python.
 
 This article shares the process of this migration and the key considerations behind it.
 

@@ -6,12 +6,8 @@ lang: en
 mathjax: false
 toc: true
 categories:
-  - Technical Share
-  - Model Iteration
-tags: 
-  - Dual-Stream
-  - ResNet
-  - UNet
+  - Biosignal Processing
+tags:
   - PPG
 description: The final V4.0 architecture solving the classification-localization conflict by completely decoupling the feature streams.
 ---

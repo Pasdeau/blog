@@ -604,9 +604,8 @@ fancybox: true
 # For more information: https://medium-zoom.francoischalifour.com
 mediumzoom: false
 
-# Vanilla JavaScript plugin for lazyloading images.
-# For more information: https://apoorv.pro/lozad.js/demo/
-lazyload: true
+# Image lazy loading is configured in Hexo's marked renderer.
+lazyload: false
 
 # Automatically insert whitespace between CJK and half-width characters.
 # For more information: https://github.com/vinta/pangu.js

@@ -1,5 +1,5 @@
 ---
-title: "Phantom Validation: Bridging Simulation and Measurement"
+title: "Phantom Validation of MOP-MCML"
 date: 2025-11-23
 comments: true
 lang: en
@@ -7,12 +7,9 @@ mathjax: true
 toc: true
 categories:
   - Biomedical Optics
-  - Research Projects
 tags:
-  - Tissue Phantom
-  - Monte Carlo Simulation
-  - Inverse Adding-Doubling
-  - Optical Property Measurement
+  - IAD
+  - Optical Simulation
   - MOP-MCML
 description: A systematic validation study using tissue-equivalent optical phantoms to establish a bidirectional verification framework between simulation and experimental measurements, featuring a novel normalization-based correction method.
 ---
@@ -342,6 +339,6 @@ This study validates the accuracy and reliability of simulation tools like MOP-M
 
 # References
 
-- MOP-MCML User Guide: [https://www.wenzheng.eu/2025/09/09/MOP_MCML/](https://www.wenzheng.eu/2025/09/09/MOP_MCML/)
+- [MOP-MCML: A User Guide and Technical Introduction](/2025/09/09/optics/MOP_MCML/)
 - IAD Algorithm Original Paper: Scott Prahl, "The Adding-Doubling Method," Applied Optics, 32:559-568 (1993)
 - QUELimaging Phantom F04: [https://shop.quelimaging.com/product/tissue-equivalent-optical-phantoms/](https://shop.quelimaging.com/product/tissue-equivalent-optical-phantoms/)

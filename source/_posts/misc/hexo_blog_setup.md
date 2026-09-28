@@ -6,14 +6,9 @@ lang: zh
 mathjax: false
 toc: true
 categories:
-  - Technical Share
-  - Misc
+  - Tools & Workflows
 tags:
-  - Hexo
-  - GitHub
-  - Vercel
-  - GoDaddy
-  - 建站
+  - PhD Life
 description: 一篇从零开始的 Hexo 建站教程，涵盖本地环境搭建、GitHub 托管、Vercel 自动部署，以及通过 GoDaddy 购买域名的过程。
 ---
 Hexo 是一款基于 Node.js 的静态博客框架，作者在本地用 Markdown 写文章，Hexo 负责把它们变成可以部署的静态网页。本文介绍从零开始搭建 Hexo 博客的完整流程，提供两条路线：

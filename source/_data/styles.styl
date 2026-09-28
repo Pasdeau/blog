@@ -3,20 +3,25 @@
   margin: 8px 0 16px
   display: flex
   flex-wrap: wrap
-  gap: 8px
+  gap: 10px
 
 .gallery-filter button
-  padding: 6px 12px
+  display: inline-flex
+  align-items: center
+  padding: 0 .75em
   border-radius: 999px
-  border: 1px solid var(--body-text-color, #333)
-  background: transparent
+  border: 2px solid var(--btn-default-border-color, rgba(128,128,128,0.25))
+  background: var(--btn-default-bg, transparent)
+  color: var(--btn-default-color, inherit)
   cursor: pointer
-  font-size: .9rem
-  opacity: .7
-  transition: .2s
+  font-family: inherit
+  font-size: .875em
+  line-height: 2
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease
   &:hover, &.active
-    opacity: 1
-    background: rgba(0,0,0,.06)
+    background: var(--btn-default-hover-bg, #222)
+    color: var(--btn-default-hover-color, #fff)
+    border-color: var(--btn-default-hover-border-color, #222)
 
 /* 瀑布流栅格：自适应多列 */
 .gallery-grid
@@ -214,6 +219,25 @@
     margin-bottom: 2.5rem
 
 /* 2D Interactive Pixel Pet (Oneko) Particles */
+.oneko-tooltip
+  position: fixed
+  z-index: 1000000
+  width: max-content
+  max-width: 18em
+  padding: .4em .65em
+  border: 1px solid var(--btn-default-border-color, rgba(128,128,128,0.25))
+  border-radius: 10px
+  background: var(--body-bg-color, #fff)
+  color: var(--body-text-color, #333)
+  box-shadow: 0 2px 10px rgba(0,0,0,.12)
+  font-size: .8125em
+  line-height: 1.5
+  white-space: normal
+  pointer-events: none
+
+.oneko-tooltip[hidden]
+  display: none !important
+
 .oneko-heart
   position: fixed
   pointer-events: none
@@ -238,111 +262,170 @@
 .topic-nav-pills
   display: flex
   flex-wrap: wrap
-  gap: 8px
-  justify-content: center
-  margin: 15px 0 35px
+  gap: 10px
+  margin: 0 0 2em
 
 .topic-nav-pill
   display: inline-flex
   align-items: center
-  gap: 6px
-  padding: 6px 14px
+  gap: .4em
+  padding: 0 .75em
+  border: 2px solid var(--btn-default-border-color, rgba(128,128,128,0.25))
   border-radius: 999px
-  border: 1px solid var(--btn-default-border-color, rgba(128,128,128,0.25))
-  background: var(--body-bg-color, transparent)
-  color: var(--text-color, inherit) !important
-  font-size: 0.88rem
-  font-weight: 500
+  background: var(--btn-default-bg, transparent)
+  color: var(--btn-default-color, inherit) !important
+  font-size: .875em
+  line-height: 2
   text-decoration: none !important
-  transition: all 0.2s ease
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease
 
-.topic-nav-pill:hover
-  background: var(--theme-color, #222)
-  color: #fff !important
-  border-color: var(--theme-color, #222)
-  transform: translateY(-1px)
+.topic-nav-pill:hover,
+.topic-nav-pill[aria-current="page"]
+  background: var(--btn-default-hover-bg, #222)
+  color: var(--btn-default-hover-color, #fff) !important
+  border-color: var(--btn-default-hover-border-color, #222)
 
-.topic-nav-pill .badge
-  padding: 1px 7px
-  font-size: 0.75rem
-  border-radius: 999px
-  background: rgba(128,128,128,0.15)
-  color: inherit
-
-.topic-nav-pill:hover .badge
-  background: rgba(255,255,255,0.25)
-  color: #fff
-
-.topic-nav-pill.timeline-pill
-  border-style: dashed
+.topic-groups[hidden],
+.topic-category-section[hidden],
+.topic-post-list[hidden],
+.topic-timeline[hidden]
+  display: none !important
 
 .topic-category-section
-  margin-bottom: 35px
+  margin-bottom: 2em
 
 .topic-category-header
   display: flex
   align-items: center
-  gap: 10px
-  margin: 30px 0 12px
-  padding-bottom: 8px
-  border-bottom: 1.5px solid var(--theme-color, rgba(128,128,128,0.25))
-  font-size: 1.25rem
+  gap: .5em
+  margin: 1.5em 0 .75em
+  font-size: 1.375em
   font-weight: 700
+
+.topic-category-link
+  display: inline-flex
+  align-items: center
+  gap: .5em
+  border-bottom: none
+  color: inherit !important
+  text-decoration: none !important
+
+.topic-category-link:hover,
+.topic-category-link[aria-current="location"]
+  color: var(--theme-color, inherit) !important
+
+.topic-category-link:hover
+  text-decoration: underline !important
 
 .topic-category-header i
   color: var(--theme-color, inherit)
-  font-size: 1.1rem
+  font-size: 1em
 
 .topic-category-header .badge
-  font-size: 0.8rem
+  font-size: .65em
   font-weight: normal
-  padding: 2px 8px
-  border-radius: 999px
-  background: rgba(128,128,128,0.12)
-  opacity: 0.8
+  opacity: .65
+
+/* Series Subheaders */
+.topic-series-header
+  font-size: 1.125em
+  font-weight: 700
+  margin: 1.25em 0 .4em
+  display: flex
+  align-items: center
+  text-align: left !important
+
+.topic-series-link
+  border-bottom: none
+  color: inherit !important
+  text-decoration: none !important
+
+.topic-series-link:hover,
+.topic-series-link[aria-current="location"]
+  color: var(--theme-color, inherit) !important
+  text-decoration: underline !important
 
 .topic-post-list
   list-style: none !important
   padding: 0 !important
-  margin: 0 0 20px !important
+  margin: 0 0 1.25em !important
 
 .topic-post-item
   display: flex
-  align-items: baseline
-  padding: 9px 12px
-  border-bottom: 1px dashed rgba(128,128,128,0.15)
-  border-radius: 6px
-  transition: background 0.15s ease
-  gap: 16px
+  flex-direction: column
+  padding: .55em 0 .75em
+  border-bottom: 1px solid var(--btn-default-border-color, rgba(128,128,128,0.25))
+  gap: .15em
+  text-align: left !important
+  align-items: flex-start !important
 
-.topic-post-item:hover
-  background: rgba(128,128,128,0.06)
+.topic-post-main
+  display: grid
+  grid-template-columns: 5.5em minmax(0, 1fr)
+  align-items: baseline
+  gap: .75em
+  text-align: left !important
+  width: 100%
 
 .topic-post-date
-  font-family: Consolas, Monaco, "Courier New", monospace
-  font-size: 0.86rem
-  opacity: 0.65
-  flex-shrink: 0
-  min-width: 95px
+  font-size: .8125em
+  opacity: .7
+  text-align: left !important
 
 .topic-post-title
-  flex-grow: 1
-  font-size: 0.96rem
-  font-weight: 500
+  font-size: 1em
+  font-weight: normal
   color: var(--link-color, inherit)
   text-decoration: none !important
+  text-align: left !important
 
-.topic-post-item:hover .topic-post-title
+.topic-post-title:hover
   color: var(--link-hover-color, #222)
   text-decoration: underline !important
 
-@media (max-width: 600px)
-  .topic-post-item
+.topic-post-tags
+  display: inline-flex
+  flex-wrap: wrap
+  gap: .4em
+  margin: 0 0 0 6.25em
+
+.topic-tag-pill
+  display: inline-flex
+  align-items: center
+  font-size: .8125em
+  line-height: 1.4
+  padding: .15em .6em
+  border: 1px solid var(--btn-default-border-color, rgba(128,128,128,0.25))
+  border-radius: 999px
+  background: var(--btn-default-bg, transparent)
+  color: var(--btn-default-color, inherit) !important
+  text-decoration: none !important
+  white-space: nowrap
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease
+
+.topic-tag-pill:hover,
+.topic-tag-pill:focus-visible
+  background: var(--btn-default-hover-bg, #222)
+  color: var(--btn-default-hover-color, #fff) !important
+  border-color: var(--btn-default-hover-border-color, #222)
+
+.topic-post-task
+  font-size: 1em
+  line-height: 1.8
+  margin-left: 6.25em
+  text-align: left !important
+
+@media (max-width: 768px)
+  .topic-post-main
+    display: flex
     flex-direction: column
-    gap: 4px
-    padding: 8px 6px
-  .topic-post-date
-    font-size: 0.78rem
+    align-items: flex-start !important
+    gap: .1em
+  .topic-post-task
+    margin-left: 0
+    text-align: left !important
+  .topic-post-tags
+    margin-left: 0
 
 /* 表格内容上下左右居中 */
 .post-body table th,
@@ -350,5 +433,11 @@
   text-align: center !important
   vertical-align: middle !important
 
+/* Hexo renders highlighted code blocks as tables. */
+.post-body figure.highlight td.code
+  text-align: left !important
+  vertical-align: top !important
 
-
+.post-body figure.highlight td.gutter
+  text-align: right !important
+  vertical-align: top !important

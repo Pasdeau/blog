@@ -7,12 +7,9 @@ mathjax: false
 toc: true
 categories:
   - Embedded Systems
-  - Troubleshooting
 tags:
   - nRF5340
   - BLE
-  - NCS
-  - Dual-Core
 description: An in-depth analysis of why BLE fails on the nRF5340 DK after a "Recover" or "Erase All" operation, along with engineering-grade solutions using VS Code and the command line.
 ---
 

@@ -6,13 +6,9 @@ lang: en
 mathjax: false
 toc: true
 categories:
-  - Competitions
-  - Robotics
+  - Embedded Systems
 tags:
-  - LeRobot
-  - AMD
   - Robotics
-  - Python
 description: A comprehensive development guide for the AMD LeRobot Challenge, covering environment setup, robot calibration, teleoperation, dataset recording, and hardware maintenance.
 ---
 

@@ -6,13 +6,9 @@ lang: en
 mathjax: false
 toc: true
 categories:
-  - Technical Share
-  - Model Iteration
+  - Biosignal Processing
 tags:
   - PPG
-  - CWT
-  - UNet
-  - SE-Attention
 description: How introducing Continuous Wavelet Transform (CWT) and SE-Attention bridged the gap between time-domain limitations and robust noise segmentation.
 ---
 

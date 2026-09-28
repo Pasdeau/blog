@@ -6,12 +6,8 @@ lang: en
 mathjax: true
 toc: true
 categories:
-  - Research Projects
-  - Signal Processing
+  - Biosignal Processing
 tags:
-  - Cross-Day
-  - Data Augmentation
-  - Robustness
   - EMG
 description: Proposing Causal Filtering and Spatial Rotation Augmentation strategies to address non-stationarity caused by electrode shift, significantly improving Cross-Day accuracy.
 ---

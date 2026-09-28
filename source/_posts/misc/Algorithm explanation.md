@@ -1,18 +1,15 @@
 ---
-title: MATLAB Simulation for ECG and PPG Signal Generation
+title: ECG and PPG Signal Simulation in MATLAB
 date: 2025-07-15
 comments: true
 lang: en
 mathjax: false
 toc: true
 categories:
-  - Research Projects
-  - Biomedical Optics
+  - Biosignal Processing
 tags:
-  - MATLAB
-  - ECG
   - PPG
-  - Simulation
+  - ECG
 description: A MATLAB-based framework for generating customizable ECG and PPG signals with realistic noise artifacts, designed to train and validate signal classification algorithms.
 ---
 

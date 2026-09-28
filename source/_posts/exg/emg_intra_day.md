@@ -6,13 +6,9 @@ lang: en
 mathjax: true
 toc: true
 categories:
-  - Research Projects
-  - Signal Processing
+  - Biosignal Processing
 tags:
   - EMG
-  - Intra-Day
-  - TCN
-  - Baseline
 description: Establishing a TCN-based EMG gesture recognition baseline to verify signal separability and model capacity under ideal conditions.
 ---
 
