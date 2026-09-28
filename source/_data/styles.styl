@@ -168,7 +168,7 @@
 
 /* Keep the copyright and counters on one line when space allows. */
 .footer .footer-inner > .copyright,
-.footer .footer-inner > .busuanzi-count,
+.footer .footer-inner > .footer-views,
 .footer .footer-inner > .footer-online
   flex: 0 0 auto
   display: inline-flex
@@ -178,32 +178,18 @@
   float: none !important
   white-space: nowrap
 
-.footer .footer-inner > :not(.copyright):not(.busuanzi-count):not(.footer-online)
+.footer .footer-inner > :not(.copyright):not(.footer-views):not(.footer-online)
   display: none !important
-
-.footer .busuanzi-count > span
-  margin: 0
-
-.footer #busuanzi_container_site_pv .post-meta-item-icon
-  display: none
 
 .footer .copyright .author,
 .footer .copyright .with-love
   display: none
 
-.footer .busuanzi-count::before,
+.footer .footer-views::before,
 .footer .footer-online::before
   content: '·'
   margin: 0 .75em
   opacity: .55
-
-.footer #busuanzi_container_site_pv .site-pv
-  display: inline-flex
-  align-items: baseline
-  gap: .3em
-
-.footer #busuanzi_container_site_pv .site-pv::before
-  content: 'Views'
 
 .footer .footer-online
   color: inherit

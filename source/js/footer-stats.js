@@ -1,58 +1,41 @@
 (function () {
-  const value = document.getElementById('busuanzi_value_site_pv');
-  if (value) {
-    function formatViews() {
-      const raw = value.textContent.replace(/[\s,]/g, '');
-      if (!/^\d+$/.test(raw)) return;
-
-      const count = Number(raw);
-      const compact = count < 1000
-        ? String(count)
-        : new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 }).format(count).toLowerCase();
-
-      value.title = `${count.toLocaleString('en-US')} total views`;
-      if (value.textContent !== compact) value.textContent = compact;
-    }
-
-    new MutationObserver(formatViews).observe(value, { childList: true, characterData: true, subtree: true });
-    formatViews();
+  const views = document.getElementById('footer-views-count');
+  if (views) {
+    const counter = 'https://abacus.jasoncameron.dev';
+    const endpoint = location.hostname === 'www.wenzheng.eu' ? 'hit' : 'get';
+    const url = `${counter}/${endpoint}/wenzheng.eu/site-views-v2`;
+    // Busuanzi reported 387 page views for www.wenzheng.eu at migration.
+    fetch(url, { cache: 'no-store' })
+      .then(response => response.ok ? response.json() : null)
+      .then(data => {
+        if (!data || !Number.isSafeInteger(data.value) || data.value < 0) return;
+        const total = 387 + data.value;
+        views.textContent = new Intl.NumberFormat('en', {
+          notation: 'compact',
+          maximumFractionDigits: 1
+        }).format(total).toLowerCase();
+        views.title = `${total.toLocaleString('en-US')} total page views`;
+      })
+      .catch(() => {});
   }
 
   const online = document.getElementById('footer-online-count');
-  if (!online) return;
+  if (!online || location.hostname !== 'www.wenzheng.eu') return;
 
-  let visitorId;
-  try {
-    visitorId = localStorage.getItem('blog-online-visitor');
-    if (!visitorId) {
-      visitorId = crypto.randomUUID();
-      localStorage.setItem('blog-online-visitor', visitorId);
-    }
-  } catch {
-    visitorId = Math.random().toString(36).slice(2);
-  }
-
-  async function refreshOnline() {
-    if (document.hidden) return;
-
-    const url = new URL('https://counterapi.com/api/wenzheng-wang-blog/presence/site');
-    url.searchParams.set('timeline', '1m');
-    url.searchParams.set('unique', 'true');
-    url.searchParams.set('userId', visitorId);
-
-    try {
-      const response = await fetch(url, { cache: 'no-store' });
-      if (!response.ok) return;
-      const data = await response.json();
-      if (Number.isSafeInteger(data.value) && data.value >= 0) {
-        online.textContent = data.value.toLocaleString('en-US');
+  window.now4real = window.now4real || {};
+  now4real.config = { target: 'api', scope: 'site' };
+  now4real.onload = function () {
+    this.subscribe(this.Subject.COUNTER_SITE_VIEWERS, update => {
+      const count = update.data && update.data.value;
+      if ((typeof count === 'number' && Number.isFinite(count) && count >= 0) ||
+          (typeof count === 'string' && /^\d+(?:[.,]\d+)?[kKmM]?$/.test(count))) {
+        online.textContent = String(count);
       }
-    } catch {
-      // Keep the count unavailable when the analytics service cannot be reached.
-    }
-  }
+    }).catch(() => {});
+  };
 
-  refreshOnline();
-  setInterval(refreshOnline, 30000);
-  document.addEventListener('visibilitychange', refreshOnline);
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://cdn.now4real.com/now4real.js';
+  document.head.appendChild(script);
 })();
