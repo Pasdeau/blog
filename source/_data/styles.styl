@@ -435,24 +435,50 @@
   text-align: right !important
   vertical-align: top !important
 
-.online-stats
-  display: flex
-  flex-wrap: wrap
-  gap: 1em
-  margin: 1.5em 0
+.online-map-panel
+  margin: 1.25em 0 .75em
 
-.online-stats > div
-  min-width: 10em
-  padding: .8em 1.2em
+.online-map-count
+  margin-bottom: .75em
+  font-size: 1.1em
+
+.online-map-count span
+  font-size: 1.5em
+  font-weight: 600
+
+.online-map
+  overflow: hidden
   border: 1px solid var(--btn-default-border-color, rgba(128,128,128,0.25))
   border-radius: .6em
+  background: var(--content-bg-color, transparent)
+  text-align: center
 
-.online-stats span
+.online-map svg
   display: block
-  font-size: 2em
-  line-height: 1.3
+  width: 100%
+  height: auto
 
-.online-stats small
-  display: block
+.online-map-country
+  fill: #dbe5ea
+  stroke: #fff
+  stroke-width: .65
+
+.online-map-country.is-active
+  fill: #a9c8d9
+
+.online-map-dot
+  fill: #d3524a
+  stroke: #fff
+  stroke-width: 2
+
+.online-map-locations
+  margin-top: .5em
   font-size: .875em
-  opacity: .7
+  opacity: .75
+
+html[data-theme="dark"] .online-map-country
+  fill: #37424c
+  stroke: #262f38
+
+html[data-theme="dark"] .online-map-country.is-active
+  fill: #537b92

@@ -16,15 +16,57 @@
         }).format(total).toLowerCase();
         views.textContent = formatted;
         views.title = `${total.toLocaleString('en-US')} page views, including 387 from the previous counter`;
-        const detail = document.getElementById('online-views-count');
-        if (detail) detail.textContent = total.toLocaleString('en-US');
       })
       .catch(() => {});
   }
 
   const online = document.getElementById('footer-online-count');
   const liveDetail = document.getElementById('online-live-count');
+  const map = document.getElementById('online-map');
+  const locations = document.getElementById('online-map-locations');
   if (!online || location.hostname !== 'www.wenzheng.eu') return;
+
+  const heatmap = new Map();
+  function renderMap() {
+    if (!map || !map.querySelector('svg')) return;
+    const dots = map.querySelector('#online-map-dots');
+    dots.replaceChildren();
+    map.querySelectorAll('.online-map-country').forEach(path => {
+      path.classList.remove('is-active');
+    });
+    const names = [];
+    heatmap.forEach((intensity, country) => {
+      if (intensity <= 0) return;
+      const path = map.querySelector(`.online-map-country[data-code="${country}"]`);
+      if (!path) return;
+      path.classList.add('is-active');
+      const name = path.querySelector('title').textContent;
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('class', 'online-map-dot');
+      dot.setAttribute('cx', path.dataset.x);
+      dot.setAttribute('cy', path.dataset.y);
+      dot.setAttribute('r', '5');
+      const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+      title.textContent = name;
+      dot.appendChild(title);
+      dots.appendChild(dot);
+      names.push(name);
+    });
+    if (locations) locations.textContent = names.length ? names.join(' · ') : 'No visitor countries shown right now.';
+  }
+
+  if (map) {
+    fetch('/images/world-countries.svg')
+      .then(response => {
+        if (!response.ok) throw new Error('Map unavailable');
+        return response.text();
+      })
+      .then(svg => {
+        map.innerHTML = svg;
+        renderMap();
+      })
+      .catch(() => { map.textContent = 'Map unavailable.'; });
+  }
 
   window.now4real = window.now4real || {};
   now4real.config = { target: 'api', scope: 'site' };
@@ -37,6 +79,30 @@
         if (liveDetail) liveDetail.textContent = String(count);
       }
     }).catch(() => {});
+
+    if (map) {
+      const subject = this.Subject.HEATMAP_SITE_VIEWERS;
+      this.subscribe(subject, update => {
+        const data = update.data;
+        if (!data || !/^[A-Z]{2}$/.test(data.country) ||
+            typeof data.intensity !== 'number') return;
+        if (data.intensity > 0) heatmap.set(data.country, data.intensity);
+        else heatmap.delete(data.country);
+        renderMap();
+      }).then(() => {
+        const snapshot = this.get(subject);
+        if (snapshot && typeof snapshot === 'object') {
+          Object.entries(snapshot).forEach(([country, intensity]) => {
+            if (/^[A-Z]{2}$/.test(country) && typeof intensity === 'number' && intensity > 0) {
+              heatmap.set(country, intensity);
+            }
+          });
+          renderMap();
+        }
+      }).catch(() => {
+        if (locations) locations.textContent = 'Live locations are unavailable.';
+      });
+    }
   };
 
   const script = document.createElement('script');
