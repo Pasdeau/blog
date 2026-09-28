@@ -13,6 +13,22 @@ comments: false
 </div>
 
 <div class="gallery-grid">
+  <a href="/images/photos/puppy/IMG_7762.jpg" data-fancybox="photos" data-caption="IMG_7762" data-category="puppy">
+    <img src="/images/photos/puppy/IMG_7762.jpg" alt="IMG_7762" loading="lazy">
+    <span class="caption">IMG_7762</span>
+  </a>
+  <a href="/images/photos/puppy/IMG_2465.jpg" data-fancybox="photos" data-caption="IMG_2465" data-category="puppy">
+    <img src="/images/photos/puppy/IMG_2465.jpg" alt="IMG_2465" loading="lazy">
+    <span class="caption">IMG_2465</span>
+  </a>
+  <a href="/images/photos/puppy/IMG_2460.jpg" data-fancybox="photos" data-caption="IMG_2460" data-category="puppy">
+    <img src="/images/photos/puppy/IMG_2460.jpg" alt="IMG_2460" loading="lazy">
+    <span class="caption">IMG_2460</span>
+  </a>
+  <a href="/images/photos/puppy/IMG_7247.jpg" data-fancybox="photos" data-caption="IMG_7247" data-category="puppy">
+    <img src="/images/photos/puppy/IMG_7247.jpg" alt="IMG_7247" loading="lazy">
+    <span class="caption">IMG_7247</span>
+  </a>
   <a href="/images/photos/puppy/IMG_6760.jpg" data-fancybox="photos" data-caption="IMG_6760" data-category="puppy">
     <img src="/images/photos/puppy/IMG_6760.jpg" alt="IMG_6760" loading="lazy">
     <span class="caption">IMG_6760</span>
