@@ -5,11 +5,11 @@ comments: false
 ---
 
 <div class="topic-nav-pills">
-  <a href="#mcml" class="topic-nav-pill"><i class="fa fa-lightbulb"></i> MCML & Optics <span class="badge">6</span></a>
+  <a href="#mcml" class="topic-nav-pill"><i class="fa fa-lightbulb"></i> MCML & Optics <span class="badge">5</span></a>
   <a href="#ppg" class="topic-nav-pill"><i class="fa fa-heartbeat"></i> PPG & Hemodynamics <span class="badge">4</span></a>
   <a href="#emg" class="topic-nav-pill"><i class="fa fa-wave-square"></i> EMG & Electrophysiology <span class="badge">4</span></a>
   <a href="#embedded" class="topic-nav-pill"><i class="fa fa-microchip"></i> Embedded Systems <span class="badge">4</span></a>
-  <a href="#tech" class="topic-nav-pill"><i class="fa fa-wrench"></i> Technical Notes <span class="badge">3</span></a>
+  <a href="#tech" class="topic-nav-pill"><i class="fa fa-wrench"></i> Technical Notes <span class="badge">4</span></a>
   <a href="#news" class="topic-nav-pill"><i class="fa fa-trophy"></i> News & Honors <span class="badge">2</span></a>
   <a href="#life" class="topic-nav-pill"><i class="fa fa-mug-hot"></i> Life & Essays <span class="badge">1</span></a>
   <a href="/timeline/" class="topic-nav-pill timeline-pill"><i class="fa fa-clock"></i> Full Timeline &rarr;</a>
@@ -17,7 +17,7 @@ comments: false
 
 <div class="topic-category-section">
   <h2 class="topic-category-header" id="mcml">
-    <i class="fa fa-lightbulb"></i> Tissue Optics & MCML Simulation <span class="badge">6</span>
+    <i class="fa fa-lightbulb"></i> Tissue Optics & MCML Simulation <span class="badge">5</span>
   </h2>
   <ul class="topic-post-list">
     <li class="topic-post-item">
@@ -27,10 +27,6 @@ comments: false
     <li class="topic-post-item">
       <span class="topic-post-date">2025-12-16</span>
       <a class="topic-post-title" href="/2025/12/16/optics/mop_mcml_gpu/">MOP-MCML GPU Version: 175x Faster 2D Light Transport Simulation</a>
-    </li>
-    <li class="topic-post-item">
-      <span class="topic-post-date">2025-12-14</span>
-      <a class="topic-post-title" href="/2025/12/14/optics/lip6-gpu-intro/">LIP6 GPU Cluster User Guide</a>
     </li>
     <li class="topic-post-item">
       <span class="topic-post-date">2025-11-23</span>
@@ -121,12 +117,16 @@ comments: false
 
 <div class="topic-category-section">
   <h2 class="topic-category-header" id="tech">
-    <i class="fa fa-wrench"></i> Technical Notes & Datasets <span class="badge">3</span>
+    <i class="fa fa-wrench"></i> Technical Notes & Datasets <span class="badge">4</span>
   </h2>
   <ul class="topic-post-list">
     <li class="topic-post-item">
       <span class="topic-post-date">2026-03-29</span>
       <a class="topic-post-title" href="/2026/03/29/misc/hexo_blog_setup/">用 Hexo 搭建个人博客</a>
+    </li>
+    <li class="topic-post-item">
+      <span class="topic-post-date">2025-12-14</span>
+      <a class="topic-post-title" href="/2025/12/14/optics/lip6-gpu-intro/">LIP6 GPU Cluster User Guide</a>
     </li>
     <li class="topic-post-item">
       <span class="topic-post-date">2025-07-15</span>
