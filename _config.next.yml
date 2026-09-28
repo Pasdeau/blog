@@ -25,7 +25,7 @@ custom_file_path:
   #postMeta: source/_data/post-meta.njk
   #postBodyStart: source/_data/post-body-start.njk
   #postBodyEnd: source/_data/post-body-end.njk
-  # footer: source/_data/footer.njk
+  footer: source/_data/footer.njk
   bodyEnd: source/_data/body-end.njk
   #variable: source/_data/variables.styl
   #mixin: source/_data/mixins.styl
@@ -215,14 +215,10 @@ footer:
   # Specify the year when the site was setup. If not defined, current year will be used.
   since: 1998
 
-  # Icon between year and copyright info.
+  # No icon after the copyright years.
   icon:
-    # Icon name in Font Awesome. See: https://fontawesome.com/icons
-    name: fa fa-trophy
-    # If you want to animate the icon, set it to true.
-    animated: true
-    # Change the color of icon, using Hex Code.
-    color: "#74C0FC"
+    name: ''
+    animated: false
 
   # If not defined, `author` from Hexo `_config.yml` will be used.
   # Set to `false` to disable the copyright statement.
@@ -825,10 +821,10 @@ firestore:
 # Show Views / Visitors of the website / page with busuanzi.
 # For more information: http://ibruce.info/2015/04/04/busuanzi/
 busuanzi_count:
-  enable: false
-  total_visitors: true
+  enable: true
+  total_visitors: false
   total_visitors_icon: fa fa-user
-  total_views: false
+  total_views: true
   total_views_icon: fa fa-eye
   post_views: false
   post_views_icon: far fa-eye

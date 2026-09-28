@@ -156,61 +156,68 @@
     width: 132px
     height: 132px
 
-/* Footer：两行居中。第1行=第一个块（版权），其余在第2行水平居中排布 */
+/* Compact footer counters beside the copyright. */
 .footer .footer-inner
   display: flex
-  flex-wrap: wrap
+  flex-flow: row nowrap
   justify-content: center
   align-items: center
-  gap: 6px 16px
+  gap: 0
   text-align: center
   font-size: .92em
 
-/* 所有直接子块只占自身宽度，不再占满整行 */
-.footer .footer-inner > *
+/* Keep the copyright and counters on one line when space allows. */
+.footer .footer-inner > .copyright,
+.footer .footer-inner > .busuanzi-count,
+.footer .footer-inner > .footer-online
   flex: 0 0 auto
   display: inline-flex
   align-items: center
-  gap: .5em
+  gap: .35em
   margin: 0
-  float: none !important   /* 关键：撤销主题里的浮动 */
-
- /* 第一个子块（版权/作者）独占一整行并居中 */
-.footer .footer-inner > :first-child
-  flex-basis: 100%
-  justify-content: center
-
-/* 这些统计模块统一成内联 flex，避免被当成块级撑满一行 */
-.footer .symbols-count-time,
-.footer .busuanzi-count,
-.footer .cc-license,
-.footer .powered,
-.footer .footer-custom
-  display: inline-flex !important
-  align-items: center
-  gap: .6em
   float: none !important
+  white-space: nowrap
 
-/* 计数字段间距更友好 */
-.footer .busuanzi-count > span,
-.footer .symbols-count-time > span,
-.footer .symbols-count-time .post-meta-item
-  margin: 0 .5em
-
-/* 移动端微调 */
-@media (max-width: 480px)
-  .footer .footer-inner
-    column-gap: 12px
-    font-size: .9em
-
-/* 仅显示 footer 的第一个块（版权），其余全部隐藏 */
-.footer .footer-inner > *:not(:first-child)
+.footer .footer-inner > :not(.copyright):not(.busuanzi-count):not(.footer-online)
   display: none !important
 
-/* 让版权这一块单独占一行并居中 */
-.footer .footer-inner > :first-child
-  flex-basis: 100%
-  justify-content: center
+.footer .busuanzi-count > span
+  margin: 0
+
+.footer #busuanzi_container_site_pv .post-meta-item-icon
+  display: none
+
+.footer .copyright .author,
+.footer .copyright .with-love
+  display: none
+
+.footer .busuanzi-count::before,
+.footer .footer-online::before
+  content: '·'
+  margin: 0 .75em
+  opacity: .55
+
+.footer #busuanzi_container_site_pv .site-pv
+  display: inline-flex
+  align-items: baseline
+  gap: .3em
+
+.footer #busuanzi_container_site_pv .site-pv::before
+  content: 'Views'
+
+.footer .footer-online
+  color: inherit
+
+.footer .footer-online a
+  border-bottom: none
+  color: inherit
+
+.footer .footer-online a:hover
+  color: var(--link-hover-color, inherit)
+
+@media (max-width: 480px)
+  .footer .footer-inner
+    font-size: .8em
 
 @media (max-width: 600px)
   .home-name
