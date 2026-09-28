@@ -10,16 +10,20 @@
       .then(data => {
         if (!data || !Number.isSafeInteger(data.value) || data.value < 0) return;
         const total = 387 + data.value;
-        views.textContent = new Intl.NumberFormat('en', {
+        const formatted = new Intl.NumberFormat('en', {
           notation: 'compact',
           maximumFractionDigits: 1
         }).format(total).toLowerCase();
-        views.title = `${total.toLocaleString('en-US')} total page views`;
+        views.textContent = formatted;
+        views.title = `${total.toLocaleString('en-US')} page views, including 387 from the previous counter`;
+        const detail = document.getElementById('online-views-count');
+        if (detail) detail.textContent = total.toLocaleString('en-US');
       })
       .catch(() => {});
   }
 
   const online = document.getElementById('footer-online-count');
+  const liveDetail = document.getElementById('online-live-count');
   if (!online || location.hostname !== 'www.wenzheng.eu') return;
 
   window.now4real = window.now4real || {};
@@ -30,6 +34,7 @@
       if ((typeof count === 'number' && Number.isFinite(count) && count >= 0) ||
           (typeof count === 'string' && /^\d+(?:[.,]\d+)?[kKmM]?$/.test(count))) {
         online.textContent = String(count);
+        if (liveDetail) liveDetail.textContent = String(count);
       }
     }).catch(() => {});
   };
