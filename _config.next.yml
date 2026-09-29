@@ -572,7 +572,7 @@ math:
   every_page: false
 
   mathjax:
-    enable: true
+    enable: false
     # Available values: none | ams | all
     tags: all
 

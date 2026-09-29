@@ -59,6 +59,19 @@ prismjs:
 marked:
   lazyload: true
 
+markdown:
+  render:
+    typographer: false
+
+# Render formulas into the generated HTML so they work without a browser CDN.
+mathjax:
+  tags: all
+  single_dollars: true
+  packages:
+    - ams
+  append_css: true
+  every_page: false
+
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
 # per_page: Posts displayed per page. (0 = disable pagination)

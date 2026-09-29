@@ -490,3 +490,69 @@ html[data-theme="dark"] .online-map-country
 
 html[data-theme="dark"] .online-map-country.is-active
   fill: #537b92
+
+.menu-item-language
+  position: relative
+
+  .language-toggle
+    display: block
+    appearance: none
+    border: 0
+    border-radius: 2px
+    background: transparent
+    color: inherit
+    cursor: pointer
+    font-family: inherit
+    font-size: .8125em
+    line-height: inherit
+    padding: 0 10px
+
+    &:hover, &:focus-visible
+      background: var(--menu-item-bg-color)
+
+    i
+      margin-right: 8px
+
+  .language-options
+    position: absolute
+    right: 0
+    z-index: 100
+    min-width: 150px
+    margin: 4px 0 0
+    padding: 5px
+    border: 1px solid var(--btn-default-border-color, rgba(128,128,128,.25))
+    border-radius: 4px
+    background: var(--content-bg-color, #fff)
+    box-shadow: 0 6px 20px rgba(0,0,0,.12)
+    list-style: none
+    text-align: left
+
+    &[hidden]
+      display: none
+
+    a, button
+      display: block
+      box-sizing: border-box
+      width: 100%
+      border: 0
+      border-radius: 2px
+      background: transparent
+      color: inherit
+      cursor: pointer
+      font-family: inherit
+      font-size: .8125em
+      line-height: 1.7
+      padding: 4px 10px
+      text-align: left
+      text-decoration: none
+
+      &:hover, &:focus-visible
+        background: var(--menu-item-bg-color)
+
+@media (max-width: 767px)
+  .menu-item-language .language-options
+    position: static
+    left: 0
+    right: auto
+    margin-left: 10px
+    box-shadow: none

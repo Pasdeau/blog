@@ -19,3 +19,12 @@ convert_images.py
 timestamps.txt
 source/photos/gallery_content.html
 __pycache__/
+
+# Local source audio backups for the Cheese Thief post
+source/_posts/misc/cheese/*.mp3
+local-backups/
+
+# Local API credentials
+.env
+.env.*
+!.env.example
