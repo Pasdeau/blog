@@ -27,6 +27,7 @@
   if (!online || location.hostname !== 'www.wenzheng.eu') return;
 
   const heatmap = new Map();
+  let ownCountry = null;
   function updateCountry(country, intensity) {
     if (typeof country !== 'string') return;
     const code = country.toUpperCase();
@@ -44,27 +45,47 @@
       path.classList.remove('is-active');
     });
     const names = [];
-    heatmap.forEach((intensity, country) => {
-      if (intensity <= 0) return;
+    function addDot(country, label, own) {
       const path = map.querySelector(`.online-map-country[data-code="${country}"]`);
       if (!path) return;
       path.classList.add('is-active');
       const name = path.querySelector('title').textContent;
       const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      dot.setAttribute('class', 'online-map-dot');
+      dot.setAttribute('class', own ? 'online-map-dot is-own' : 'online-map-dot');
       dot.setAttribute('cx', path.dataset.x);
       dot.setAttribute('cy', path.dataset.y);
       dot.setAttribute('r', '5');
       const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-      title.textContent = name;
+      title.textContent = label || name;
       dot.appendChild(title);
       dots.appendChild(dot);
-      names.push(name);
+      names.push(label || name);
+    }
+    heatmap.forEach((intensity, country) => {
+      if (intensity <= 0) return;
+      const path = map.querySelector(`.online-map-country[data-code="${country}"]`);
+      if (!path) return;
+      addDot(country);
     });
-    if (locations) locations.textContent = names.length ? names.join(' · ') : 'Location data is unavailable for current visitors.';
+    if (ownCountry && document.visibilityState === 'visible' && !heatmap.has(ownCountry)) {
+      const path = map.querySelector(`.online-map-country[data-code="${ownCountry}"]`);
+      if (path) addDot(ownCountry, `${path.querySelector('title').textContent} (you)`, true);
+    }
+    if (locations) {
+      locations.textContent = names.length ? names.join(' · ') : 'Location data is unavailable for current visitors.';
+    }
   }
 
   if (map) {
+    fetch('/api/visitor-country', { cache: 'no-store' })
+      .then(response => response.ok ? response.json() : null)
+      .then(data => {
+        if (data && /^[A-Z]{2}$/.test(data.country)) {
+          ownCountry = data.country;
+          renderMap();
+        }
+      })
+      .catch(() => {});
     fetch('/images/world-countries.svg')
       .then(response => {
         if (!response.ok) throw new Error('Map unavailable');
@@ -75,6 +96,7 @@
         renderMap();
       })
       .catch(() => { map.textContent = 'Map unavailable.'; });
+    document.addEventListener('visibilitychange', renderMap);
   }
 
   window.now4real = window.now4real || {};

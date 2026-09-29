@@ -11,4 +11,4 @@ description: See where visitors are viewing this site from right now.
   <div id="online-map-locations" class="online-map-locations" aria-live="polite"></div>
 </div>
 
-<p class="online-map-note">Dots show visitors' countries, not precise locations. The map updates while this page is open.</p>
+<p class="online-map-note">Dots show approximate countries, not precise locations. Your country is shown when available; other countries depend on live map data.</p>
