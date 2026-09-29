@@ -1,21 +1,22 @@
 (function () {
+  // Conservative lower bound supplied by the site owner for views before migration.
+  const historicalViewsBaseline = 12000;
   const views = document.getElementById('footer-views-count');
   if (views) {
     const counter = 'https://abacus.jasoncameron.dev';
     const endpoint = location.hostname === 'www.wenzheng.eu' ? 'hit' : 'get';
     const url = `${counter}/${endpoint}/wenzheng.eu/site-views-v2`;
-    // Busuanzi reported 387 page views for www.wenzheng.eu at migration.
     fetch(url, { cache: 'no-store' })
       .then(response => response.ok ? response.json() : null)
       .then(data => {
         if (!data || !Number.isSafeInteger(data.value) || data.value < 0) return;
-        const total = 387 + data.value;
+        const total = historicalViewsBaseline + data.value;
         const formatted = new Intl.NumberFormat('en', {
           notation: 'compact',
           maximumFractionDigits: 1
         }).format(total).toLowerCase();
         views.textContent = formatted;
-        views.title = `${total.toLocaleString('en-US')} page views, including 387 from the previous counter`;
+        views.title = `At least ${total.toLocaleString('en-US')} page views: ${historicalViewsBaseline.toLocaleString('en-US')} historical baseline plus ${data.value.toLocaleString('en-US')} since September 28, 2026`;
       })
       .catch(() => {});
   }
