@@ -556,3 +556,20 @@ html[data-theme="dark"] .online-map-country.is-active
     right: auto
     margin-left: 10px
     box-shadow: none
+
+/* Give the desktop navigation room without widening article text. */
+@media (min-width: 1080px)
+  header.header
+    box-sizing: border-box
+    width: calc(100% - 40px)
+    max-width: 1120px
+
+  header.header .site-meta
+    flex: 0 0 auto
+
+  header.header .site-nav
+    flex: 1 1 auto
+    min-width: 0
+
+  header.header .main-menu
+    white-space: nowrap
