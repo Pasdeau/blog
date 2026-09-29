@@ -25,7 +25,7 @@
   const liveDetail = document.getElementById('online-live-count');
   const map = document.getElementById('online-map');
   const locations = document.getElementById('online-map-locations');
-  if (!online || location.hostname !== 'www.wenzheng.eu') return;
+  if (!online || !['www.wenzheng.eu', 'wenzheng.eu'].includes(location.hostname)) return;
 
   const heatmap = new Map();
   let ownCountry = null;
@@ -63,12 +63,12 @@
       names.push(label || name);
     }
     heatmap.forEach((intensity, country) => {
-      if (intensity <= 0) return;
+      if (intensity <= 0 || country === ownCountry) return;
       const path = map.querySelector(`.online-map-country[data-code="${country}"]`);
       if (!path) return;
       addDot(country);
     });
-    if (ownCountry && document.visibilityState === 'visible' && !heatmap.has(ownCountry)) {
+    if (ownCountry && document.visibilityState === 'visible') {
       const path = map.querySelector(`.online-map-country[data-code="${ownCountry}"]`);
       if (path) addDot(ownCountry, `${path.querySelector('title').textContent} (you)`, true);
     }
