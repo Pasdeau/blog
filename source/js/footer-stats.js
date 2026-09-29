@@ -16,7 +16,7 @@
           maximumFractionDigits: 1
         }).format(total).toLowerCase();
         views.textContent = formatted;
-        views.title = `At least ${total.toLocaleString('en-US')} page views: ${historicalViewsBaseline.toLocaleString('en-US')} historical baseline plus ${data.value.toLocaleString('en-US')} since September 28, 2026`;
+        views.parentElement.title = total.toLocaleString('en-US');
       })
       .catch(() => {});
   }
