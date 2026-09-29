@@ -27,6 +27,15 @@
   if (!online || location.hostname !== 'www.wenzheng.eu') return;
 
   const heatmap = new Map();
+  function updateCountry(country, intensity) {
+    if (typeof country !== 'string') return;
+    const code = country.toUpperCase();
+    const score = Number(intensity);
+    if (!/^[A-Z]{2}$/.test(code) || !Number.isFinite(score)) return;
+    if (score > 0) heatmap.set(code, score);
+    else heatmap.delete(code);
+  }
+
   function renderMap() {
     if (!map || !map.querySelector('svg')) return;
     const dots = map.querySelector('#online-map-dots');
@@ -52,7 +61,7 @@
       dots.appendChild(dot);
       names.push(name);
     });
-    if (locations) locations.textContent = names.length ? names.join(' · ') : 'No visitor countries shown right now.';
+    if (locations) locations.textContent = names.length ? names.join(' · ') : 'Location data is unavailable for current visitors.';
   }
 
   if (map) {
@@ -84,18 +93,14 @@
       const subject = this.Subject.HEATMAP_SITE_VIEWERS;
       this.subscribe(subject, update => {
         const data = update.data;
-        if (!data || !/^[A-Z]{2}$/.test(data.country) ||
-            typeof data.intensity !== 'number') return;
-        if (data.intensity > 0) heatmap.set(data.country, data.intensity);
-        else heatmap.delete(data.country);
+        if (!data) return;
+        updateCountry(data.country, data.intensity);
         renderMap();
       }).then(() => {
         const snapshot = this.get(subject);
         if (snapshot && typeof snapshot === 'object') {
           Object.entries(snapshot).forEach(([country, intensity]) => {
-            if (/^[A-Z]{2}$/.test(country) && typeof intensity === 'number' && intensity > 0) {
-              heatmap.set(country, intensity);
-            }
+            updateCountry(country, intensity);
           });
           renderMap();
         }
