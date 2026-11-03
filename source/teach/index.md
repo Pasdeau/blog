@@ -20,6 +20,12 @@ Before building hardware, second-year engineering students must learn how to mod
 
 ---
 
+# Electrical Energy Sources — [Annick Dégardin](mailto:annick.degardin@centralesupelec.fr)
+
+Generating and dispatching electrical power across modern grids requires understanding both the physics of primary energy conversion and the dynamics of multi-source networks. In this second-year undergraduate laboratory, students rotate through five experimental test benches covering photovoltaic, hydroelectric, wind, and smart-grid systems. On the photovoltaic setups, students characterize polycrystalline silicon cells across incident optical wavelengths, trace I–V and P–V curves to extract the maximum power point (MPP) and fill factor, and evaluate Schottky bypass diodes, charge regulators, battery storage, and standalone inverters under partial-shading conditions. Using a Pelton turbine hydroelectric bench and a servo-driven wind turbine emulator, students apply Bernoulli's relation to flow and pressure readings, determine alternator pole pairs and rectifier waveforms, and quantify mechanical-to-electrical conversion efficiencies across variable injector and wind-speed profiles. Finally, a modular smart-grid testbench brings these elements together, simulating transmission line thermal losses, diurnal building load curves with smart metering, and supercapacitor energy buffering during power plant outages and renewable overproduction.
+
+---
+
 # Numerical Methods in MATLAB — [Yannis Cuypers](mailto:yannis.cuypers@sorbonne-universite.fr)
 
 Calculus behaves very differently when forced onto finite-precision computing hardware. In this second-year methods course, students explore computational linear algebra and numerical analysis in MATLAB. The sessions begin by demonstrating how machine epsilon, catastrophic cancellation, and integer overflows can silently corrupt results. Students then code and analyze numerical tools from scratch: building polynomial interpolations via Vandermonde and Lagrange matrices to witness the Runge phenomenon, evaluating the convergence rates of composite Newton-Cotes rules (rectangle, midpoint, trapezoid, Simpson) alongside Gaussian quadrature, and formulating ordinary differential equation solvers (explicit Euler and Heun/RK2). By simulating the transient step responses of RC, RL, and resonant LC circuits, students see firsthand how numerical integration step sizes dictate numerical stability, alongside comparing direct LU and Cholesky matrix factorizations against iterative Gauss-Seidel schemes.
