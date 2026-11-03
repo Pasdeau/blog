@@ -32,7 +32,7 @@ Calculus behaves very differently when forced onto finite-precision computing ha
 
 ---
 
-# Scientific Programming in Python — [Islem Ben Doudou](mailto:islem.ben_doudou@sorbonne-universite.fr)
+# Scientific Programming in Python — [Gilles Chagnon](mailto:gilles.chagnon@sorbonne-universite.fr)
 
 In this programming course for second-year undergraduates, the objective is to guide students from informal script writing toward disciplined, modular algorithmic development in Jupyter Notebooks. The syllabus covers core control flow, iterative loops, and sequential collections (strings, lists, tuples, and dictionaries). Computational assignments center on practical algorithmic challenges: prime number sieving, run-length encoding (RLE) string compression and decompression, and structured text file parsing. Throughout the semester, an emphasis is placed on defensive coding practices. Every function must include a clear docstring contract, formal input assertions to prevent boundary violations, and an accompanying unit test suite to independently verify correctness before submission.
 
