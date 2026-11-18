@@ -1,0 +1,19 @@
+{
+  "redirects": [
+    {
+      "source": "/abs-lab",
+      "destination": "/abs-lab/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/abs-lab/",
+      "destination": "https://abs-lab-ruddy.vercel.app/"
+    },
+    {
+      "source": "/abs-lab/:path*",
+      "destination": "https://abs-lab-ruddy.vercel.app/:path*"
+    }
+  ]
+}
